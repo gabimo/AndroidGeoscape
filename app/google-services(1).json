@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "74309405992",
+    "firebase_url": "https://geoscape-7062a.firebaseio.com",
+    "project_id": "geoscape-7062a",
+    "storage_bucket": "geoscape-7062a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74309405992:android:c36084ff298cfb8c",
+        "android_client_info": {
+          "package_name": "com.geoscape"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74309405992-q45nre06nc003mjon1av8ih6h6i6ue8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6sUR_hqcgZajSKEeGZhFVSSG52s5Btj8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74309405992:android:b94543594d85dbd6",
+        "android_client_info": {
+          "package_name": "com.lawnscape"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74309405992-q45nre06nc003mjon1av8ih6h6i6ue8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6sUR_hqcgZajSKEeGZhFVSSG52s5Btj8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
