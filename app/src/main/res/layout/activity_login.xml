@@ -18,7 +18,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="71dp"
-        android:id="@+id/emailLoginEditText"
+        android:id="@+id/etLoginEmail"
         android:hint="Email"/>
 
     <EditText
@@ -26,11 +26,11 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:layout_below="@+id/emailLoginEditText"
-        android:layout_alignLeft="@+id/emailLoginEditText"
-        android:layout_alignStart="@+id/emailLoginEditText"
+        android:layout_below="@+id/etLoginEmail"
+        android:layout_alignLeft="@+id/etLoginEmail"
+        android:layout_alignStart="@+id/etLoginEmail"
         android:layout_marginTop="65dp"
-        android:id="@+id/passLoginEditText"
+        android:id="@+id/etLoginPassword"
         android:hint="Password"/>
 
     <Button
@@ -56,10 +56,10 @@
         android:textSize="18sp"
         android:textAlignment="center"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/passLoginEditText"
-        android:layout_alignStart="@+id/passLoginEditText"
-        android:layout_alignRight="@+id/passLoginEditText"
-        android:layout_alignEnd="@+id/passLoginEditText"
+        android:layout_alignLeft="@+id/etLoginPassword"
+        android:layout_alignStart="@+id/etLoginPassword"
+        android:layout_alignRight="@+id/etLoginPassword"
+        android:layout_alignEnd="@+id/etLoginPassword"
         android:textStyle="normal|italic"
         android:onClick="signup"/>
 </RelativeLayout>

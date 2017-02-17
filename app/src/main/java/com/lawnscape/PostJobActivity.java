@@ -11,9 +11,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class PostJobActivity extends Activity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
@@ -61,19 +58,19 @@ public class PostJobActivity extends Activity {
     public void postJob(View v){
         // grab the widgets as objects
         int success = 0;
-        TextView etTitle = (TextView) findViewById(R.id.etNameProfileSettings);
-        TextView etLocation = (TextView) findViewById(R.id.etLocation);
-        TextView etDescription = (TextView) findViewById(R.id.etJobDescription);
+        TextView etTitle = (TextView) findViewById(R.id.etPostJobTitle);
+        TextView etLocation = (TextView) findViewById(R.id.etPostJobLocation);
+        TextView etDescription = (TextView) findViewById(R.id.etPostJobDescription);
 
         String newTitle = etTitle.getText().toString();
         String newLoc = etLocation.getText().toString();
         String newDesc = etDescription.getText().toString();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myJobsRef = database.getReference("Jobs/");
+        DatabaseReference myJobsRef = database.getReference("Jobs");
 
         // Add a job
-        if(!newTitle.isEmpty()&&(!newLoc.isEmpty())){
+        if(!newTitle.equals("")&&(!newLoc.equals(""))){
             DatabaseReference newJobRef = myJobsRef.push();
             if(!newDesc.isEmpty()){
                 newDesc = "No description";

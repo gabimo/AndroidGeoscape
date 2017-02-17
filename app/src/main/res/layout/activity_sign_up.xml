@@ -29,10 +29,10 @@
         android:id="@+id/button"
         android:onClick="createAccount"
         android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/passwordBox"
-        android:layout_alignStart="@+id/passwordBox"
-        android:layout_alignRight="@+id/passwordBox"
-        android:layout_alignEnd="@+id/passwordBox" />
+        android:layout_alignLeft="@+id/etSignUpPassword"
+        android:layout_alignStart="@+id/etSignUpPassword"
+        android:layout_alignRight="@+id/etSignUpPassword"
+        android:layout_alignEnd="@+id/etSignUpPassword" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -40,11 +40,11 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:layout_marginBottom="49dp"
-        android:id="@+id/emailBox"
-        android:hint=".edu Email Address"
-        android:layout_above="@+id/passwordBox"
-        android:layout_alignLeft="@+id/passwordBox"
-        android:layout_alignStart="@+id/passwordBox" />
+        android:id="@+id/etSignUpEmail"
+        android:hint="Email Address"
+        android:layout_above="@+id/etSignUpPassword"
+        android:layout_alignLeft="@+id/etSignUpPassword"
+        android:layout_alignStart="@+id/etSignUpPassword" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
         android:inputType="textPassword"
         android:ems="10"
         android:layout_marginBottom="43dp"
-        android:id="@+id/passwordBox"
+        android:id="@+id/etSignUpPassword"
         android:hint="Password"
         android:layout_above="@+id/button"
         android:layout_centerHorizontal="true" />

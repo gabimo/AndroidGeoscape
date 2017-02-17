@@ -11,11 +11,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class ProfileSettingsActivity extends Activity {
     //Firebase global init
@@ -65,8 +62,8 @@ public class ProfileSettingsActivity extends Activity {
     public void updateUserInfo(View v){
         // grab the widgets as objects
         int success = 0;
-        TextView etName = (TextView) findViewById(R.id.etNameProfileSettings);
-        TextView etLocation = (TextView) findViewById(R.id.etLocation);
+        TextView etName = (TextView) findViewById(R.id.etProfSettingsName);
+        TextView etLocation = (TextView) findViewById(R.id.etProfSettingsLocation);
 
         String newName = etName.getText().toString();
         String newLoc = etLocation.getText().toString();

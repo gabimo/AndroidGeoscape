@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/etNameProfileSettings"
+            android:id="@+id/etProfSettingsName"
             android:hint="Your Name"
             android:layout_marginTop="33dp"
             android:layout_below="@+id/textView5"
@@ -46,7 +46,7 @@
             android:id="@+id/textView3"
             android:textSize="18sp"
             android:layout_marginTop="39dp"
-            android:layout_below="@+id/etNameProfileSettings"
+            android:layout_below="@+id/etProfSettingsName"
             android:layout_centerHorizontal="true"
             android:layout_weight="0.13" />
 
@@ -55,11 +55,11 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/etLocation"
+            android:id="@+id/etProfSettingsLocation"
             android:hint="Your Location"
             android:layout_below="@+id/textView3"
-            android:layout_alignLeft="@+id/etNameProfileSettings"
-            android:layout_alignStart="@+id/etNameProfileSettings"
+            android:layout_alignLeft="@+id/etProfSettingsName"
+            android:layout_alignStart="@+id/etProfSettingsName"
             android:layout_marginTop="12dp" />
 
         <CheckBox
@@ -90,10 +90,10 @@
             android:id="@+id/changeUserInfoButton"
             android:layout_marginBottom="16dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/etLocation"
-            android:layout_alignStart="@+id/etLocation"
-            android:layout_alignRight="@+id/etLocation"
-            android:layout_alignEnd="@+id/etLocation"
+            android:layout_alignLeft="@+id/etProfSettingsLocation"
+            android:layout_alignStart="@+id/etProfSettingsLocation"
+            android:layout_alignRight="@+id/etProfSettingsLocation"
+            android:layout_alignEnd="@+id/etProfSettingsLocation"
             android:onClick="updateUserInfo" />
 
         <Button

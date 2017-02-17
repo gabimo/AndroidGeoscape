@@ -27,8 +27,8 @@ public class SignUpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         //init the login edit fields
-        username = (EditText) findViewById(R.id.emailBox);
-        passfield = (EditText) findViewById(R.id.passwordBox);
+        username = (EditText) findViewById(R.id.etSignUpEmail);
+        passfield = (EditText) findViewById(R.id.etSignUpPassword);
 
         //Track when users sign in and out
         mAuth = FirebaseAuth.getInstance();

@@ -90,8 +90,8 @@ public class LoginActivity extends Activity {
     }
     /*************** LOGIN ***************/
     public void login(View v) {
-        EditText emailBox = (EditText) findViewById(R.id.emailLoginEditText);
-        EditText passBox = (EditText) findViewById(R.id.passLoginEditText);
+        EditText emailBox = (EditText) findViewById(R.id.etLoginEmail);
+        EditText passBox = (EditText) findViewById(R.id.etLoginPassword);
 
         String email = emailBox.getText().toString();
         String password = passBox.getText().toString();
