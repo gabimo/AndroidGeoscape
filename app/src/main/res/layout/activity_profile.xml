@@ -8,34 +8,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.lawnscape.ProfileActivity">
+    tools:context="com.scape.ProfileActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
         android:text="Email: " />
-
-    <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2"
-        android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="164dp"
-        android:id="@+id/button2" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2"
-        android:id="@+id/useremailtextview" />
 
     <TextView
         android:text="User ID: "
@@ -48,15 +27,6 @@
         android:id="@+id/textView4" />
 
     <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView4"
-        android:layout_alignLeft="@+id/useremailtextview"
-        android:layout_alignStart="@+id/useremailtextview"
-        android:id="@+id/useridtextview" />
-
-    <TextView
         android:text="Your Name: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,13 +37,59 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/nametextview"
+        android:id="@+id/tvNameProfile"
         android:layout_below="@+id/textView6"
         android:layout_toRightOf="@+id/textView2"
         android:layout_toEndOf="@+id/textView2"
         android:layout_marginTop="14dp" />
+
+    <TextView
+        android:text="Your Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/tvNameProfile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView7"
+        android:layout_alignLeft="@+id/tvNameProfile"
+        android:layout_alignStart="@+id/tvNameProfile"
+        android:layout_marginTop="15dp"
+        android:id="@+id/tvLocationProfile" />
+
+    <Button
+        android:text="Update Profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateButton"
+        android:layout_below="@+id/tvLocationProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="103dp"
+        android:onClick="gotoProfileSettings" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvUserID"
+        android:layout_above="@+id/textView6"
+        android:layout_toRightOf="@+id/textView7"
+        android:layout_toEndOf="@+id/textView7" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvUserEmail"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/tvUserID"
+        android:layout_alignStart="@+id/tvUserID" />
 
 </RelativeLayout>

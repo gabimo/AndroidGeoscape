@@ -43,23 +43,23 @@ public class ProfileActivity extends Activity {
                     finish();
                 }else{
                     //user is logged in
-                    TextView emailTV = (TextView) findViewById(R.id.useremailtextview);
-                    TextView useridTV = (TextView) findViewById(R.id.useridtextview);
+                    final TextView emailTV = (TextView) findViewById(R.id.tvUserEmail);
+                    final TextView useridTV = (TextView) findViewById(R.id.tvUserID);
+                    final TextView locationTV = (TextView) findViewById(R.id.tvLocationProfile);
+                    final TextView nameTV = (TextView) findViewById(R.id.tvNameProfile);
+
 
                     emailTV.setText(user.getEmail().toString());
                     useridTV.setText(user.getUid().toString());
 
-
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("Users/"+user.getUid()+"/name");
-                    myRef.addValueEventListener(new ValueEventListener() {
+                    DatabaseReference myNameRef = database.getReference("Users/"+user.getUid()+"/name");
+                    myNameRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
                             String value = dataSnapshot.getValue(String.class);
-
-                            TextView nameTV = (TextView) findViewById(R.id.nametextview);
                             nameTV.setText(value);
                         }
 
@@ -68,7 +68,21 @@ public class ProfileActivity extends Activity {
                             // Failed to read value
                         }
                     });
+                    DatabaseReference myLocRef = database.getReference("Users/"+user.getUid()+"/location");
+                    myLocRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+                            String value = dataSnapshot.getValue(String.class);
+                            locationTV.setText(value);
+                        }
 
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                        }
+                    });
                 }
             }
         };
@@ -106,9 +120,13 @@ public class ProfileActivity extends Activity {
                 auth.signOut();
                 return true;
             case R.id.profileMenu2:
+                startActivity(new Intent(ProfileActivity.this, ProfileSettingsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    public void gotoProfileSettings(View v){
+        startActivity( new Intent( ProfileActivity.this, ProfileSettingsActivity.class));
     }
 }

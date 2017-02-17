@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Geoscape</string>
+    <string name="title_activity_profile_settings">ProfileSettings</string>
 </resources>

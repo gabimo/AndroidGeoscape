@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_profile_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="center"
+    tools:context="com.lawnscape.ProfileSettingsActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:weightSum="1">
+
+        <TextView
+            android:text="Your Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView5"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/textView3"
+            android:layout_alignEnd="@+id/textView3" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etNameProfileSettings"
+            android:hint="Your Name"
+            android:layout_marginTop="33dp"
+            android:layout_below="@+id/textView5"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="Your Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:textSize="18sp"
+            android:layout_marginTop="39dp"
+            android:layout_below="@+id/etNameProfileSettings"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="0.13" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etLocation"
+            android:hint="Your Location"
+            android:layout_below="@+id/textView3"
+            android:layout_alignLeft="@+id/etNameProfileSettings"
+            android:layout_alignStart="@+id/etNameProfileSettings"
+            android:layout_marginTop="12dp" />
+
+        <CheckBox
+            android:text="Let anyone message me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox"
+            android:layout_below="@+id/checkBox3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:layout_weight="0.25"
+            android:textAlignment="center"/>
+
+        <CheckBox
+            android:text="Let anyone discover my profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox3"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/checkBox"
+            android:layout_alignStart="@+id/checkBox"
+            android:layout_weight="0.54" />
+
+        <Button
+            android:text="Apply Changes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/changeUserInfoButton"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/etLocation"
+            android:layout_alignStart="@+id/etLocation"
+            android:layout_alignRight="@+id/etLocation"
+            android:layout_alignEnd="@+id/etLocation"
+            android:onClick="updateUserInfo" />
+
+        <Button
+            android:text="Back to Profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button4"
+            android:onClick="backToProfile" />
+    </LinearLayout>
+
+</RelativeLayout>
