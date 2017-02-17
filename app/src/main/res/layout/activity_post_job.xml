@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_post_job"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.lawnscape.PostJobActivity">
+
+    <TextView
+        android:text="Job Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:id="@+id/textView8"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/etJobTitle"
+        android:layout_alignStart="@+id/etJobTitle" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/etJobTitle"
+        android:hint="Job Title"
+        android:layout_below="@+id/textView8"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/etJobDescription"
+        android:hint="Put a concise job description here, anything you want to say"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/textView19"
+        android:layout_alignStart="@+id/textView19" />
+
+    <TextView
+        android:text="Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"
+        android:layout_below="@+id/etJobTitle"
+        android:layout_alignLeft="@+id/etJobTitle"
+        android:layout_alignStart="@+id/etJobTitle"
+        android:layout_marginTop="11dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/etJobLocation"
+        android:hint="Location of job"
+        android:layout_alignTop="@+id/textView9"
+        android:layout_alignLeft="@+id/textView9"
+        android:layout_alignStart="@+id/textView9"
+        android:layout_marginTop="23dp" />
+
+    <TextView
+        android:text="Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView19"
+        android:layout_marginBottom="12dp"
+        android:layout_above="@+id/etJobDescription"
+        android:layout_alignLeft="@+id/etJobLocation"
+        android:layout_alignStart="@+id/etJobLocation" />
+
+    <Button
+        android:text="Post Job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:onClick="postJob"
+        android:layout_below="@+id/etJobDescription"
+        android:layout_alignLeft="@+id/etJobDescription"
+        android:layout_alignStart="@+id/etJobDescription"
+        android:layout_marginTop="44dp"
+        android:layout_alignRight="@+id/etJobDescription"
+        android:layout_alignEnd="@+id/etJobDescription" />
+
+</RelativeLayout>

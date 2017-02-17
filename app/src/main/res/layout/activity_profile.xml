@@ -92,4 +92,17 @@
         android:layout_alignLeft="@+id/tvUserID"
         android:layout_alignStart="@+id/tvUserID" />
 
+    <Button
+        android:text="Post New Job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/updateButton"
+        android:layout_alignLeft="@+id/updateButton"
+        android:layout_alignStart="@+id/updateButton"
+        android:layout_marginTop="43dp"
+        android:id="@+id/button5"
+        android:layout_alignRight="@+id/updateButton"
+        android:layout_alignEnd="@+id/updateButton"
+        android:onClick="gotoPostNewJob" />
+
 </RelativeLayout>

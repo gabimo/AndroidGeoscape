@@ -129,4 +129,7 @@ public class ProfileActivity extends Activity {
     public void gotoProfileSettings(View v){
         startActivity( new Intent( ProfileActivity.this, ProfileSettingsActivity.class));
     }
+    public void gotoPostNewJob(View v){
+        startActivity( new Intent( ProfileActivity.this, PostJobActivity.class));
+    }
 }

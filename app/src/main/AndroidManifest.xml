@@ -19,7 +19,10 @@
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".ProfileSettingsActivity"
-            android:label="@string/title_activity_profile_settings"></activity>
+            android:label="@string/title_activity_profile_settings" />
+        <activity
+            android:name=".PostJobActivity"
+            android:label="@string/title_activity_post_job"></activity>
     </application>
 
 </manifest>

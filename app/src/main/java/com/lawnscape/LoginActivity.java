@@ -23,10 +23,9 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        setContentView(R.layout.activity_login);
+        mAuth = FirebaseAuth.getInstance();        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -37,8 +36,8 @@ public class LoginActivity extends Activity {
                     startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Currently logged out",
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this, "Currently logged out",
+                    // Toast.LENGTH_SHORT).show();
                     // User is signed out
                     //Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
@@ -98,7 +97,7 @@ public class LoginActivity extends Activity {
         String password = passBox.getText().toString();
 
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(Task<AuthResult> task) {
                        // Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
@@ -115,10 +114,7 @@ public class LoginActivity extends Activity {
                             startActivity(i);
                             finish();
                         }
-
-                        // ...
                     }
                 });
     }
-
 }

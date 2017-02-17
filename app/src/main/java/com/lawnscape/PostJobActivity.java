@@ -3,21 +3,18 @@ package com.lawnscape;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-public class ProfileSettingsActivity extends Activity {
+import java.util.HashMap;
+import java.util.Map;
+
+public class PostJobActivity extends Activity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -26,7 +23,7 @@ public class ProfileSettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_settings);
+        setContentView(R.layout.activity_post_job);
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
@@ -38,7 +35,7 @@ public class ProfileSettingsActivity extends Activity {
                 if (user == null) {
                     // user auth state is changed - user is null
                     // launch login activity
-                    startActivity(new Intent(ProfileSettingsActivity.this, LoginActivity.class));
+                    startActivity(new Intent(PostJobActivity.this, LoginActivity.class));
                     finish();
                 } else {
                     //user is logged in
@@ -47,7 +44,6 @@ public class ProfileSettingsActivity extends Activity {
             }
         };
     }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -62,49 +58,28 @@ public class ProfileSettingsActivity extends Activity {
         }
     }
 
-    public void updateUserInfo(View v){
+    public void postJob(View v){
         // grab the widgets as objects
         int success = 0;
-        TextView etName = (TextView) findViewById(R.id.etNameProfileSettings);
+        TextView etTitle = (TextView) findViewById(R.id.etNameProfileSettings);
         TextView etLocation = (TextView) findViewById(R.id.etLocation);
+        TextView etDescription = (TextView) findViewById(R.id.etJobDescription);
 
-        String newName = etName.getText().toString();
+        String newTitle = etTitle.getText().toString();
         String newLoc = etLocation.getText().toString();
+        String newDesc = etDescription.getText().toString();
 
-        // Set name of user and location
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myJobsRef = database.getReference("Jobs/");
 
-        DatabaseReference usersRef = database.getReference("Users").child(currentUser.getUid().toString());
-        if(!newName.isEmpty()&&!newLoc.isEmpty()){
-            DatabaseReference newUserRef = usersRef;
-            newUserRef.setValue(new User(newName, newLoc));
-
+        // Add a job
+        if(!newTitle.isEmpty()&&(!newLoc.isEmpty())){
+            DatabaseReference newJobRef = myJobsRef.push();
+            if(!newDesc.isEmpty()){
+                newDesc = "No description";
+            }
+            newJobRef.setValue(new Job(newTitle, newLoc, newDesc));
         }
         finish();
     }
-    public void backToProfile(View v){
-        finish();
-    }
-    /******************* Menu Handling *******************/
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_profile_settings, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.profileSettingsMenu1:
-                auth.signOut();
-                return true;
-            case R.id.profileSettingsMenu2:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 }
