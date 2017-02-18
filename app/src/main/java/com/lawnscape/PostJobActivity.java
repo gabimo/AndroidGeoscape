@@ -68,7 +68,7 @@ public class PostJobActivity extends Activity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myJobsRef = database.getReference("Jobs");
-        DatabaseReference myUserJobRef = database.getReference("Users").child(currentUser.getUid().toString()).child("jobids").push();
+        DatabaseReference myUserJobRef = database.getReference("Users").child(currentUser.getUid().toString()).child("jobs").push();
 
         // Add a job
         if(!newTitle.equals("")&&(!newLoc.equals(""))){

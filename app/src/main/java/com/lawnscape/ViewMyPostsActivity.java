@@ -52,51 +52,51 @@ public class ViewMyPostsActivity extends Activity {
                     //user is logged in
                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
                     // two ways to do this
-                    DatabaseReference myJobListRef = database.getReference("Users/"+user.getUid()+"/jobids");
-                    DatabaseReference myUserRef = database.getReference("Users").child(user.getUid().toString());
-
+                    DatabaseReference myUserRef = database.getReference("Users").child(user.getUid().toString()).child("jobs");
                     //Gonna hold all the jobs
                     jobsList = new ArrayList<String>();
                     //Put the jobs into the adaptor
                     jobsList.add("My Jobs");
-                    jobsAdaptor = new ArrayAdapter<String>(ViewMyPostsActivity.this,
-                            android.R.layout.simple_list_item_1, jobsList);
-                    //find the list view to add posts to it
-                    ListView myPostsList = (ListView) findViewById(R.id.lvMyPostsList);
-                    // List view needs adaptors for string arraylists
 
-                    myJobListRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            //Add all the jobs
-                            for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                                String title = (String) messageSnapshot.child("title").getValue();
-                                String location = (String) messageSnapshot.child("location").getValue();
-                                String description = (String) messageSnapshot.child("description").getValue();
-
-                                jobsList.add(title);
-                                jobsList.add(location);
-                                jobsList.add(description);
-
-                            }
-                            jobsAdaptor.notifyDataSetChanged();
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError firebaseError) { }
-                    });
-                    //Get user data for whatever reason
                     myUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            String name =(String) dataSnapshot.child("name").getValue();
-                            String location =(String) dataSnapshot.child("location").getValue();
+                            for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                                jobsList.add(messageSnapshot.getValue().toString());
+                            }
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
                         }
                     });
+/*
+                    myJobListRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //Add all the jobs
+                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                            for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                                String title = (String) messageSnapshot.child("title").getValue();
+                                String location = (String) messageSnapshot.child("location").getValue();
+                                String description = (String) messageSnapshot.child("description").getValue();
 
+                                System.out.println("XX "+title+" :: "+location);
+                                jobsList.add(title);
+                                jobsList.add(location);
+                                jobsList.add(description);
+
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError firebaseError) { }
+                    });*/
+                    // List view needs adaptors for string arraylists
+
+                    jobsAdaptor = new ArrayAdapter<String>(ViewMyPostsActivity.this,
+                            android.R.layout.simple_list_item_1, jobsList);
+                    //find the list view to add posts to it
+                    ListView myPostsList = (ListView) findViewById(R.id.lvMyPostsList);
                     myPostsList.setAdapter(jobsAdaptor);
                 }
             }
