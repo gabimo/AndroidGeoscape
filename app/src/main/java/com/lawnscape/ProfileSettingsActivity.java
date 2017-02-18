@@ -75,7 +75,6 @@ public class ProfileSettingsActivity extends Activity {
         if(!newName.isEmpty()&&!newLoc.isEmpty()){
             DatabaseReference newUserRef = usersRef;
             newUserRef.setValue(new User(newName, newLoc));
-
         }
         finish();
     }

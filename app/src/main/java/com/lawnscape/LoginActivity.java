@@ -25,7 +25,8 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-        mAuth = FirebaseAuth.getInstance();        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -36,12 +37,8 @@ public class LoginActivity extends Activity {
                     startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
                     finish();
                 } else {
-                    //Toast.makeText(LoginActivity.this, "Currently logged out",
-                    // Toast.LENGTH_SHORT).show();
                     // User is signed out
-                    //Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
     }
@@ -60,13 +57,12 @@ public class LoginActivity extends Activity {
     /************** Switch to SIGN UP activity ****************/
     public void signup(View v){
         //switch to sign up activity
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
     }
     public void signup(){
         //switch to sign up activity
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-        startActivity(intent);
+        //overload for programmatic access
+        startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
     }
     /******************* Menu Handling *******************/
     //make the menu show up
@@ -100,8 +96,6 @@ public class LoginActivity extends Activity {
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(Task<AuthResult> task) {
-                       // Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.

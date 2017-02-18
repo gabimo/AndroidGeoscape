@@ -7,10 +7,16 @@ package com.lawnscape;
 public class User {
     private String name;
     private String location;
+    private String jobid;
 
     public User(String n, String l){
         name = n;
         location = l;
+    }
+    public User(String n, String l, String j){
+        name = n;
+        location = l;
+        jobid = j;
     }
 
     public String getName(){
@@ -18,6 +24,13 @@ public class User {
     }
     public String getLocation(){
         return location;
+    }
+
+    public void setJobID(String id){
+        jobid = id;
+    }
+    public String getJobID(){
+        return jobid;
     }
 
 }

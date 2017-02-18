@@ -57,7 +57,6 @@ public class PostJobActivity extends Activity {
 
     public void postJob(View v){
         // grab the widgets as objects
-        int success = 0;
         TextView etTitle = (TextView) findViewById(R.id.etPostJobTitle);
         TextView etLocation = (TextView) findViewById(R.id.etPostJobLocation);
         TextView etDescription = (TextView) findViewById(R.id.etPostJobDescription);
@@ -65,17 +64,20 @@ public class PostJobActivity extends Activity {
         String newTitle = etTitle.getText().toString();
         String newLoc = etLocation.getText().toString();
         String newDesc = etDescription.getText().toString();
+        String userID = currentUser.getUid().toString();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myJobsRef = database.getReference("Jobs");
+        DatabaseReference myUserJobRef = database.getReference("Users").child(currentUser.getUid().toString()).child("jobids").push();
 
         // Add a job
         if(!newTitle.equals("")&&(!newLoc.equals(""))){
             DatabaseReference newJobRef = myJobsRef.push();
-            if(!newDesc.isEmpty()){
+            if(!newDesc.equals("")){
                 newDesc = "No description";
             }
-            newJobRef.setValue(new Job(newTitle, newLoc, newDesc));
+            newJobRef.setValue(new Job(newTitle, newLoc, newDesc, userID));
+            myUserJobRef.setValue(newJobRef.getKey());
         }
         finish();
     }

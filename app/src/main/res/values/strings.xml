@@ -2,4 +2,5 @@
     <string name="app_name">Geoscape</string>
     <string name="title_activity_profile_settings">ProfileSettings</string>
     <string name="title_activity_post_job">PostJobActivity</string>
+    <string name="title_activity_view_jobs">ViewJobs</string>
 </resources>
