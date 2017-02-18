@@ -73,7 +73,7 @@ public class PostJobActivity extends Activity {
         // Add a job
         if(!newTitle.equals("")&&(!newLoc.equals(""))){
             DatabaseReference newJobRef = myJobsRef.push();
-            if(!newDesc.equals("")){
+            if(newDesc.equals("")){
                 newDesc = "No description";
             }
             newJobRef.setValue(new Job(newTitle, newLoc, newDesc, userID));

@@ -2,6 +2,7 @@ package com.lawnscape;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.net.sip.SipSession;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -21,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 
 public class ViewMyPostsActivity extends Activity {
     //Firebase global init
@@ -28,6 +30,7 @@ public class ViewMyPostsActivity extends Activity {
     private FirebaseAuth auth;
 
     ArrayList<String> jobsList;
+    ArrayList<String> myPostDetailsList;
     ArrayAdapter<String> jobsAdaptor;
 
 
@@ -53,28 +56,17 @@ public class ViewMyPostsActivity extends Activity {
                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
                     // two ways to do this
                     DatabaseReference myUserRef = database.getReference("Users").child(user.getUid().toString()).child("jobs");
+                    final DatabaseReference myJobsRef = database.getReference("Jobs");
                     //Gonna hold all the jobs
                     jobsList = new ArrayList<String>();
                     //Put the jobs into the adaptor
                     jobsList.add("My Jobs");
-
-                    myUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                                jobsList.add(messageSnapshot.getValue().toString());
-                            }
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-/*
-                    myJobListRef.addValueEventListener(new ValueEventListener() {
+                    // set this up to use after we find the personal job IDs
+                    final ValueEventListener listenForJobPosts = new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             //Add all the jobs
+                            myPostDetailsList = new ArrayList<String>();
                             System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                             for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                                 String title = (String) messageSnapshot.child("title").getValue();
@@ -82,22 +74,36 @@ public class ViewMyPostsActivity extends Activity {
                                 String description = (String) messageSnapshot.child("description").getValue();
 
                                 System.out.println("XX "+title+" :: "+location);
-                                jobsList.add(title);
-                                jobsList.add(location);
-                                jobsList.add(description);
+                                myPostDetailsList.add(title);
+                                myPostDetailsList.add(location);
+                                myPostDetailsList.add(description);
 
                             }
+                            jobsAdaptor = new ArrayAdapter<String>(ViewMyPostsActivity.this,
+                                    android.R.layout.simple_list_item_1, myPostDetailsList);
+                            //find the list view to add posts to it
+                            ListView myPostsList = (ListView) findViewById(R.id.lvMyPostsList);
+                            myPostsList.setAdapter(jobsAdaptor);
                         }
                         @Override
                         public void onCancelled(DatabaseError firebaseError) { }
-                    });*/
+                    };
+                    myUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                                jobsList.add(messageSnapshot.getValue().toString());
+                            }
+                            myJobsRef.addListenerForSingleValueEvent(listenForJobPosts);
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                     // List view needs adaptors for string arraylists
 
-                    jobsAdaptor = new ArrayAdapter<String>(ViewMyPostsActivity.this,
-                            android.R.layout.simple_list_item_1, jobsList);
-                    //find the list view to add posts to it
-                    ListView myPostsList = (ListView) findViewById(R.id.lvMyPostsList);
-                    myPostsList.setAdapter(jobsAdaptor);
                 }
             }
         };
