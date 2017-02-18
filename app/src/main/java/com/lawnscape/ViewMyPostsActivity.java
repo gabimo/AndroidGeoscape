@@ -1,0 +1,151 @@
+package com.lawnscape;
+
+import android.app.ListActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+public class ViewMyPostsActivity extends Activity {
+    //Firebase global init
+    private FirebaseAuth.AuthStateListener authListener;
+    private FirebaseAuth auth;
+
+    ArrayList<String> jobsList;
+    ArrayAdapter<String> jobsAdaptor;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_my_posts);
+
+        //get firebase auth instance
+        auth = FirebaseAuth.getInstance();
+        //make sure user is logged in and has an account
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(ViewMyPostsActivity.this, LoginActivity.class));
+                    finish();
+                }else{
+                    //user is logged in
+                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    // two ways to do this
+                    DatabaseReference myJobListRef = database.getReference("Users/"+user.getUid()+"/jobids");
+                    DatabaseReference myUserRef = database.getReference("Users").child(user.getUid().toString());
+
+                    //Gonna hold all the jobs
+                    jobsList = new ArrayList<String>();
+                    //Put the jobs into the adaptor
+                    jobsList.add("My Jobs");
+                    jobsAdaptor = new ArrayAdapter<String>(ViewMyPostsActivity.this,
+                            android.R.layout.simple_list_item_1, jobsList);
+                    //find the list view to add posts to it
+                    ListView myPostsList = (ListView) findViewById(R.id.lvMyPostsList);
+                    // List view needs adaptors for string arraylists
+
+                    myJobListRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //Add all the jobs
+                            for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                                String title = (String) messageSnapshot.child("title").getValue();
+                                String location = (String) messageSnapshot.child("location").getValue();
+                                String description = (String) messageSnapshot.child("description").getValue();
+
+                                jobsList.add(title);
+                                jobsList.add(location);
+                                jobsList.add(description);
+
+                            }
+                            jobsAdaptor.notifyDataSetChanged();
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError firebaseError) { }
+                    });
+                    //Get user data for whatever reason
+                    myUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String name =(String) dataSnapshot.child("name").getValue();
+                            String location =(String) dataSnapshot.child("location").getValue();
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    myPostsList.setAdapter(jobsAdaptor);
+                }
+            }
+        };
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (authListener != null) {
+            auth.removeAuthStateListener(authListener);
+        }
+    }
+    /************** End LifeCycle ****************/
+    public void signout(View v){
+        auth.signOut();
+    }
+    /******************* Menu Handling *******************/
+    //make the menu show up
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_view_posts, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.viewPostsMenu1:
+                startActivity( new Intent( ViewMyPostsActivity.this, ProfileActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenu2:
+                auth.signOut();
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    // this will be for later maybe, feel free to remove
+    public void gotoPostNewJob(View v){
+        startActivity( new Intent( ViewMyPostsActivity.this, PostJobActivity.class));
+        finish();
+    }
+}

@@ -117,10 +117,14 @@ public class ProfileActivity extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.profileMenu1:
-                auth.signOut();
+                startActivity(new Intent(ProfileActivity.this, ProfileSettingsActivity.class));
                 return true;
             case R.id.profileMenu2:
-                startActivity(new Intent(ProfileActivity.this, ProfileSettingsActivity.class));
+                startActivity(new Intent(ProfileActivity.this, ViewMyPostsActivity.class));
+                finish();
+                return true;
+            case R.id.profileMenu3:
+                auth.signOut();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

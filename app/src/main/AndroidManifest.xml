@@ -23,6 +23,9 @@
         <activity
             android:name=".PostJobActivity"
             android:label="@string/title_activity_post_job" />
+        <activity
+            android:name=".ViewMyPostsActivity"
+            android:label="@string/title_activity_view_my_posts"></activity>
     </application>
 
 </manifest>
