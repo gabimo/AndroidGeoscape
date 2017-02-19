@@ -1,8 +1,7 @@
 package com.lawnscape;
 
-import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
-import android.net.sip.SipSession;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -10,8 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,15 +21,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 
 public class ViewMyPostsActivity extends Activity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
 
-    ArrayList<String> myPostDetailsList;
-    ArrayAdapter<String> jobsAdaptor;
+    ArrayList<Job> myJobList;
+    JobPostListAdapter jobsAdaptor;
 
     ListView myPostsList;
 
@@ -46,7 +44,7 @@ public class ViewMyPostsActivity extends Activity {
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
                     // user auth state is changed - user is not logged in
                     // launch login activity
@@ -60,13 +58,12 @@ public class ViewMyPostsActivity extends Activity {
                     // DatabaseReference myUserRef = database.getReference("Users/"+user.getUid().toString()+"/jobs");
 
                     //Gonna hold all the jobs, must init for adaptor
-                    myPostDetailsList = new ArrayList<String>();
+                    myJobList = new ArrayList<Job>();
                     //Put the jobs into the adaptor
                     //Find the listview widget and set up a connection to our ArrayList
                     // The adaptor handles pushing each object in the ArrayList to the listview
                     myPostsList = (ListView) findViewById(R.id.lvMyPostsList);
-                    jobsAdaptor = new ArrayAdapter<String>(ViewMyPostsActivity.this,
-                            android.R.layout.simple_list_item_1, myPostDetailsList);
+                    jobsAdaptor = new JobPostListAdapter(ViewMyPostsActivity.this,myJobList);
                     myPostsList.setAdapter(jobsAdaptor);
 
                     // set this up to use after we find the personal job IDs
@@ -80,9 +77,7 @@ public class ViewMyPostsActivity extends Activity {
                             String title = (String) dataSnapshot.child("title").getValue();
                             String location = (String) dataSnapshot.child("location").getValue();
                             String description = (String) dataSnapshot.child("description").getValue();
-                            myPostDetailsList.add(title);
-                            myPostDetailsList.add(location);
-                            myPostDetailsList.add(description);
+                            myJobList.add(new Job(title, location,description,user.getUid().toString()));
                             //Tell the listview adaptor to update the listview based on the ArrayList updates
                             jobsAdaptor.notifyDataSetChanged();
                         }
@@ -116,7 +111,6 @@ public class ViewMyPostsActivity extends Activity {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
-
     }
 
     @Override

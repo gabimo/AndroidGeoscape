@@ -26,11 +26,10 @@ public class ViewAllJobsActivity extends Activity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
 
-    ArrayList<String> allPostDetailsList;
-    ArrayAdapter<String> jobsAdaptor;
+    ArrayList<Job> allPostDetailsList;
+    JobPostListAdapter jobsAdaptor;
 
     ListView allPostsList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class ViewAllJobsActivity extends Activity {
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
                     // user auth state is changed - user is not logged in
                     // launch login activity
@@ -57,13 +56,12 @@ public class ViewAllJobsActivity extends Activity {
                     // DatabaseReference myUserRef = database.getReference("Users/"+user.getUid().toString()+"/jobs");
 
                     //Gonna hold all the jobs, must init for adaptor
-                    allPostDetailsList = new ArrayList<String>();
+                    allPostDetailsList = new ArrayList<Job>();
                     //Put the jobs into the adaptor
                     //Find the listview widget and set up a connection to our ArrayList
                     // The adaptor handles pushing each object in the ArrayList to the listview
                     allPostsList = (ListView) findViewById(R.id.lvMyPostsList);
-                    jobsAdaptor = new ArrayAdapter<String>(ViewAllJobsActivity.this,
-                            android.R.layout.simple_list_item_1, allPostDetailsList);
+                    jobsAdaptor = new JobPostListAdapter(ViewAllJobsActivity.this, allPostDetailsList);
                     allPostsList.setAdapter(jobsAdaptor);
 
                     // set this up to use after we find the personal job IDs
@@ -78,9 +76,7 @@ public class ViewAllJobsActivity extends Activity {
                                 String title = (String) jobNode.child("title").getValue();
                                 String location = (String) jobNode.child("location").getValue();
                                 String description = (String) jobNode.child("description").getValue();
-                                allPostDetailsList.add(title);
-                                allPostDetailsList.add(location);
-                                allPostDetailsList.add(description);
+                                allPostDetailsList.add(new Job(title, location, description, user.getUid().toString()));
                                 //Tell the listview adaptor to update the listview based on the ArrayList updates
                                 jobsAdaptor.notifyDataSetChanged();
                             }
