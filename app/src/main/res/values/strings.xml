@@ -4,4 +4,5 @@
     <string name="title_activity_post_job">PostJobActivity</string>
     <string name="title_activity_view_jobs">ViewJobs</string>
     <string name="title_activity_view_my_posts">ViewMyPosts</string>
+    <string name="title_activity_view_all_jobs">ViewAllJobs</string>
 </resources>

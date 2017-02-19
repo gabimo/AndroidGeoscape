@@ -25,7 +25,10 @@
             android:label="@string/title_activity_post_job" />
         <activity
             android:name=".ViewMyPostsActivity"
-            android:label="@string/title_activity_view_my_posts"></activity>
+            android:label="@string/title_activity_view_my_posts" />
+        <activity
+            android:name=".ViewAllJobsActivity"
+            android:label="@string/title_activity_view_all_jobs"></activity>
     </application>
 
 </manifest>

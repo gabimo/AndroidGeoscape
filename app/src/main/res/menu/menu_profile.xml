@@ -7,6 +7,9 @@
         android:title="My Job Posts" >
     </item>
     <item android:id="@+id/profileMenu3"
+        android:title="View All Jobs" >
+    </item>
+    <item android:id="@+id/profileMenu4"
         android:title="Sign Out" >
     </item>
 </menu>

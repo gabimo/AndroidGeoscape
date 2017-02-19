@@ -124,6 +124,10 @@ public class ProfileActivity extends Activity {
                 finish();
                 return true;
             case R.id.profileMenu3:
+                startActivity(new Intent(ProfileActivity.this, ViewAllJobsActivity.class));
+                finish();
+                return true;
+            case R.id.profileMenu4:
                 auth.signOut();
                 return true;
             default:

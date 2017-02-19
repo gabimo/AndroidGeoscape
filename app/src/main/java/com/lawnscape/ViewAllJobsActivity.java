@@ -1,8 +1,6 @@
 package com.lawnscape;
 
-import android.app.ListActivity;
 import android.content.Intent;
-import android.net.sip.SipSession;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -11,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,17 +19,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 
-public class ViewMyPostsActivity extends Activity {
+public class ViewAllJobsActivity extends Activity {
+
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
 
-    ArrayList<String> myPostDetailsList;
+    ArrayList<String> allPostDetailsList;
     ArrayAdapter<String> jobsAdaptor;
 
-    ListView myPostsList;
+    ListView allPostsList;
 
 
     @Override
@@ -50,24 +47,24 @@ public class ViewMyPostsActivity extends Activity {
                 if (user == null) {
                     // user auth state is changed - user is not logged in
                     // launch login activity
-                    startActivity(new Intent(ViewMyPostsActivity.this, LoginActivity.class));
+                    startActivity(new Intent(ViewAllJobsActivity.this, LoginActivity.class));
                     finish();
                 }else{
                     //user is logged in
                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
                     // two ways to do this, only use one
-                    DatabaseReference myUserRef = database.getReference("Users").child(user.getUid().toString()).child("jobs");
+                    DatabaseReference myJobsRef = database.getReference("Jobs");
                     // DatabaseReference myUserRef = database.getReference("Users/"+user.getUid().toString()+"/jobs");
 
                     //Gonna hold all the jobs, must init for adaptor
-                    myPostDetailsList = new ArrayList<String>();
+                    allPostDetailsList = new ArrayList<String>();
                     //Put the jobs into the adaptor
                     //Find the listview widget and set up a connection to our ArrayList
                     // The adaptor handles pushing each object in the ArrayList to the listview
-                    myPostsList = (ListView) findViewById(R.id.lvMyPostsList);
-                    jobsAdaptor = new ArrayAdapter<String>(ViewMyPostsActivity.this,
-                            android.R.layout.simple_list_item_1, myPostDetailsList);
-                    myPostsList.setAdapter(jobsAdaptor);
+                    allPostsList = (ListView) findViewById(R.id.lvMyPostsList);
+                    jobsAdaptor = new ArrayAdapter<String>(ViewAllJobsActivity.this,
+                            android.R.layout.simple_list_item_1, allPostDetailsList);
+                    allPostsList.setAdapter(jobsAdaptor);
 
                     // set this up to use after we find the personal job IDs
                     // The reason this is declared is so it does not appear visually as a nested listener
@@ -77,37 +74,22 @@ public class ViewMyPostsActivity extends Activity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             //Add all the jobs to the array list
-                            String title = (String) dataSnapshot.child("title").getValue();
-                            String location = (String) dataSnapshot.child("location").getValue();
-                            String description = (String) dataSnapshot.child("description").getValue();
-                            myPostDetailsList.add(title);
-                            myPostDetailsList.add(location);
-                            myPostDetailsList.add(description);
-                            //Tell the listview adaptor to update the listview based on the ArrayList updates
-                            jobsAdaptor.notifyDataSetChanged();
+                            for(DataSnapshot jobNode: dataSnapshot.getChildren()) {
+                                String title = (String) jobNode.child("title").getValue();
+                                String location = (String) jobNode.child("location").getValue();
+                                String description = (String) jobNode.child("description").getValue();
+                                allPostDetailsList.add(title);
+                                allPostDetailsList.add(location);
+                                allPostDetailsList.add(description);
+                                //Tell the listview adaptor to update the listview based on the ArrayList updates
+                                jobsAdaptor.notifyDataSetChanged();
+                            }
                         }
                         @Override
                         public void onCancelled(DatabaseError firebaseError) { }
                     };
-                    myUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            //Find each job made by the user and add it to the listview
-                            // This is done with the ValueEventListener object above
-                            DatabaseReference myJobsRef = database.getReference("Jobs");
-                            for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                                String job = messageSnapshot.getValue().toString();
-                                //For each job posted by the user call the custom listener
-                                myJobsRef.child(job).addListenerForSingleValueEvent(listenForJobPosts);
-                            }
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            // idk what we would do
-                        }
-                    });
+                    myJobsRef.addListenerForSingleValueEvent(listenForJobPosts);
 
-                    // List view needs adaptors for string arraylists
                 }
             }
         };
@@ -143,15 +125,15 @@ public class ViewMyPostsActivity extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.viewPostsMenu1:
-                startActivity( new Intent( ViewMyPostsActivity.this, ProfileActivity.class));
+                startActivity( new Intent( ViewAllJobsActivity.this, ProfileActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenu2:
-                startActivity(new Intent(ViewMyPostsActivity.this, ViewMyPostsActivity.class));
+                startActivity(new Intent(ViewAllJobsActivity.this, ViewMyPostsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenu3:
-                startActivity(new Intent(ViewMyPostsActivity.this, ViewAllJobsActivity.class));
+                startActivity(new Intent(ViewAllJobsActivity.this, ViewAllJobsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenu4:
@@ -164,7 +146,7 @@ public class ViewMyPostsActivity extends Activity {
     }
     // this will be for later maybe, feel free to remove
     public void gotoPostNewJob(View v){
-        startActivity( new Intent( ViewMyPostsActivity.this, PostJobActivity.class));
+        startActivity( new Intent( ViewAllJobsActivity.this, PostJobActivity.class));
         finish();
     }
 }

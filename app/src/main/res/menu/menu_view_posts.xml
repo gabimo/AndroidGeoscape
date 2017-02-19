@@ -4,6 +4,12 @@
         android:title="My Profile">
     </item>
     <item android:id="@+id/viewPostsMenu2"
+        android:title="My Job Posts">
+    </item>
+    <item android:id="@+id/viewPostsMenu3"
+        android:title="View All Jobs">
+    </item>
+    <item android:id="@+id/viewPostsMenu4"
         android:title="Sign Out" >
     </item>
 </menu>
