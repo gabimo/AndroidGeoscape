@@ -44,4 +44,18 @@
         android:layout_marginTop="17dp"
         android:id="@+id/tvSingleJobDescription"
         android:textSize="20sp" />
+
+    <Button
+        android:text="Request Job"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button6" />
+
+    <Button
+        android:text="Save Job"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button7"
+        android:elevation="0dp"
+        android:gravity="bottom|center_horizontal" />
 </LinearLayout>
