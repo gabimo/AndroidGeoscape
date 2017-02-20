@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -101,8 +102,16 @@ public class ViewMyPostsActivity extends Activity {
                             // idk what we would do
                         }
                     });
-
-                    // List view needs adaptors for string arraylists
+                    myPostsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                                long id) {
+                            Job selectedJob = (Job) jobsAdaptor.getItem(position);
+                            Intent singleJobViewIntent = new Intent(ViewMyPostsActivity.this, ViewSingleJobActivity.class);
+                            singleJobViewIntent.putExtra("Job",selectedJob);
+                            startActivity(singleJobViewIntent);
+                        }
+                    });
                 }
             }
         };
