@@ -100,6 +100,7 @@ public class ViewAllJobsActivity extends Activity {
                             Intent singleJobViewIntent = new Intent(ViewAllJobsActivity.this, ViewSingleJobActivity.class);
                             singleJobViewIntent.putExtra("Job",selectedJob);
                             startActivity(singleJobViewIntent);
+                            finish();
                         }
                     });
 
