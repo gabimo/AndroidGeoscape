@@ -76,7 +76,9 @@ public class PostJobActivity extends Activity {
             if(newDesc.equals("")){
                 newDesc = "No description";
             }
-            newJobRef.setValue(new Job(newTitle, newLoc, newDesc, userID));
+            Job newJob = new Job(newTitle, newLoc, newDesc, userID);
+            newJob.setPostid(myJobsRef.getKey());
+            newJobRef.setValue(newJob);
             myUserJobRef.setValue(newJobRef.getKey());
         }
         finish();

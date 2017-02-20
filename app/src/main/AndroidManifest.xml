@@ -28,7 +28,8 @@
             android:label="@string/title_activity_view_my_posts" />
         <activity
             android:name=".ViewAllJobsActivity"
-            android:label="@string/title_activity_view_all_jobs"></activity>
+            android:label="@string/title_activity_view_all_jobs" />
+        <activity android:name=".ViewSingleJobActivity"></activity>
     </application>
 
 </manifest>

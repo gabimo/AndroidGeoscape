@@ -39,10 +39,9 @@ public class SignUpActivity extends Activity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    System.out.println("logged in " + user.getEmail().toString());
+                    System.out.println("Somehow logged in as " + user.getEmail().toString());
                 } else {
                     // User is signed out
-                    System.out.println("logged out");
                     //Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
             }
@@ -61,8 +60,6 @@ public class SignUpActivity extends Activity {
                 .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(Task<AuthResult> task) {
-                        Toast.makeText(SignUpActivity.this, "Step 222",
-                                Toast.LENGTH_SHORT).show();
                         // Log.d("EVENT", "createUserWithEmail:onComplete:" + task.isSuccessful());
                         if (!task.isSuccessful()) {
                             Toast.makeText(SignUpActivity.this, "Could Not Create Account",

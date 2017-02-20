@@ -7,8 +7,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -76,7 +80,9 @@ public class ViewAllJobsActivity extends Activity {
                                 String title = (String) jobNode.child("title").getValue();
                                 String location = (String) jobNode.child("location").getValue();
                                 String description = (String) jobNode.child("description").getValue();
-                                allPostDetailsList.add(new Job(title, location, description, user.getUid().toString()));
+                                String userid = (String) jobNode.child("userid").getValue();
+                                String postid = (String) jobNode.getKey().toString();
+                                allPostDetailsList.add(new Job(title, location, description, userid, postid));
                                 //Tell the listview adaptor to update the listview based on the ArrayList updates
                                 jobsAdaptor.notifyDataSetChanged();
                             }
@@ -86,6 +92,17 @@ public class ViewAllJobsActivity extends Activity {
                     };
                     myJobsRef.addListenerForSingleValueEvent(listenForJobPosts);
 
+                    allPostsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                                long id) {
+                            Job selectedJob = (Job) jobsAdaptor.getItem(position);
+                            Intent singleJobViewIntent = new Intent(ViewAllJobsActivity.this, ViewSingleJobActivity.class);
+                            singleJobViewIntent.putExtra("Job",selectedJob);
+                            startActivity(singleJobViewIntent);
+                        }
+                    });
+
                 }
             }
         };
@@ -94,6 +111,8 @@ public class ViewAllJobsActivity extends Activity {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
+
+
 
     }
 
@@ -145,4 +164,6 @@ public class ViewAllJobsActivity extends Activity {
         startActivity( new Intent( ViewAllJobsActivity.this, PostJobActivity.class));
         finish();
     }
+
+
 }

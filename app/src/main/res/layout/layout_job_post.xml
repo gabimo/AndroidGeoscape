@@ -6,6 +6,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:textSize="16sp"
         android:typeface="sans"/>
 
     <TextView
@@ -14,16 +15,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvPostLayoutTitle"
         android:layout_marginTop="5dip"
-        android:textColor="#343434"
-        android:textSize="12sp"/>
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/tvPostLayoutLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#343434"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:layout_alignBottom="@+id/tvPostLayoutTitle"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

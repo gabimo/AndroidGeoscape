@@ -28,7 +28,7 @@ public class JobPostListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Job getItem(int position) {
         return jobPostDetails.get(position);
     }
 
@@ -42,23 +42,23 @@ public class JobPostListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.layout_job_post, null);
             holder = new ViewHolder();
-            holder.headlineView = (TextView) convertView.findViewById(R.id.tvPostLayoutTitle);
-            holder.reporterNameView = (TextView) convertView.findViewById(R.id.tvPostLayoutDescription);
-            holder.reportedDateView = (TextView) convertView.findViewById(R.id.tvPostLayoutLocation);
+            holder.tvTitle = (TextView) convertView.findViewById(R.id.tvPostLayoutTitle);
+            holder.tvDescription = (TextView) convertView.findViewById(R.id.tvPostLayoutDescription);
+            holder.tvLocation = (TextView) convertView.findViewById(R.id.tvPostLayoutLocation);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.headlineView.setText(jobPostDetails.get(position).getTitle());
-        holder.reporterNameView.setText(jobPostDetails.get(position).getDescription());
-        holder.reportedDateView.setText(jobPostDetails.get(position).getLocation());
+        holder.tvTitle.setText(jobPostDetails.get(position).getTitle());
+        holder.tvDescription.setText(jobPostDetails.get(position).getDescription());
+        holder.tvLocation.setText(jobPostDetails.get(position).getLocation());
         return convertView;
     }
 
     static class ViewHolder {
-        TextView headlineView;
-        TextView reporterNameView;
-        TextView reportedDateView;
+        TextView tvTitle;
+        TextView tvDescription;
+        TextView tvLocation;
     }
 }
