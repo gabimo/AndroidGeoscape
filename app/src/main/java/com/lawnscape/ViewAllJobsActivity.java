@@ -1,5 +1,8 @@
 package com.lawnscape;
-
+/*
+This just pulls the whole Jobs table, contained are many userids
+Jobs are parsed in to JSON and parsed out to a custom local POJO Job
+ */
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -12,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -96,14 +98,12 @@ public class ViewAllJobsActivity extends Activity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position,
                                                 long id) {
-                            Job selectedJob = (Job) jobsAdaptor.getItem(position);
-                            Intent singleJobViewIntent = new Intent(ViewAllJobsActivity.this, ViewSingleJobActivity.class);
-                            singleJobViewIntent.putExtra("Job",selectedJob);
-                            startActivity(singleJobViewIntent);
-                            finish();
+                        Job selectedJob = (Job) jobsAdaptor.getItem(position);
+                        Intent singleJobViewIntent = new Intent(ViewAllJobsActivity.this, ViewSingleJobActivity.class);
+                        singleJobViewIntent.putExtra("Job",selectedJob);
+                        startActivity(singleJobViewIntent);
                         }
                     });
-
                 }
             }
         };
@@ -111,23 +111,19 @@ public class ViewAllJobsActivity extends Activity {
     @Override
     public void onStart() {
         super.onStart();
+        // Boiler plate Authentication
         auth.addAuthStateListener(authListener);
-
-
-
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        // Boiler plate Authentication
         if (authListener != null) {
             auth.removeAuthStateListener(authListener);
         }
     }
     /************** End LifeCycle ****************/
-    public void signout(View v){
-        auth.signOut();
-    }
     /******************* Menu Handling *******************/
     //make the menu show up
     @Override

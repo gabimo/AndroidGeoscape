@@ -11,8 +11,6 @@ import android.os.Parcelable;
  */
 
 public class Job implements Parcelable {
-
-
     private String title;
     private String location;
     private String description;

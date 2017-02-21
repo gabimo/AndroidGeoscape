@@ -58,4 +58,12 @@
         android:id="@+id/button7"
         android:elevation="0dp"
         android:gravity="bottom|center_horizontal" />
+
+    <Button
+        android:text="Delete This Post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonDeletePost"
+        android:onClick="deletePost"
+        android:visibility="gone" />
 </LinearLayout>

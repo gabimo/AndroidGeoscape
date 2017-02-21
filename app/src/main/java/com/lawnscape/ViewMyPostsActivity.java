@@ -110,7 +110,6 @@ public class ViewMyPostsActivity extends Activity {
                             Intent singleJobViewIntent = new Intent(ViewMyPostsActivity.this, ViewSingleJobActivity.class);
                             singleJobViewIntent.putExtra("Job",selectedJob);
                             startActivity(singleJobViewIntent);
-                            finish();
                         }
                     });
                 }
