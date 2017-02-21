@@ -9,7 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.lawnscape.ViewSingleJobActivity">
+    tools:context="com.lawnscape.ViewSingleJobActivity"
+    android:weightSum="1">
 
     <TextView
         android:text="TextView"
@@ -49,15 +50,19 @@
         android:text="Request Job"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button6" />
+        android:id="@+id/button6"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/white" />
 
     <Button
         android:text="Save Job"
-        android:layout_width="match_parent"
+        android:layout_width="353dp"
         android:layout_height="wrap_content"
         android:id="@+id/button7"
-        android:elevation="0dp"
-        android:gravity="bottom|center_horizontal" />
+        android:gravity="bottom|center_horizontal"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
+        android:elevation="0dp" />
 
     <Button
         android:text="Delete This Post"

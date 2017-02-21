@@ -35,31 +35,27 @@
 
     <Button
         android:text="Log In"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="48dp"
         android:id="@+id/loginbutton"
         android:onClick="login"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
         android:layout_above="@+id/textView"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="Don't have an account?\nClick here"
-        android:layout_width="wrap_content"
+        android:text="Don't have an account? Click here"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="51dp"
+        android:layout_marginBottom="49dp"
         android:id="@+id/textView"
         android:typeface="normal"
         android:textSize="18sp"
         android:textAlignment="center"
+        android:onClick="signup"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/etLoginPassword"
-        android:layout_alignStart="@+id/etLoginPassword"
-        android:layout_alignRight="@+id/etLoginPassword"
-        android:layout_alignEnd="@+id/etLoginPassword"
-        android:textStyle="normal|italic"
-        android:onClick="signup"/>
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

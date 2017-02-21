@@ -14,47 +14,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:text="Email: " />
-
-    <TextView
-        android:text="User ID: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="11dp"
-        android:id="@+id/textView4" />
-
-    <TextView
-        android:text="Your Name: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:id="@+id/textView6"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/tvNameProfile"
         android:layout_below="@+id/textView6"
         android:layout_toRightOf="@+id/textView2"
         android:layout_toEndOf="@+id/textView2"
         android:layout_marginTop="14dp" />
-
-    <TextView
-        android:text="Your Location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:id="@+id/textView7"
-        android:layout_below="@+id/tvNameProfile"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,16 +29,6 @@
         android:layout_marginTop="15dp"
         android:id="@+id/tvLocationProfile" />
 
-    <Button
-        android:text="Update Profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/updateButton"
-        android:layout_below="@+id/tvLocationProfile"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="103dp"
-        android:onClick="gotoProfileSettings" />
-
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
@@ -82,28 +36,82 @@
         android:id="@+id/tvUserID"
         android:layout_above="@+id/textView6"
         android:layout_toRightOf="@+id/textView7"
-        android:layout_toEndOf="@+id/textView7" />
+        android:layout_alignRight="@+id/tvNameProfile"
+        android:layout_alignEnd="@+id/tvNameProfile"
+        android:layout_alignParentTop="true" />
 
     <TextView
-        android:text="TextView"
+        android:text="Your Name: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvUserEmail"
+        android:id="@+id/textView6"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/tvUserID"
-        android:layout_alignStart="@+id/tvUserID" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Update Profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateButton"
+        android:layout_marginTop="55dp"
+        android:onClick="gotoProfileSettings"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/tvLocationProfile"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:text="Post New Job"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/updateButton"
+        android:id="@+id/button5"
+        android:onClick="gotoPostNewJob"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/updateButton"
         android:layout_alignStart="@+id/updateButton"
-        android:layout_marginTop="43dp"
-        android:id="@+id/button5"
-        android:layout_alignRight="@+id/updateButton"
-        android:layout_alignEnd="@+id/updateButton"
-        android:onClick="gotoPostNewJob" />
+        android:layout_marginBottom="22dp" />
+
+    <TextView
+        android:text="Your Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvUserEmail"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/textView2"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:text="Email: "
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/tvNameProfile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="User ID: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/tvUserEmail"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

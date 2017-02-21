@@ -79,6 +79,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/button3"
         android:onClick="postJob"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
         android:layout_below="@+id/etPostJobDescription"
         android:layout_alignLeft="@+id/etPostJobDescription"
         android:layout_alignStart="@+id/etPostJobDescription"
