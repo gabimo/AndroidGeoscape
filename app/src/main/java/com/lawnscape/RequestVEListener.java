@@ -1,5 +1,7 @@
 package com.lawnscape;
 
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -30,6 +32,8 @@ public class RequestVEListener implements ValueEventListener {
                 for(DataSnapshot requesterid : jobNode.child("requesters").getChildren()){
                     if( requesterid.getValue().toString().equals(currentuserid)){
                         isDuplicate = true;
+                        //remove on reclick
+                        requesterid.getRef().removeValue();
                     }
                 }
                 if(!isDuplicate){

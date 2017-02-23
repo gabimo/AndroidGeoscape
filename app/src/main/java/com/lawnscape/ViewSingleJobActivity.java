@@ -192,6 +192,8 @@ public class ViewSingleJobActivity extends Activity {
                     for (DataSnapshot node : dataSnapshot.getChildren()) {
                         if (node.getValue().toString().equals(jobPost.getPostid())) {
                             isDuplicate = true;
+                            //Remove on reclick
+                            node.getRef().removeValue();
                         }
                     }
                     if (!isDuplicate) {
