@@ -63,9 +63,14 @@ public class ViewSingleJobActivity extends Activity {
                     //user is logged in
                     currentUser = FirebaseAuth.getInstance().getCurrentUser();
                     Button deleteButton = (Button) findViewById(R.id.buttonDeletePost);
+                    Button requestButton = (Button) findViewById(R.id.buttonRequestJob);
+                    Button saveButton = (Button) findViewById(R.id.buttonSaveJob);
                     if(jobPost.getUserid().toString().equals(currentUser.getUid().toString())) {
                         deleteButton.setVisibility(View.VISIBLE);
+                        requestButton.setVisibility(View.INVISIBLE);
+                        saveButton.setVisibility(View.INVISIBLE);
                     }
+
                 }
             }
         };
@@ -178,22 +183,59 @@ public class ViewSingleJobActivity extends Activity {
         /* before saving a job, check to make sure it isnt already saved to aoid duplication */
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs");
-        mySavedJobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean isDuplicate = false;
-                for(DataSnapshot node : dataSnapshot.getChildren()){
-                    if ( node.getValue().toString().equals(jobPost.getPostid())){
-                        isDuplicate = true;
+        //Dont save your own jobs
+        if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
+            mySavedJobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    boolean isDuplicate = false;
+                    for (DataSnapshot node : dataSnapshot.getChildren()) {
+                        if (node.getValue().toString().equals(jobPost.getPostid())) {
+                            isDuplicate = true;
+                        }
+                    }
+                    if (!isDuplicate) {
+                        dataSnapshot.getRef().push().setValue(jobPost.getPostid());
                     }
                 }
-                if(!isDuplicate){
-                    dataSnapshot.getRef().push().setValue(jobPost.getPostid());
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
                 }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+            });
+        }
+    }
+    public void requestJob(View v){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myJobRef = database.getReference("Jobs");
+        //Dont let a user request their own job
+        if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
+            myJobRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot jobNode : dataSnapshot.getChildren()) {
+
+                        String keyVal = jobNode.child("postid").getValue().toString();
+                        String postKeyVal = jobPost.getPostid();
+                        //find the right job
+                        if (keyVal.equals(postKeyVal)) {
+                            boolean isDuplicate = false;
+                            for(DataSnapshot r : jobNode.child("requesters").getChildren()){
+                                if( r.getValue().toString().equals(currentUser.getUid())){
+                                    isDuplicate = true;
+                                }
+                            }
+                            if(!isDuplicate){
+                                jobNode.child("requesters").getRef().push().setValue(currentUser.getUid().toString());
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
     }
 }
