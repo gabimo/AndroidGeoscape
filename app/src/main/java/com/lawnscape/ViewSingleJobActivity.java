@@ -209,33 +209,9 @@ public class ViewSingleJobActivity extends Activity {
         DatabaseReference myJobRef = database.getReference("Jobs");
         //Dont let a user request their own job
         if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
-            myJobRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    for (DataSnapshot jobNode : dataSnapshot.getChildren()) {
-
-                        String keyVal = jobNode.child("postid").getValue().toString();
-                        String postKeyVal = jobPost.getPostid();
-                        //find the right job
-                        if (keyVal.equals(postKeyVal)) {
-                            boolean isDuplicate = false;
-                            for(DataSnapshot r : jobNode.child("requesters").getChildren()){
-                                if( r.getValue().toString().equals(currentUser.getUid())){
-                                    isDuplicate = true;
-                                }
-                            }
-                            if(!isDuplicate){
-                                jobNode.child("requesters").getRef().push().setValue(currentUser.getUid().toString());
-                            }
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+            myJobRef.addListenerForSingleValueEvent(
+                    new RequestVEListener(jobPost.getPostid(),currentUser.getUid().toString())
+            );
         }
     }
 }
