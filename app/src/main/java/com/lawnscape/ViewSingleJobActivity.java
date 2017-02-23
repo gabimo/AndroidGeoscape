@@ -115,7 +115,7 @@ public class ViewSingleJobActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewPostsMenu3:
-                startActivity(new Intent(ViewSingleJobActivity.this, ViewAllJobsActivity.class));
+                startActivity(new Intent(ViewSingleJobActivity.this, JobListViewActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenu4:

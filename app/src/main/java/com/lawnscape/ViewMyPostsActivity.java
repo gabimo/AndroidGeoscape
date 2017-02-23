@@ -153,7 +153,7 @@ public class ViewMyPostsActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewPostsMenu3:
-                startActivity(new Intent(ViewMyPostsActivity.this, ViewAllJobsActivity.class));
+                startActivity(new Intent(ViewMyPostsActivity.this, JobListViewActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenu4:

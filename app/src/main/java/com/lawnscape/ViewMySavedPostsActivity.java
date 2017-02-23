@@ -65,26 +65,6 @@ public class ViewMySavedPostsActivity extends Activity {
                     jobsAdaptor = new JobPostListAdapter(ViewMySavedPostsActivity.this,myJobList);
                     myPostsList.setAdapter(jobsAdaptor);
 
-                    // set this up to use after we find the personal job IDs
-                    // The reason this is declared is so it does not appear visually as a nested listener
-                    // Since this will actually be the place to handle output to the screen
-                    // Until i figure out why I cant write to the higher scoped arraylist myPostDetailList and jobList
-                    final ValueEventListener listenForJobPosts = new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            //Add all the jobs to the array list
-                            String title = (String) dataSnapshot.child("title").getValue();
-                            String location = (String) dataSnapshot.child("location").getValue();
-                            String description = (String) dataSnapshot.child("description").getValue();
-                            String userid = (String) dataSnapshot.child("userid").getValue();
-                            String postid = (String) dataSnapshot.getKey().toString();
-                            myJobList.add(new Job(title, location,description,userid,postid));
-                            //Tell the listview adaptor to update the listview based on the ArrayList updates
-                            jobsAdaptor.notifyDataSetChanged();
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError firebaseError) { }
-                    };
                     myUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -94,7 +74,8 @@ public class ViewMySavedPostsActivity extends Activity {
                             for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                                 String job = messageSnapshot.getValue().toString();
                                 //For each job posted by the user call the custom listener
-                                myJobsRef.child(job).addListenerForSingleValueEvent(listenForJobPosts);
+                                myJobsRef.child(job).addListenerForSingleValueEvent(
+                                        new JobListVEListener(ViewMySavedPostsActivity.this, myJobList, jobsAdaptor));
                             }
                         }
                         @Override
@@ -154,7 +135,7 @@ public class ViewMySavedPostsActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewPostsMenu3:
-                startActivity(new Intent(ViewMySavedPostsActivity.this, ViewAllJobsActivity.class));
+                startActivity(new Intent(ViewMySavedPostsActivity.this, JobListViewActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenu4:

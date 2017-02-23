@@ -124,7 +124,7 @@ public class ProfileActivity extends Activity {
                 finish();
                 return true;
             case R.id.profileMenu3:
-                startActivity(new Intent(ProfileActivity.this, ViewAllJobsActivity.class));
+                startActivity(new Intent(ProfileActivity.this, JobListViewActivity.class));
                 finish();
                 return true;
             case R.id.profileMenu4:
