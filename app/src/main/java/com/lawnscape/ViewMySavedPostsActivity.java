@@ -1,8 +1,8 @@
 package com.lawnscape;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ViewMyPostsActivity extends Activity {
+public class ViewMySavedPostsActivity extends Activity {
+
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -34,7 +35,7 @@ public class ViewMyPostsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_my_posts);
+        setContentView(R.layout.activity_view_my_saved_posts);
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
@@ -46,13 +47,13 @@ public class ViewMyPostsActivity extends Activity {
                 if (user == null) {
                     // user auth state is changed - user is not logged in
                     // launch login activity
-                    startActivity(new Intent(ViewMyPostsActivity.this, LoginActivity.class));
+                    startActivity(new Intent(ViewMySavedPostsActivity.this, LoginActivity.class));
                     finish();
                 }else{
                     //user is logged in
                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
                     // two ways to do this, only use one
-                    DatabaseReference myUserRef = database.getReference("Users").child(user.getUid().toString()).child("jobs");
+                    DatabaseReference myUserRef = database.getReference("Users").child(user.getUid().toString()).child("savedjobs");
                     // DatabaseReference myUserRef = database.getReference("Users/"+user.getUid().toString()+"/jobs");
 
                     //Gonna hold all the jobs, must init for adaptor
@@ -60,8 +61,8 @@ public class ViewMyPostsActivity extends Activity {
                     //Put the jobs into the adaptor
                     //Find the listview widget and set up a connection to our ArrayList
                     // The adaptor handles pushing each object in the ArrayList to the listview
-                    myPostsList = (ListView) findViewById(R.id.lvMyPostsList);
-                    jobsAdaptor = new JobPostListAdapter(ViewMyPostsActivity.this,myJobList);
+                    myPostsList = (ListView) findViewById(R.id.lvMySavedPostsList);
+                    jobsAdaptor = new JobPostListAdapter(ViewMySavedPostsActivity.this,myJobList);
                     myPostsList.setAdapter(jobsAdaptor);
 
                     // set this up to use after we find the personal job IDs
@@ -106,7 +107,7 @@ public class ViewMyPostsActivity extends Activity {
                         public void onItemClick(AdapterView<?> parent, View view, int position,
                                                 long id) {
                             Job selectedJob = (Job) jobsAdaptor.getItem(position);
-                            Intent singleJobViewIntent = new Intent(ViewMyPostsActivity.this, ViewSingleJobActivity.class);
+                            Intent singleJobViewIntent = new Intent(ViewMySavedPostsActivity.this, ViewSingleJobActivity.class);
                             singleJobViewIntent.putExtra("Job",selectedJob);
                             startActivity(singleJobViewIntent);
                         }
@@ -145,19 +146,19 @@ public class ViewMyPostsActivity extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.viewPostsMenu1:
-                startActivity( new Intent( ViewMyPostsActivity.this, ProfileActivity.class));
+                startActivity( new Intent( ViewMySavedPostsActivity.this, ProfileActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenu2:
-                startActivity(new Intent(ViewMyPostsActivity.this, ViewMyPostsActivity.class));
+                startActivity(new Intent(ViewMySavedPostsActivity.this, ViewMyPostsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenu3:
-                startActivity(new Intent(ViewMyPostsActivity.this, ViewAllJobsActivity.class));
+                startActivity(new Intent(ViewMySavedPostsActivity.this, ViewAllJobsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenu4:
-                startActivity(new Intent(ViewMyPostsActivity.this, ViewMySavedPostsActivity.class));
+                startActivity(new Intent(ViewMySavedPostsActivity.this, ViewMySavedPostsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenu5:
@@ -170,7 +171,7 @@ public class ViewMyPostsActivity extends Activity {
     }
     // this will be for later maybe, feel free to remove
     public void gotoPostNewJob(View v){
-        startActivity( new Intent( ViewMyPostsActivity.this, PostJobActivity.class));
+        startActivity( new Intent( ViewMySavedPostsActivity.this, PostJobActivity.class));
         finish();
     }
 }

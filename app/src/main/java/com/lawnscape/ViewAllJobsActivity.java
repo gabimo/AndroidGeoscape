@@ -11,10 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -149,6 +146,10 @@ public class ViewAllJobsActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewPostsMenu4:
+                startActivity(new Intent(ViewAllJobsActivity.this, ViewMySavedPostsActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenu5:
                 auth.signOut();
                 finish();
                 return true;

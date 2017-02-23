@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,7 +21,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class ViewSingleJobActivity extends Activity {
@@ -121,6 +119,10 @@ public class ViewSingleJobActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewPostsMenu4:
+                startActivity(new Intent(ViewSingleJobActivity.this, ViewMySavedPostsActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenu5:
                 auth.signOut();
                 finish();
                 return true;
@@ -143,40 +145,13 @@ public class ViewSingleJobActivity extends Activity {
         you have to instead delete it like I have implemented below with listeners
         */
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //remove the job from the list of all jobs
         DatabaseReference myJobRef = database.getReference("Jobs");
+        myJobRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
         //remove the job from the users job list
         DatabaseReference myUserJobsRef = database.getReference("Users").child(currentUser.getUid()).child("jobs");
-        //remove the job from the list of all jobs
-        myJobRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot jobNode: dataSnapshot.getChildren()){
-                    String keyVal = jobNode.child("postid").getValue().toString();
-                    String postKeyVal = jobPost.getPostid();
-                    if(keyVal.equals(postKeyVal)){
-                        jobNode.getRef().removeValue();
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        myUserJobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot jobNode: dataSnapshot.getChildren()){
-                    String keyVal = jobNode.getValue().toString();
-                    String postKeyVal = jobPost.getPostid();
-                    if(keyVal.equals(postKeyVal)){
-                        jobNode.getRef().removeValue();
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        myUserJobsRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid()));
+        finish();
     }
 
     public void saveJob(View v){
@@ -185,34 +160,17 @@ public class ViewSingleJobActivity extends Activity {
         DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs");
         //Dont save your own jobs
         if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
-            mySavedJobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    boolean isDuplicate = false;
-                    for (DataSnapshot node : dataSnapshot.getChildren()) {
-                        if (node.getValue().toString().equals(jobPost.getPostid())) {
-                            isDuplicate = true;
-                            //Remove on reclick
-                            node.getRef().removeValue();
-                        }
-                    }
-                    if (!isDuplicate) {
-                        dataSnapshot.getRef().push().setValue(jobPost.getPostid());
-                    }
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+            mySavedJobsRef.addListenerForSingleValueEvent(
+                    new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
         }
     }
     public void requestJob(View v){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myJobRef = database.getReference("Jobs");
+        DatabaseReference myJobRef = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
         //Dont let a user request their own job
         if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
             myJobRef.addListenerForSingleValueEvent(
-                    new RequestVEListener(jobPost.getPostid(),currentUser.getUid().toString())
+                    new ToggleAddIDVEListener(ViewSingleJobActivity.this,currentUser.getUid().toString())
             );
         }
     }

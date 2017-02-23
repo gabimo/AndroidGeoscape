@@ -10,6 +10,9 @@
         android:title="View All Jobs">
     </item>
     <item android:id="@+id/viewPostsMenu4"
+        android:title="My Saved Posts" >
+    </item>
+    <item android:id="@+id/viewPostsMenu5"
         android:title="Sign Out" >
     </item>
 </menu>

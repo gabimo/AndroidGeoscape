@@ -128,6 +128,10 @@ public class ProfileActivity extends Activity {
                 finish();
                 return true;
             case R.id.profileMenu4:
+                startActivity(new Intent(ProfileActivity.this, ViewMySavedPostsActivity.class));
+                finish();
+                return true;
+            case R.id.profileMenu5:
                 auth.signOut();
                 return true;
             default:
