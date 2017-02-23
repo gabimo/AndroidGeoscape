@@ -173,4 +173,27 @@ public class ViewSingleJobActivity extends Activity {
             }
         });
     }
+
+    public void saveJob(View v){
+        /* before saving a job, check to make sure it isnt already saved to aoid duplication */
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs");
+        mySavedJobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean isDuplicate = false;
+                for(DataSnapshot node : dataSnapshot.getChildren()){
+                    if ( node.getValue().toString().equals(jobPost.getPostid())){
+                        isDuplicate = true;
+                    }
+                }
+                if(!isDuplicate){
+                    dataSnapshot.getRef().push().setValue(jobPost.getPostid());
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
 }

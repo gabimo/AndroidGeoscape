@@ -49,7 +49,8 @@
         android:text="Request Job"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button6" />
+        android:id="@+id/button6"
+        android:onClick="requestJob" />
 
     <Button
         android:text="Save Job"
@@ -57,7 +58,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/button7"
         android:elevation="0dp"
-        android:gravity="bottom|center_horizontal" />
+        android:gravity="bottom|center_horizontal"
+        android:onClick="saveJob" />
 
     <Button
         android:text="Delete This Post"
