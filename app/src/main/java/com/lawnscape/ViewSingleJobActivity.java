@@ -7,7 +7,6 @@ For an example please see ViewMyPostsActivity
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,8 +18,12 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class ViewSingleJobActivity extends Activity {
 
@@ -35,7 +38,6 @@ public class ViewSingleJobActivity extends Activity {
         setContentView(R.layout.activity_view_single_job);
         Intent jobIntent = getIntent();
         jobPost = jobIntent.getParcelableExtra("Job");
-        Toast.makeText(this,jobPost.getTitle(),Toast.LENGTH_SHORT).show();
 
         TextView tvTitle = (TextView) findViewById(R.id.tvSingleJobTitle);
         TextView tvLoc = (TextView) findViewById(R.id.tvSingleJobLocation);
@@ -73,17 +75,13 @@ public class ViewSingleJobActivity extends Activity {
     @Override
     public void onStart() {
         super.onStart();
-
         // Boiler Plate Authentication
         auth.addAuthStateListener(authListener);
-
-
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
         // Boiler Plate Authentication
         if (authListener != null) {
             auth.removeAuthStateListener(authListener);
@@ -132,11 +130,47 @@ public class ViewSingleJobActivity extends Activity {
     }
 
     public void deletePost(View v){
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myJobsRef = database.getReference("Jobs");
-        if(jobPost.getUserid().equals(currentUser.getUid())) {
-            myJobsRef.child(jobPost.getPostid()).removeValue();
-            finish();
-        }
+        /*
+        Firebase does this annoying thing where it wants you to push data to the DB
+        and you get a truly unique post ID like Kdksk12sskw-2k_sk3mwk__jdk3k
+        but you cant just get the post and delete it like this
+        FirebaseDatabase.getInstance().getReference("Kdksk12sskw-2k_sk3mwk__jdk3k").removeValue();
+        you have to instead delete it like I have implemented below with listeners
+        */
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myJobRef = database.getReference("Jobs");
+        //remove the job from the users job list
+        DatabaseReference myUserJobsRef = database.getReference("Users").child(currentUser.getUid()).child("jobs");
+        //remove the job from the list of all jobs
+        myJobRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot jobNode: dataSnapshot.getChildren()){
+                    String keyVal = jobNode.child("postid").getValue().toString();
+                    String postKeyVal = jobPost.getPostid();
+                    if(keyVal.equals(postKeyVal)){
+                        jobNode.getRef().removeValue();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        myUserJobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot jobNode: dataSnapshot.getChildren()){
+                    String keyVal = jobNode.getValue().toString();
+                    String postKeyVal = jobPost.getPostid();
+                    if(keyVal.equals(postKeyVal)){
+                        jobNode.getRef().removeValue();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }

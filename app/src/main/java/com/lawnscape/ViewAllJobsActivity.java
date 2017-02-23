@@ -2,7 +2,7 @@ package com.lawnscape;
 /*
 This just pulls the whole Jobs table, contained are many userids
 Jobs are parsed in to JSON and parsed out to a custom local POJO Job
- */
+*/
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -98,10 +98,10 @@ public class ViewAllJobsActivity extends Activity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position,
                                                 long id) {
-                        Job selectedJob = (Job) jobsAdaptor.getItem(position);
-                        Intent singleJobViewIntent = new Intent(ViewAllJobsActivity.this, ViewSingleJobActivity.class);
-                        singleJobViewIntent.putExtra("Job",selectedJob);
-                        startActivity(singleJobViewIntent);
+                            Job selectedJob = (Job) jobsAdaptor.getItem(position);
+                            Intent singleJobViewIntent = new Intent(ViewAllJobsActivity.this, ViewSingleJobActivity.class);
+                            singleJobViewIntent.putExtra("Job",selectedJob);
+                            startActivity(singleJobViewIntent);
                         }
                     });
                 }

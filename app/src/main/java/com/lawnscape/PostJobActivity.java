@@ -71,16 +71,13 @@ public class PostJobActivity extends Activity {
         DatabaseReference myUserJobRef = database.getReference("Users").child(currentUser.getUid().toString()).child("jobs").push();
 
         // Add a job
-        if(!newTitle.equals("")&&(!newLoc.equals(""))){
-            DatabaseReference newJobRef = myJobsRef.push();
-            if(newDesc.equals("")){
-                newDesc = "No description";
-            }
-            Job newJob = new Job(newTitle, newLoc, newDesc, userID);
-            newJob.setPostid(myJobsRef.getKey());
-            newJobRef.setValue(newJob);
-            myUserJobRef.setValue(newJobRef.getKey());
+        DatabaseReference newJobRef = myJobsRef.push();
+        if(newDesc.equals("")){
+            newDesc = "No description";
         }
+        Job newJob = new Job(newTitle, newLoc, newDesc, userID, newJobRef.getKey());
+        newJobRef.setValue(newJob);
+        myUserJobRef.setValue(newJobRef.getKey());
         finish();
     }
 }

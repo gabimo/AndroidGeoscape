@@ -8,37 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:74309405992:android:c36084ff298cfb8c",
-        "android_client_info": {
-          "package_name": "com.geoscape"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "74309405992-q45nre06nc003mjon1av8ih6h6i6ue8u.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD6sUR_hqcgZajSKEeGZhFVSSG52s5Btj8"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:74309405992:android:b94543594d85dbd6",
         "android_client_info": {
           "package_name": "com.lawnscape"
@@ -46,11 +15,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "74309405992-drhsepk29k8ms91bn1k395tgbn9m2ibe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lawnscape",
+            "certificate_hash": "209b3c5cf74c29d04bfe4f554c83bd7376e82260"
+          }
+        },
+        {
+          "client_id": "74309405992-a3q81av0smkf614i650lhajab08frvr4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lawnscape",
+            "certificate_hash": "cd073091e2f53513dd19a8dd614ae4f40de1bc1c"
+          }
+        },
+        {
           "client_id": "74309405992-benflnghdqrscn8fd2ft4mlg9igesq2c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.lawnscape",
-            "certificate_hash": "5F1D59853A268EF68055FEE4973180594E07325A"
+            "certificate_hash": "5f1d59853a268ef68055fee4973180594e07325a"
           }
         },
         {
