@@ -51,7 +51,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonRequestJob"
         android:onClick="requestJob" />
-
     <Button
         android:text="Save Job"
         android:layout_width="match_parent"
@@ -60,6 +59,13 @@
         android:elevation="0dp"
         android:gravity="bottom|center_horizontal"
         android:onClick="saveJob" />
+
+    <Button
+        android:text="Chat with poster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonChatWithPoster"
+        android:onClick="openChat"/>
 
     <Button
         android:text="Delete This Post"

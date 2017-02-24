@@ -1,6 +1,9 @@
 package com.lawnscape;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -57,12 +60,7 @@ public class LoginActivity extends Activity {
     /************** Switch to SIGN UP activity ****************/
     public void signup(View v){
         //switch to sign up activity
-        startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-    }
-    public void signup(){
-        //switch to sign up activity
-        //overload for programmatic access
-        startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+        setContentView(R.layout.activity_sign_up);
     }
     /******************* Menu Handling *******************/
     //make the menu show up
@@ -77,8 +75,7 @@ public class LoginActivity extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.loginMenu1:
-                startActivity(new Intent(this,SignUpActivity.class));
-                finish();
+                setContentView(R.layout.activity_sign_up);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -111,4 +108,33 @@ public class LoginActivity extends Activity {
                     }
                 });
     }
+    public void createAccount(View v) {
+        EditText emailBox = (EditText) findViewById(R.id.etSignUpEmail);
+        EditText passBox = (EditText) findViewById(R.id.etSignUpEmail);
+
+        String email = emailBox.getText().toString();
+        String password = passBox.getText().toString();
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(Task<AuthResult> task) {
+                        // Log.d("EVENT", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Could Not Create Account",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Account Created Successfully",
+                                    Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                            finish();
+                        }
+                    }
+                });
+    }
+    public void backToLogin(View v){
+        //switch to login activity
+        setContentView(R.layout.activity_login);
+    }
+
 }

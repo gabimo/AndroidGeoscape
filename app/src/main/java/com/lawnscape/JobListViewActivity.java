@@ -2,13 +2,13 @@ package com.lawnscape;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,17 +26,22 @@ public class JobListViewActivity extends Activity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     ArrayList<Job> allPostDetailsList;
-    JobPostListAdapter jobsAdaptor;
+    JobListAdapter jobsAdapter;
     DatabaseReference myListRef;
 
     ListView allPostsList;
+
+    Button savedJobsButton;
+    Button allJobsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_list_view);
+
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
@@ -48,33 +53,35 @@ public class JobListViewActivity extends Activity {
                 if (user == null) {
                     // user auth state is changed - user is not logged in
                     // launch login activity
-                    startActivity(new Intent(JobListViewActivity.this, LoginActivity.class));
-                    finish();
+                    //startActivity(new Intent(JobListViewActivity.this, LoginActivity.class));
+                    //finish();
+                    System.out.println("LOG IN ERROR ");
                 }else{
                     //user is logged in
                     currentUser = user;
-                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    // two ways to do this, only use one
-                    myListRef = database.getReference("Jobs");
-                    // DatabaseReference myUserRef = database.getReference("Users/"+user.getUid().toString()+"/jobs");
-
+                    allJobsButton = (Button) findViewById(R.id.buttonViewAllJobs);
+                    savedJobsButton = (Button) findViewById(R.id.buttonViewSavedJobs);
                     //Gonna hold all the jobs, must init for adaptor
                     allPostDetailsList = new ArrayList<Job>();
                     //Put the jobs into the adaptor
                     //Find the listview widget and set up a connection to our ArrayList
-                    // The adaptor handles pushing each object in the ArrayList to the listview
                     allPostsList = (ListView) findViewById(R.id.lvJobs);
-                    jobsAdaptor = new JobPostListAdapter(JobListViewActivity.this, allPostDetailsList);
-                    allPostsList.setAdapter(jobsAdaptor);
-
-                    myListRef.addListenerForSingleValueEvent(
-                            new JobListVEListener(JobListViewActivity.this, allPostDetailsList, jobsAdaptor));
-
+                    jobsAdapter = new JobListAdapter(JobListViewActivity.this, allPostDetailsList);
+                    // The adaptor handles pushing each object in the ArrayList to the listview
+                    // but you MUST call jobsAdaptor.notifyDataSetChanged(); to update the listview
+                    allPostsList.setAdapter(jobsAdapter);
+                    if(getIntent().getExtras().get("View").toString().equals("saved")) {
+                        viewSavedJobs(savedJobsButton);
+                    }else {
+                        viewAllJobs(allJobsButton);
+                    }
+                    //This handles clicks on individual job items from the list
+                    // and bring you to a job specific page with details
                     allPostsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position,
                                                 long id) {
-                            Job selectedJob = (Job) jobsAdaptor.getItem(position);
+                            Job selectedJob = (Job) jobsAdapter.getItem(position);
                             Intent singleJobViewIntent = new Intent(JobListViewActivity.this, ViewSingleJobActivity.class);
                             singleJobViewIntent.putExtra("Job",selectedJob);
                             startActivity(singleJobViewIntent);
@@ -112,25 +119,29 @@ public class JobListViewActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.viewPostsMenu1:
+            case R.id.viewPostsMenuMyProfile:
                 startActivity( new Intent( JobListViewActivity.this, ProfileActivity.class));
                 finish();
                 return true;
-            case R.id.viewPostsMenu2:
+            case R.id.viewPostsMenuMyJobs:
                 startActivity(new Intent(JobListViewActivity.this, ViewMyPostsActivity.class));
                 finish();
                 return true;
-            case R.id.viewPostsMenu3:
-                startActivity(new Intent(JobListViewActivity.this, JobListViewActivity.class));
-                finish();
+            case R.id.viewPostsMenuAllJobs:
+                if(getIntent().getExtras().get("View").toString().equals("saved")) {
+                    getIntent().putExtra("View", "all");
+                }
+                recreate();
                 return true;
-            case R.id.viewPostsMenu4:
-                startActivity(new Intent(JobListViewActivity.this, ViewMySavedPostsActivity.class));
-                finish();
-                return true;
-            case R.id.viewPostsMenu5:
-                auth.signOut();
-                finish();
+            case R.id.viewPostsMenuSavedPosts:
+                if(getIntent().getExtras().get("View").toString().equals("all")) {
+                    getIntent().putExtra("View", "saved");
+                }
+                recreate();
+            case R.id.viewPostsMenuSignOut:
+                //auth.signOut();
+                System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+                //finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -142,39 +153,38 @@ public class JobListViewActivity extends Activity {
         finish();
     }
     public void viewAllJobs(View v){
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         myListRef = database.getReference("Jobs");
         allPostDetailsList.clear();
-        jobsAdaptor.notifyDataSetChanged();
+        jobsAdapter.notifyDataSetChanged();
         myListRef.addListenerForSingleValueEvent(
-                new JobListVEListener(JobListViewActivity.this, allPostDetailsList, jobsAdaptor));
-
+                new JobListVEListener(JobListViewActivity.this, allPostDetailsList, jobsAdapter));
     }
     public void viewSavedJobs(View v){
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final ArrayList<String> jobsToFetch = new ArrayList<String>();
         myListRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs").getRef();
-
+        System.out.println("1111");
         allPostDetailsList.clear();
-        jobsAdaptor.notifyDataSetChanged();
+        jobsAdapter.notifyDataSetChanged();
         myListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Find each job made by the user and add it to the listview
-                // This is done with the ValueEventListener object above
+                //Find each job made saved by the user
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                     //make a list of the user's saved jobs
                     jobsToFetch.add(messageSnapshot.getValue().toString());
                 }
-                //fetch all saved jobs
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // idk what we would do
             }
         });
+        // now show the list of jobs that the user saved
         DatabaseReference myJobsRef = database.getReference("Jobs");
         myJobsRef.addListenerForSingleValueEvent(
-                new JobListVEListener(JobListViewActivity.this, allPostDetailsList, jobsAdaptor, jobsToFetch));
+                new JobListVEListener(JobListViewActivity.this, allPostDetailsList, jobsAdapter, jobsToFetch));
+    }
+    public void viewRequestedJobs(View v){
+
     }
 }

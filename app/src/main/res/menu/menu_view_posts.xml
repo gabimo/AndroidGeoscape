@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/viewPostsMenu1"
+    <item android:id="@+id/viewPostsMenuMyProfile"
         android:title="My Profile">
     </item>
-    <item android:id="@+id/viewPostsMenu2"
+    <item android:id="@+id/viewPostsMenuMyJobs"
         android:title="My Job Posts">
     </item>
-    <item android:id="@+id/viewPostsMenu3"
+    <item android:id="@+id/viewPostsMenuAllJobs"
         android:title="View All Jobs">
     </item>
-    <item android:id="@+id/viewPostsMenu4"
+    <item android:id="@+id/viewPostsMenuSavedPosts"
         android:title="My Saved Posts" >
     </item>
-    <item android:id="@+id/viewPostsMenu5"
+    <item android:id="@+id/viewPostsMenuSignOut"
         android:title="Sign Out" >
     </item>
 </menu>

@@ -21,10 +21,19 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ToggleAddIDVEListener implements ValueEventListener {
     String id;
+    String key;
     Context currentActivity;
 
     public ToggleAddIDVEListener(Context activityContext, String desiredID){
         id = desiredID;
+        currentActivity = activityContext;
+        key = "NOKEY";
+    }
+
+    public ToggleAddIDVEListener(Context activityContext, String keyVal, String desiredID){
+        currentActivity = activityContext;
+        id = desiredID;
+        key = keyVal;
     }
 
     @Override
@@ -38,7 +47,11 @@ public class ToggleAddIDVEListener implements ValueEventListener {
             }
         }
         if (!isDuplicate) {
-            dataSnapshot.getRef().push().setValue(id);
+            if(key.equals("NOKEY")) {
+                dataSnapshot.getRef().push().setValue(id);
+            }else{
+                dataSnapshot.child(key).getRef().setValue(id);
+            }
         }
     }
     @Override

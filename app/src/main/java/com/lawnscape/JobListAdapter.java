@@ -11,13 +11,18 @@ import java.util.ArrayList;
 
 /**
  * Created by Mellis on 2/19/2017.
+ *
+ * Simple class, specifically made for the job object
+ *
+ *  Interacts well with JobListVEListener
+ *                  a class that implements the firebase interace ValueEventListener
  */
 
-public class JobPostListAdapter extends BaseAdapter {
+public class JobListAdapter extends BaseAdapter {
     private ArrayList<Job> jobPostDetails;
     private LayoutInflater layoutInflater;
 
-    public JobPostListAdapter(Context aContext, ArrayList<Job> listData) {
+    public JobListAdapter(Context aContext, ArrayList<Job> listData) {
         this.jobPostDetails = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }

@@ -26,7 +26,7 @@ public class ViewMyPostsActivity extends Activity {
     private FirebaseAuth auth;
 
     ArrayList<Job> myJobList;
-    JobPostListAdapter jobsAdaptor;
+    JobListAdapter jobsAdaptor;
 
     ListView myPostsList;
 
@@ -61,7 +61,7 @@ public class ViewMyPostsActivity extends Activity {
                     //Find the listview widget and set up a connection to our ArrayList
                     // The adaptor handles pushing each object in the ArrayList to the listview
                     myPostsList = (ListView) findViewById(R.id.lvMyPostsList);
-                    jobsAdaptor = new JobPostListAdapter(ViewMyPostsActivity.this,myJobList);
+                    jobsAdaptor = new JobListAdapter(ViewMyPostsActivity.this,myJobList);
                     myPostsList.setAdapter(jobsAdaptor);
 
                     // set this up to use after we find the personal job IDs
@@ -144,23 +144,26 @@ public class ViewMyPostsActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.viewPostsMenu1:
+            case R.id.viewPostsMenuMyProfile:
                 startActivity( new Intent( ViewMyPostsActivity.this, ProfileActivity.class));
                 finish();
                 return true;
-            case R.id.viewPostsMenu2:
+            case R.id.viewPostsMenuMyJobs:
                 startActivity(new Intent(ViewMyPostsActivity.this, ViewMyPostsActivity.class));
                 finish();
                 return true;
-            case R.id.viewPostsMenu3:
-                startActivity(new Intent(ViewMyPostsActivity.this, JobListViewActivity.class));
+            case R.id.viewPostsMenuAllJobs:
+                Intent allJobsViewIntent = new Intent(ViewMyPostsActivity.this, JobListViewActivity.class);
+                allJobsViewIntent.putExtra("View", "all");
+                startActivity(allJobsViewIntent);
                 finish();
                 return true;
-            case R.id.viewPostsMenu4:
-                startActivity(new Intent(ViewMyPostsActivity.this, ViewMySavedPostsActivity.class));
+            case R.id.viewPostsMenuSavedPosts:
+                Intent savedJobsViewIntent = new Intent(ViewMyPostsActivity.this, JobListViewActivity.class);
+                savedJobsViewIntent.putExtra("View", "saved");
+                startActivity(savedJobsViewIntent);
                 finish();
-                return true;
-            case R.id.viewPostsMenu5:
+            case R.id.viewPostsMenuSignOut:
                 auth.signOut();
                 finish();
                 return true;

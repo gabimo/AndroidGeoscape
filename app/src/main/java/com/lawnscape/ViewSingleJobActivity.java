@@ -99,30 +99,25 @@ public class ViewSingleJobActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_view_posts, menu);
+        inflater.inflate(R.menu.menu_single_post_view, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.viewPostsMenu1:
+            case R.id.viewSinglePostMenuMyProfile:
                 startActivity( new Intent( ViewSingleJobActivity.this, ProfileActivity.class));
                 finish();
                 return true;
-            case R.id.viewPostsMenu2:
+            case R.id.viewSinglePostMenuMyJobs:
                 startActivity(new Intent(ViewSingleJobActivity.this, ViewMyPostsActivity.class));
                 finish();
                 return true;
-            case R.id.viewPostsMenu3:
-                startActivity(new Intent(ViewSingleJobActivity.this, JobListViewActivity.class));
+            case R.id.viewSinglePostMenuBackToJobsList:
                 finish();
                 return true;
-            case R.id.viewPostsMenu4:
-                startActivity(new Intent(ViewSingleJobActivity.this, ViewMySavedPostsActivity.class));
-                finish();
-                return true;
-            case R.id.viewPostsMenu5:
+            case R.id.viewSinglePostMenuSignOut:
                 auth.signOut();
                 finish();
                 return true;
@@ -138,17 +133,17 @@ public class ViewSingleJobActivity extends Activity {
 
     public void deletePost(View v){
         /*
-        Firebase does this annoying thing where it wants you to push data to the DB
-        and you get a truly unique post ID like Kdksk12sskw-2k_sk3mwk__jdk3k
-        but you cant just get the post and delete it like this
-        FirebaseDatabase.getInstance().getReference("Kdksk12sskw-2k_sk3mwk__jdk3k").removeValue();
+        Firebase does this thing where it wants you to push data to the DB
+        and you get a unique post ID like Kdksk12sskw-2k_sk3mwk__jdk3k
+        but you cant just get the post and delete it like this next line of this comment
+       -- FirebaseDatabase.getInstance().getReference("Kdksk12sskw-2k_sk3mwk__jdk3k").removeValue();
         you have to instead delete it like I have implemented below with listeners
         */
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //remove the job from the list of all jobs
+        //remove the job from the list of all jobs with a listener
         DatabaseReference myJobRef = database.getReference("Jobs");
         myJobRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
-        //remove the job from the users job list
+        //remove the job from the users job list with a listener*
         DatabaseReference myUserJobsRef = database.getReference("Users").child(currentUser.getUid()).child("jobs");
         myUserJobsRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid()));
         finish();
@@ -166,12 +161,22 @@ public class ViewSingleJobActivity extends Activity {
     }
     public void requestJob(View v){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myJobRef = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
+        DatabaseReference myJobRequestRef = database.getReference("Users").child(currentUser.getUid().toString()).child("requestedjobs");
+        DatabaseReference jobRequesterListRef = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
         //Dont let a user request their own job
         if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
-            myJobRef.addListenerForSingleValueEvent(
+            myJobRequestRef.addListenerForSingleValueEvent(
+                    new ToggleAddIDVEListener(ViewSingleJobActivity.this,currentUser.getUid().toString())
+            );
+            jobRequesterListRef.addListenerForSingleValueEvent(
                     new ToggleAddIDVEListener(ViewSingleJobActivity.this,currentUser.getUid().toString())
             );
         }
+    }
+    public void openChat(View v){
+        Intent chatIntent = new Intent(this,ChatActivity.class);
+        chatIntent.putExtra("posterid",jobPost.getUserid());
+        startActivity(chatIntent);
+        finish();
     }
 }

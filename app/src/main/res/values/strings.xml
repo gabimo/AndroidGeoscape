@@ -5,4 +5,7 @@
     <string name="title_activity_view_jobs">ViewJobs</string>
     <string name="title_activity_view_my_posts">ViewMyPosts</string>
     <string name="title_activity_view_all_jobs">ViewAllJobs</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -26,19 +26,32 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/buttonAllJobsListView"
-        android:layout_toLeftOf="@+id/button8"
-        android:layout_toStartOf="@+id/button8"
+        android:id="@+id/buttonViewAllJobs"
+        android:layout_toLeftOf="@+id/buttonViewSavedJobs"
+        android:layout_toStartOf="@+id/buttonViewSavedJobs"
         android:onClick="viewAllJobs" />
 
     <Button
         android:text="Saved Jobs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button8"
+        android:id="@+id/buttonViewSavedJobs"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:onClick="viewSavedJobs" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonViewSavedJobs"
+        android:layout_toRightOf="@+id/buttonViewSavedJobs"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/buttonRequestedJobs"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="requestedJobs" />
 
 
 </RelativeLayout>

@@ -15,7 +15,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".ProfileSettingsActivity"
@@ -27,8 +26,8 @@
             android:name=".ViewMyPostsActivity"
             android:label="@string/title_activity_view_my_posts" />
         <activity android:name=".ViewSingleJobActivity" />
-        <activity android:name=".ViewMySavedPostsActivity" />
-        <activity android:name=".JobListViewActivity"></activity>
+        <activity android:name=".JobListViewActivity" />
+        <activity android:name=".ChatActivity"></activity>
     </application>
 
 </manifest>

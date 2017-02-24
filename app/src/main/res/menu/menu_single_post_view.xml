@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/viewSinglePostMenuMyProfile"
+        android:title="My Profile">
+    </item>
+    <item android:id="@+id/viewSinglePostMenuChat"
+        android:title="Chat">
+    </item>
+    <item android:id="@+id/viewSinglePostMenuMyJobs"
+        android:title="My Job Posts">
+    </item>
+    <item android:id="@+id/viewSinglePostMenuBackToJobsList"
+        android:title="Back to Jobs">
+    </item>
+    <item android:id="@+id/viewSinglePostMenuSignOut"
+        android:title="Sign Out" >
+    </item>
+</menu>

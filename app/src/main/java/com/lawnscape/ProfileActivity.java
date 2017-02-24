@@ -124,11 +124,15 @@ public class ProfileActivity extends Activity {
                 finish();
                 return true;
             case R.id.profileMenu3:
-                startActivity(new Intent(ProfileActivity.this, JobListViewActivity.class));
+                Intent allJobsViewIntent = new Intent(ProfileActivity.this, JobListViewActivity.class);
+                allJobsViewIntent.putExtra("View", "all");
+                startActivity(allJobsViewIntent);
                 finish();
                 return true;
             case R.id.profileMenu4:
-                startActivity(new Intent(ProfileActivity.this, ViewMySavedPostsActivity.class));
+                Intent savedJobsViewIntent = new Intent(ProfileActivity.this, JobListViewActivity.class);
+                savedJobsViewIntent.putExtra("View", "saved");
+                startActivity(savedJobsViewIntent);
                 finish();
                 return true;
             case R.id.profileMenu5:
