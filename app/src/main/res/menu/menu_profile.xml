@@ -4,15 +4,18 @@
         android:title="Settings">
     </item>
     <item android:id="@+id/profileMenu2"
-        android:title="My Job Posts" >
+        android:title="My Chats" >
     </item>
     <item android:id="@+id/profileMenu3"
-        android:title="View All Jobs" >
+        android:title="My Job Posts" >
     </item>
     <item android:id="@+id/profileMenu4"
-        android:title="My Saved Posts" >
+        android:title="View All Jobs" >
     </item>
     <item android:id="@+id/profileMenu5"
+        android:title="My Saved Posts" >
+    </item>
+    <item android:id="@+id/profileMenu6"
         android:title="Sign Out" >
     </item>
 </menu>

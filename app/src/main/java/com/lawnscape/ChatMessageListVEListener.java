@@ -29,7 +29,6 @@ public class ChatMessageListVEListener implements ValueEventListener {
         //Add all the messages to the array list
         messageList.clear();
         for (DataSnapshot chatNode : dataSnapshot.getChildren()) {
-            System.out.println(chatNode.getKey() + " KEY GIVING ISSUES ?");
             String date = chatNode.child("date").getValue().toString();
             String msg = chatNode.child("textMsg").getValue().toString();
             ChatMessage newMsg = new ChatMessage();

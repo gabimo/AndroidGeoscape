@@ -10,7 +10,6 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * Created by Mellis on 2/23/2017.
  *
- *
  * Given a reference such as "Users/myUserIDxvHDJdk/savedjobs/" it will find the given ID
  * if it is in the given tree and remove it, or, if it cannot find the given ID it will add it
  *

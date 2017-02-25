@@ -68,14 +68,6 @@
         android:onClick="openChat"/>
 
     <Button
-        android:text="Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonViewRequesters"
-        android:visibility="gone"
-        android:onClick="viewRequesters"/>
-
-    <Button
         android:text="Delete This Post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

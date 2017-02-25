@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity">
+        <activity android:name=".ViewMyProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -16,9 +16,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity
-            android:name=".ProfileSettingsActivity"
-            android:label="@string/title_activity_profile_settings" />
         <activity
             android:name=".PostJobActivity"
             android:label="@string/title_activity_post_job" />

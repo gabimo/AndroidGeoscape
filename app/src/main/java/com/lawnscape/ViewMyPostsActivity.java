@@ -146,7 +146,11 @@ public class ViewMyPostsActivity extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.viewPostsMenuMyProfile:
-                startActivity( new Intent( ViewMyPostsActivity.this, ProfileActivity.class));
+                startActivity( new Intent( ViewMyPostsActivity.this, ViewMyProfileActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenuAllChats:
+                startActivity(new Intent(ViewMyPostsActivity.this, ViewAllChatsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:

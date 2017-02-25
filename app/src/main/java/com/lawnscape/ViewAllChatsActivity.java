@@ -3,6 +3,9 @@ package com.lawnscape;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -34,7 +37,7 @@ public class ViewAllChatsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_job_requests);
+        setContentView(R.layout.activity_view_all_chats);
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
         //make sure user is logged in and has an account
@@ -48,7 +51,7 @@ public class ViewAllChatsActivity extends Activity {
                     //startActivity(new Intent(JobListViewActivity.this, LoginActivity.class));
                     //finish();
                     System.out.println("LOG IN ERROR ");
-                }else{
+                } else {
                     //user is logged in
                     currentUser = user;
                     DatabaseReference myChatsRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
@@ -65,18 +68,19 @@ public class ViewAllChatsActivity extends Activity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             DatabaseReference myUserRef = database.getReference("Users");
                             System.out.println("Checking chatids");
-                            for(DataSnapshot curUserid: dataSnapshot.getChildren()){
+                            for (DataSnapshot curUserid : dataSnapshot.getChildren()) {
                                 useridList.add(curUserid.getKey().toString());
                                 System.out.println(curUserid.getKey().toString());
                             }
                             myUserRef.addValueEventListener(
                                     new UserListVEListener(ViewAllChatsActivity.this, userList, useridList, userAdapter));
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
                     });
-                    if(!useridList.isEmpty()) {
+                    if (!useridList.isEmpty()) {
                     }
 
                     //This handles clicks on individual user items from the list
@@ -87,8 +91,8 @@ public class ViewAllChatsActivity extends Activity {
                                                 long id) {
                             User selectedUser = (User) userAdapter.getItem(position);
                             Intent singleJobViewIntent = new Intent(ViewAllChatsActivity.this, ViewSingleJobActivity.class);
-                            Intent chatIntent = new Intent(ViewAllChatsActivity.this,ChatActivity.class);
-                            chatIntent.putExtra("posterid",selectedUser.getUserid());
+                            Intent chatIntent = new Intent(ViewAllChatsActivity.this, ChatActivity.class);
+                            chatIntent.putExtra("otherid", selectedUser.getUserid());
                             startActivity(chatIntent);
                             finish();
                         }
@@ -97,6 +101,7 @@ public class ViewAllChatsActivity extends Activity {
             }
         };
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -110,6 +115,53 @@ public class ViewAllChatsActivity extends Activity {
         // Boiler plate Authentication
         if (authListener != null) {
             auth.removeAuthStateListener(authListener);
+        }
+    }
+
+    /*******************
+     * Menu Handling
+     *******************/
+    //make the menu show up
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_view_posts, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.viewPostsMenuMyProfile:
+                startActivity(new Intent(ViewAllChatsActivity.this, ViewMyProfileActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenuAllChats:
+                startActivity(new Intent(ViewAllChatsActivity.this, ViewAllChatsActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenuMyJobs:
+                startActivity(new Intent(ViewAllChatsActivity.this, ViewMyPostsActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenuAllJobs:
+                Intent allJobsViewIntent = new Intent(ViewAllChatsActivity.this, JobListViewActivity.class);
+                allJobsViewIntent.putExtra("View", "all");
+                startActivity(allJobsViewIntent);
+                finish();
+                return true;
+            case R.id.viewPostsMenuSavedPosts:
+                Intent savedJobsViewIntent = new Intent(ViewAllChatsActivity.this, JobListViewActivity.class);
+                savedJobsViewIntent.putExtra("View", "saved");
+                startActivity(savedJobsViewIntent);
+                finish();
+            case R.id.viewPostsMenuSignOut:
+                auth.signOut();
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

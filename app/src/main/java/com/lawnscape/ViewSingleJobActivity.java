@@ -60,13 +60,9 @@ public class ViewSingleJobActivity extends Activity {
                     Button deleteButton = (Button) findViewById(R.id.buttonDeletePost);
                     Button requestButton = (Button) findViewById(R.id.buttonRequestJob);
                     Button saveButton = (Button) findViewById(R.id.buttonSaveJob);
-                    Button viewRequestersButton = (Button) findViewById(R.id.buttonViewRequesters);
                     Button chatWithPostersButton = (Button) findViewById(R.id.buttonChatWithPoster);
                     if(jobPost.getUserid().toString().equals(currentUser.getUid().toString())) {
                         deleteButton.setVisibility(View.VISIBLE);
-                        viewRequestersButton.setVisibility(View.VISIBLE);
-
-                        viewRequestersButton.setVisibility(View.VISIBLE);
                         requestButton.setVisibility(View.INVISIBLE);
                         saveButton.setVisibility(View.INVISIBLE);
                         chatWithPostersButton.setVisibility(View.INVISIBLE);
@@ -110,8 +106,16 @@ public class ViewSingleJobActivity extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.viewSinglePostMenuMyProfile:
-                startActivity( new Intent( ViewSingleJobActivity.this, ProfileActivity.class));
+                startActivity( new Intent( ViewSingleJobActivity.this, ViewMyProfileActivity.class));
                 finish();
+                return true;
+            case R.id.viewSinglePostMenuChat:
+                if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
+                    Intent chatIntent = new Intent(ViewSingleJobActivity.this, ChatActivity.class);
+                    chatIntent.putExtra("otherid", jobPost.getUserid());
+                    startActivity(chatIntent);
+                    finish();
+                }
                 return true;
             case R.id.viewSinglePostMenuMyJobs:
                 startActivity(new Intent(ViewSingleJobActivity.this, ViewMyPostsActivity.class));
@@ -173,15 +177,9 @@ public class ViewSingleJobActivity extends Activity {
         }
     }
     public void openChat(View v){
-        Intent chatIntent = new Intent(this,ChatActivity.class);
-        chatIntent.putExtra("posterid",jobPost.getUserid());
+        Intent chatIntent = new Intent(ViewSingleJobActivity.this,ChatActivity.class);
+        chatIntent.putExtra("otherid",jobPost.getUserid());
         startActivity(chatIntent);
-        finish();
-    }
-    public void viewRequesters(View v){
-        Intent viewRequestersIntent = new Intent(this, ViewAllChatsActivity.class);
-        viewRequestersIntent.putExtra("postid", jobPost.getPostid());
-        startActivity(viewRequestersIntent);
         finish();
     }
 }

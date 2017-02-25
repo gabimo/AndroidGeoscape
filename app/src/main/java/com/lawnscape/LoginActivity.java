@@ -1,9 +1,6 @@
 package com.lawnscape;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,7 +34,7 @@ public class LoginActivity extends Activity {
                     // User is signed in
                     Toast.makeText(LoginActivity.this, "Logged in",
                             Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                    startActivity(new Intent(LoginActivity.this, ViewMyProfileActivity.class));
                     finish();
                 } else {
                     // User is signed out
@@ -101,7 +98,7 @@ public class LoginActivity extends Activity {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }else{
-                            Intent i = new Intent(LoginActivity.this, ProfileActivity.class);
+                            Intent i = new Intent(LoginActivity.this, ViewMyProfileActivity.class);
                             startActivity(i);
                             finish();
                         }
@@ -126,7 +123,7 @@ public class LoginActivity extends Activity {
                         } else {
                             Toast.makeText(LoginActivity.this, "Account Created Successfully",
                                     Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                            startActivity(new Intent(LoginActivity.this, ViewMyProfileActivity.class));
                             finish();
                         }
                     }

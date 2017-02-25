@@ -18,10 +18,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 //Profile Activity
-public class ProfileActivity extends Activity {
+public class ViewMyProfileActivity extends Activity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
+    private FirebaseUser currentUser;
 
     /************** Begin LifeCycle Functions ****************/
     @Override
@@ -39,15 +40,16 @@ public class ProfileActivity extends Activity {
                 if (user == null) {
                     // user auth state is changed - user is null
                     // launch login activity
-                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                    startActivity(new Intent(ViewMyProfileActivity.this, LoginActivity.class));
                     finish();
                 }else{
                     //user is logged in
+                    currentUser = user;
+
                     final TextView emailTV = (TextView) findViewById(R.id.tvUserEmail);
                     final TextView useridTV = (TextView) findViewById(R.id.tvUserID);
                     final TextView locationTV = (TextView) findViewById(R.id.tvLocationProfile);
                     final TextView nameTV = (TextView) findViewById(R.id.tvNameProfile);
-
 
                     emailTV.setText(user.getEmail().toString());
                     useridTV.setText(user.getUid().toString());
@@ -77,7 +79,6 @@ public class ProfileActivity extends Activity {
                             String value = dataSnapshot.getValue(String.class);
                             locationTV.setText(value);
                         }
-
                         @Override
                         public void onCancelled(DatabaseError error) {
                             // Failed to read value
@@ -92,7 +93,6 @@ public class ProfileActivity extends Activity {
         super.onStart();
         auth.addAuthStateListener(authListener);
     }
-
     @Override
     public void onStop() {
         super.onStop();
@@ -117,25 +117,28 @@ public class ProfileActivity extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.profileMenu1:
-                startActivity(new Intent(ProfileActivity.this, ProfileSettingsActivity.class));
+                setContentView(R.layout.activity_profile_settings);
                 return true;
             case R.id.profileMenu2:
-                startActivity(new Intent(ProfileActivity.this, ViewMyPostsActivity.class));
-                finish();
+                startActivity(new Intent(ViewMyProfileActivity.this, ViewAllChatsActivity.class));
                 return true;
             case R.id.profileMenu3:
-                Intent allJobsViewIntent = new Intent(ProfileActivity.this, JobListViewActivity.class);
+                startActivity(new Intent(ViewMyProfileActivity.this, ViewMyPostsActivity.class));
+                finish();
+                return true;
+            case R.id.profileMenu4:
+                Intent allJobsViewIntent = new Intent(ViewMyProfileActivity.this, JobListViewActivity.class);
                 allJobsViewIntent.putExtra("View", "all");
                 startActivity(allJobsViewIntent);
                 finish();
                 return true;
-            case R.id.profileMenu4:
-                Intent savedJobsViewIntent = new Intent(ProfileActivity.this, JobListViewActivity.class);
+            case R.id.profileMenu5:
+                Intent savedJobsViewIntent = new Intent(ViewMyProfileActivity.this, JobListViewActivity.class);
                 savedJobsViewIntent.putExtra("View", "saved");
                 startActivity(savedJobsViewIntent);
                 finish();
                 return true;
-            case R.id.profileMenu5:
+            case R.id.profileMenu6:
                 auth.signOut();
                 return true;
             default:
@@ -143,9 +146,33 @@ public class ProfileActivity extends Activity {
         }
     }
     public void gotoProfileSettings(View v){
-        startActivity( new Intent( ProfileActivity.this, ProfileSettingsActivity.class));
+        setContentView(R.layout.activity_profile_settings);
     }
     public void gotoPostNewJob(View v){
-        startActivity( new Intent( ProfileActivity.this, PostJobActivity.class));
+        startActivity( new Intent( ViewMyProfileActivity.this, PostJobActivity.class));
+    }
+    public void updateUserInfo(View v){
+        // grab the widgets as objects
+        int success = 0;
+        TextView etName = (TextView) findViewById(R.id.etProfSettingsName);
+        TextView etLocation = (TextView) findViewById(R.id.etProfSettingsLocation);
+
+        String newName = etName.getText().toString();
+        String newLoc = etLocation.getText().toString();
+
+        // Set name of user and location
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        DatabaseReference usersRef = database.getReference("Users").child(currentUser.getUid().toString());
+        if(!newName.isEmpty()&&!newLoc.isEmpty()){
+            DatabaseReference newUserRef = usersRef;
+            newUserRef.setValue(new User(newName, newLoc));
+        }
+        //"return" to profile activity
+        setContentView(R.layout.activity_profile);
+    }
+    public void backToProfile(View v){
+        setContentView(R.layout.activity_profile);
+
     }
 }

@@ -2,9 +2,12 @@ package com.lawnscape;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,23 +35,30 @@ public class ChatActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*********************** IMPORTANT ****************************/
+        otherUserid = getIntent().getExtras().get("otherid").toString();
+
         setContentView(R.layout.activity_chat);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
-        otherUserid = getIntent().getExtras().get("posterid").toString();
         allMessages = new ArrayList<ChatMessage>();
         messagesWindow = (ListView) findViewById(R.id.lvMessageWindow);
         messageAdapter = new ChatMessageAdapter(this,allMessages);
         messagesWindow.setAdapter(messageAdapter);
-
+        /*
+        If there is no chat ID shared by the two users then this listener will make one
+        if there is a chat id shared by the two users, this listener will grab its ref
+         */
         final DatabaseReference myChatRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
         myChatRef.orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean chatAlreadyExists = false;
+                //chat id
                 String idToFetch = "";
+                // The chatid ref will have key-value pairs like "OtherUserID":"chatid"
                 for(DataSnapshot chatid: dataSnapshot.getChildren()){
                     if(otherUserid.equals(chatid.getKey().toString())){
                         //Found an existing chat
@@ -64,7 +74,7 @@ public class ChatActivity extends Activity {
                     DatabaseReference addChatIDRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
                     addChatIDRef.addListenerForSingleValueEvent(
                             new ToggleAddIDVEListener(ChatActivity.this,otherUserid,newChatID));
-                    //now give the other user the chat id
+                    /*****      now give the other user the chat id       ******/
                     addChatIDRef = database.getReference("Users").child(otherUserid).child("chatids");
                     addChatIDRef.addListenerForSingleValueEvent(
                             new ToggleAddIDVEListener(ChatActivity.this,currentUser.getUid().toString(),newChatID));
@@ -82,21 +92,35 @@ public class ChatActivity extends Activity {
             }
         });
 
+        final EditText messageText = (EditText) findViewById(R.id.etEnterMessage);
+        messageText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    sendMessage(messageText);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
     }
 
     public void sendMessage(View v){
         //Find the chat
         super.onStart();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference chatRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
-        //set the message details below
-        EditText messageText = (EditText) findViewById(R.id.etEnterMessage);
         final ChatMessage chatMessage = new ChatMessage();
+        EditText messageText = (EditText) findViewById(R.id.etEnterMessage);
+        DatabaseReference chatRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm:ss");
+        //set the message details below
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd mm:ss");
         chatMessage.setDate(sdf.format(new Date()));
         chatMessage.setTextMsg(messageText.getText().toString());
-
+        messageText.setText("");
+        // User listeners to push data to the database
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

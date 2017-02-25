@@ -3,6 +3,9 @@
     <item android:id="@+id/viewPostsMenuMyProfile"
         android:title="My Profile">
     </item>
+    <item android:id="@+id/viewPostsMenuAllChats"
+        android:title="My Chats">
+    </item>
     <item android:id="@+id/viewPostsMenuMyJobs"
         android:title="My Job Posts">
     </item>

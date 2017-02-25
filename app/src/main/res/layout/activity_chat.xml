@@ -11,9 +11,11 @@
     tools:context="com.lawnscape.ChatActivity">
 
     <EditText
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:imeOptions="actionSend"
         android:text="Name"
         android:ems="10"
         android:layout_alignParentBottom="true"

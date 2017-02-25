@@ -46,66 +46,38 @@ public class JobListViewActivity extends Activity {
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
         //make sure user is logged in and has an account
-        authListener = new FirebaseAuth.AuthStateListener() {
+
+        currentUser = auth.getCurrentUser();
+        allJobsButton = (Button) findViewById(R.id.buttonViewAllJobs);
+        savedJobsButton = (Button) findViewById(R.id.buttonViewSavedJobs);
+        //Gonna hold all the jobs, must init for adaptor
+        allPostDetailsList = new ArrayList<Job>();
+        //Put the jobs into the adaptor
+        //Find the listview widget and set up a connection to our ArrayList
+        allPostsList = (ListView) findViewById(R.id.lvJobs);
+        jobsAdapter = new JobListAdapter(JobListViewActivity.this, allPostDetailsList);
+        // The adaptor handles pushing each object in the ArrayList to the listview
+        // but you MUST call jobsAdaptor.notifyDataSetChanged(); to update the listview
+        allPostsList.setAdapter(jobsAdapter);
+        if(getIntent().getExtras().get("View").toString().equals("saved")) {
+            viewSavedJobs(savedJobsButton);
+        }else {
+            viewAllJobs(allJobsButton);
+        }
+        //This handles clicks on individual job items from the list
+        // and bring you to a job specific page with details
+        allPostsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                final FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    // user auth state is changed - user is not logged in
-                    // launch login activity
-                    //startActivity(new Intent(JobListViewActivity.this, LoginActivity.class));
-                    //finish();
-                    System.out.println("LOG IN ERROR ");
-                }else{
-                    //user is logged in
-                    currentUser = user;
-                    allJobsButton = (Button) findViewById(R.id.buttonViewAllJobs);
-                    savedJobsButton = (Button) findViewById(R.id.buttonViewSavedJobs);
-                    //Gonna hold all the jobs, must init for adaptor
-                    allPostDetailsList = new ArrayList<Job>();
-                    //Put the jobs into the adaptor
-                    //Find the listview widget and set up a connection to our ArrayList
-                    allPostsList = (ListView) findViewById(R.id.lvJobs);
-                    jobsAdapter = new JobListAdapter(JobListViewActivity.this, allPostDetailsList);
-                    // The adaptor handles pushing each object in the ArrayList to the listview
-                    // but you MUST call jobsAdaptor.notifyDataSetChanged(); to update the listview
-                    allPostsList.setAdapter(jobsAdapter);
-                    if(getIntent().getExtras().get("View").toString().equals("saved")) {
-                        viewSavedJobs(savedJobsButton);
-                    }else {
-                        viewAllJobs(allJobsButton);
-                    }
-                    //This handles clicks on individual job items from the list
-                    // and bring you to a job specific page with details
-                    allPostsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                                long id) {
-                            Job selectedJob = (Job) jobsAdapter.getItem(position);
-                            Intent singleJobViewIntent = new Intent(JobListViewActivity.this, ViewSingleJobActivity.class);
-                            singleJobViewIntent.putExtra("Job",selectedJob);
-                            startActivity(singleJobViewIntent);
-                        }
-                    });
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Job selectedJob = (Job) jobsAdapter.getItem(position);
+                Intent singleJobViewIntent = new Intent(JobListViewActivity.this, ViewSingleJobActivity.class);
+                singleJobViewIntent.putExtra("Job",selectedJob);
+                startActivity(singleJobViewIntent);
             }
-        };
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Boiler plate Authentication
-        auth.addAuthStateListener(authListener);
+        });
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        // Boiler plate Authentication
-        if (authListener != null) {
-            auth.removeAuthStateListener(authListener);
-        }
-    }
     /************** End LifeCycle ****************/
     /******************* Menu Handling *******************/
     //make the menu show up
@@ -120,7 +92,11 @@ public class JobListViewActivity extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.viewPostsMenuMyProfile:
-                startActivity( new Intent( JobListViewActivity.this, ProfileActivity.class));
+                startActivity( new Intent( JobListViewActivity.this, ViewMyProfileActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenuAllChats:
+                startActivity(new Intent(JobListViewActivity.this, ViewAllChatsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:
@@ -129,15 +105,18 @@ public class JobListViewActivity extends Activity {
                 return true;
             case R.id.viewPostsMenuAllJobs:
                 if(getIntent().getExtras().get("View").toString().equals("saved")) {
+                    getIntent().removeExtra("View");
                     getIntent().putExtra("View", "all");
                 }
                 recreate();
                 return true;
             case R.id.viewPostsMenuSavedPosts:
                 if(getIntent().getExtras().get("View").toString().equals("all")) {
+                    getIntent().removeExtra("View");
                     getIntent().putExtra("View", "saved");
                 }
                 recreate();
+                return true;
             case R.id.viewPostsMenuSignOut:
                 auth.signOut();
                 finish();
@@ -181,8 +160,5 @@ public class JobListViewActivity extends Activity {
         DatabaseReference myJobsRef = database.getReference("Jobs");
         myJobsRef.addListenerForSingleValueEvent(
                 new JobListVEListener(JobListViewActivity.this, allPostDetailsList, jobsAdapter, jobsToFetch));
-    }
-    public void viewRequestedJobs(View v){
-
     }
 }
