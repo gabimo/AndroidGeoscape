@@ -26,7 +26,7 @@ public class ToggleAddIDVEListener implements ValueEventListener {
     public ToggleAddIDVEListener(Context activityContext, String desiredID){
         id = desiredID;
         currentActivity = activityContext;
-        key = "NOKEY";
+        key = "";
     }
 
     public ToggleAddIDVEListener(Context activityContext, String keyVal, String desiredID){
@@ -46,7 +46,7 @@ public class ToggleAddIDVEListener implements ValueEventListener {
             }
         }
         if (!isDuplicate) {
-            if(key.equals("NOKEY")) {
+            if(key.equals("")) {
                 dataSnapshot.getRef().push().setValue(id);
             }else{
                 dataSnapshot.child(key).getRef().setValue(id);
@@ -55,6 +55,6 @@ public class ToggleAddIDVEListener implements ValueEventListener {
     }
     @Override
     public void onCancelled(DatabaseError databaseError) {
-        Toast.makeText(currentActivity ,"DB ERROR: Could not do it",Toast.LENGTH_SHORT).show();
+        Toast.makeText(currentActivity ,"DB ERROR: Could not add or remove",Toast.LENGTH_SHORT).show();
     }
 }

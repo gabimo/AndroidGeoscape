@@ -30,7 +30,6 @@ public class ViewMyPostsActivity extends Activity {
 
     ListView myPostsList;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +101,7 @@ public class ViewMyPostsActivity extends Activity {
                             // idk what we would do
                         }
                     });
+                    //click listener for each item on the list
                     myPostsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position,
