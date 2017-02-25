@@ -17,11 +17,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class ViewSingleJobActivity extends Activity {
 
@@ -63,10 +60,16 @@ public class ViewSingleJobActivity extends Activity {
                     Button deleteButton = (Button) findViewById(R.id.buttonDeletePost);
                     Button requestButton = (Button) findViewById(R.id.buttonRequestJob);
                     Button saveButton = (Button) findViewById(R.id.buttonSaveJob);
+                    Button viewRequestersButton = (Button) findViewById(R.id.buttonViewRequesters);
+                    Button chatWithPostersButton = (Button) findViewById(R.id.buttonChatWithPoster);
                     if(jobPost.getUserid().toString().equals(currentUser.getUid().toString())) {
                         deleteButton.setVisibility(View.VISIBLE);
+                        viewRequestersButton.setVisibility(View.VISIBLE);
+
+                        viewRequestersButton.setVisibility(View.VISIBLE);
                         requestButton.setVisibility(View.INVISIBLE);
                         saveButton.setVisibility(View.INVISIBLE);
+                        chatWithPostersButton.setVisibility(View.INVISIBLE);
                     }
 
                 }
@@ -161,13 +164,9 @@ public class ViewSingleJobActivity extends Activity {
     }
     public void requestJob(View v){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myJobRequestRef = database.getReference("Users").child(currentUser.getUid().toString()).child("requestedjobs");
         DatabaseReference jobRequesterListRef = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
         //Dont let a user request their own job
         if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
-            myJobRequestRef.addListenerForSingleValueEvent(
-                    new ToggleAddIDVEListener(ViewSingleJobActivity.this,currentUser.getUid().toString())
-            );
             jobRequesterListRef.addListenerForSingleValueEvent(
                     new ToggleAddIDVEListener(ViewSingleJobActivity.this,currentUser.getUid().toString())
             );
@@ -177,6 +176,12 @@ public class ViewSingleJobActivity extends Activity {
         Intent chatIntent = new Intent(this,ChatActivity.class);
         chatIntent.putExtra("posterid",jobPost.getUserid());
         startActivity(chatIntent);
+        finish();
+    }
+    public void viewRequesters(View v){
+        Intent viewRequestersIntent = new Intent(this, ViewAllChatsActivity.class);
+        viewRequestersIntent.putExtra("postid", jobPost.getPostid());
+        startActivity(viewRequestersIntent);
         finish();
     }
 }

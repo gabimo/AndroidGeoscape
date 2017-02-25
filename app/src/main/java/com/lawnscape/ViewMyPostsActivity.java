@@ -84,7 +84,8 @@ public class ViewMyPostsActivity extends Activity {
                         @Override
                         public void onCancelled(DatabaseError firebaseError) { }
                     };
-                    myUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    myUserRef.addListenerForSingleValueEvent(
+                            new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             //Find each job made by the user and add it to the listview

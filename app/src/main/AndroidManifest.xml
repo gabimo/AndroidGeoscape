@@ -27,7 +27,8 @@
             android:label="@string/title_activity_view_my_posts" />
         <activity android:name=".ViewSingleJobActivity" />
         <activity android:name=".JobListViewActivity" />
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".ViewAllChatsActivity"></activity>
     </application>
 
 </manifest>

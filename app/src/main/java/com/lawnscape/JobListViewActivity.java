@@ -139,9 +139,8 @@ public class JobListViewActivity extends Activity {
                 }
                 recreate();
             case R.id.viewPostsMenuSignOut:
-                //auth.signOut();
-                System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
-                //finish();
+                auth.signOut();
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -162,7 +161,6 @@ public class JobListViewActivity extends Activity {
     public void viewSavedJobs(View v){
         final ArrayList<String> jobsToFetch = new ArrayList<String>();
         myListRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs").getRef();
-        System.out.println("1111");
         allPostDetailsList.clear();
         jobsAdapter.notifyDataSetChanged();
         myListRef.addListenerForSingleValueEvent(new ValueEventListener() {
