@@ -17,8 +17,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ViewSingleJobActivity extends Activity {
 
@@ -60,9 +63,13 @@ public class ViewSingleJobActivity extends Activity {
                     Button deleteButton = (Button) findViewById(R.id.buttonDeletePost);
                     Button requestButton = (Button) findViewById(R.id.buttonRequestJob);
                     Button saveButton = (Button) findViewById(R.id.buttonSaveJob);
+                    Button editButton = (Button) findViewById(R.id.buttonEditPostDetails);
                     Button chatWithPostersButton = (Button) findViewById(R.id.buttonChatWithPoster);
                     if(jobPost.getUserid().toString().equals(currentUser.getUid().toString())) {
+                        //show
                         deleteButton.setVisibility(View.VISIBLE);
+                        editButton.setVisibility(View.VISIBLE);
+                        //hide
                         requestButton.setVisibility(View.INVISIBLE);
                         saveButton.setVisibility(View.INVISIBLE);
                         chatWithPostersButton.setVisibility(View.INVISIBLE);
@@ -180,6 +187,44 @@ public class ViewSingleJobActivity extends Activity {
         Intent chatIntent = new Intent(ViewSingleJobActivity.this,ChatActivity.class);
         chatIntent.putExtra("otherid",jobPost.getUserid());
         startActivity(chatIntent);
+        finish();
+    }
+    public void editJob(View v){
+        setContentView(R.layout.activity_edit_job);
+    }
+    public void dontChange(View v){
+        setContentView(R.layout.activity_view_single_job);
+    }
+
+    public void postChanges(View v){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myUserJobRef = database.getReference("Jobs").child(jobPost.getPostid());
+
+        myUserJobRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TextView etTitle = (TextView) findViewById(R.id.etEditPostJobTitle);
+                TextView etLocation = (TextView) findViewById(R.id.etEditPostJobLocation);
+                TextView etDescription = (TextView) findViewById(R.id.etEditPostJobDescription);
+
+                String newTitle = etTitle.getText().toString();
+                String newLoc = etLocation.getText().toString();
+                String newDesc = etDescription.getText().toString();
+                String userID = currentUser.getUid().toString();
+                // changes are made
+                if(newDesc.equals("")){
+                    newDesc = "No description";
+                }
+
+                dataSnapshot.getRef().setValue(
+                        new Job(newTitle, newLoc, newDesc, userID, jobPost.getPostid()));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         finish();
     }
 }

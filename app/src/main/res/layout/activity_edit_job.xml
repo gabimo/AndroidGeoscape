@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Job Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:id="@+id/textView8"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/etEditPostJobTitle"
+        android:layout_alignStart="@+id/etEditPostJobTitle" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/etEditPostJobTitle"
+        android:hint="Job Title"
+        android:layout_below="@+id/textView8"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/etEditPostJobDescription"
+        android:hint="Put a concise job description here, anything you want to say"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/textView19"
+        android:layout_alignStart="@+id/textView19" />
+
+    <TextView
+        android:text="Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView19"
+        android:layout_marginBottom="12dp"
+        android:layout_above="@+id/etEditPostJobDescription"
+        android:layout_alignLeft="@+id/etEditPostJobLocation"
+        android:layout_alignStart="@+id/etEditPostJobLocation" />
+
+    <Button
+        android:text="Post Changes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonPostEditsToJob"
+        android:onClick="postChanges"
+        android:layout_below="@+id/etEditPostJobDescription"
+        android:layout_alignLeft="@+id/etEditPostJobDescription"
+        android:layout_alignStart="@+id/etEditPostJobDescription"
+        android:layout_marginTop="44dp"
+        android:layout_alignRight="@+id/etEditPostJobDescription"
+        android:layout_alignEnd="@+id/etEditPostJobDescription" />
+
+    <Button
+        android:text="Return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonPostEditsToJob"
+        android:layout_toRightOf="@+id/textView19"
+        android:layout_toEndOf="@+id/textView19"
+        android:layout_marginTop="26dp"
+        android:id="@+id/button6"
+        android:onClick="dontChange" />
+
+    <TextView
+        android:text="Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/etEditPostJobTitle"
+        android:layout_alignRight="@+id/textView8"
+        android:layout_alignEnd="@+id/textView8" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/etEditPostJobLocation"
+        android:hint="Location of job"
+        android:layout_below="@+id/textView9"
+        android:layout_alignLeft="@+id/etEditPostJobTitle"
+        android:layout_alignStart="@+id/etEditPostJobTitle" />
+
+</RelativeLayout>
