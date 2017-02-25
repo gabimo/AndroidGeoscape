@@ -91,7 +91,7 @@ public class ChatActivity extends Activity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
+        //puts a "send" button on the keyboard
         final EditText messageText = (EditText) findViewById(R.id.etEnterMessage);
         messageText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

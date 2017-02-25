@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:inputType="textCapSentences|textAutoCorrect"
         android:imeOptions="actionSend"
-        android:text="Name"
+        android:text=""
         android:ems="10"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
