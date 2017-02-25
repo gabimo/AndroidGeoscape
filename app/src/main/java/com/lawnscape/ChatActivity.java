@@ -55,18 +55,14 @@ public class ChatActivity extends Activity {
         myChatRef.orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean chatAlreadyExists = false;
                 //chat id
                 String idToFetch = "";
                 // The chatid ref will have key-value pairs like "OtherUserID":"chatid"
-                for(DataSnapshot chatid: dataSnapshot.getChildren()){
-                    if(otherUserid.equals(chatid.getKey().toString())){
-                        //Found an existing chat
-                        chatAlreadyExists = true;
-                        idToFetch = chatid.getValue().toString();
-                    }
-                }
-                if(!chatAlreadyExists){
+
+                if(dataSnapshot.hasChild(otherUserid)){
+                    //Found an existing chat
+                    idToFetch = dataSnapshot.child(otherUserid).getValue().toString();
+                }else{
                     //make new chat and give both users the id in their chat list
                     DatabaseReference allChatsRef = database.getReference("Chats");
                     DatabaseReference newChatid = allChatsRef.push();
@@ -113,7 +109,7 @@ public class ChatActivity extends Activity {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final ChatMessage chatMessage = new ChatMessage();
         EditText messageText = (EditText) findViewById(R.id.etEnterMessage);
-        DatabaseReference chatRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
+        DatabaseReference chatRef = database.getReference("Users").child(currentUser.getUid()).child("chatids").child(otherUserid);
 
         //set the message details below
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd mm:ss");
@@ -124,7 +120,7 @@ public class ChatActivity extends Activity {
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String thechatid = dataSnapshot.child(otherUserid).getValue().toString();
+                String thechatid = dataSnapshot.getValue().toString();
                 DatabaseReference ourChatRef = database.getReference("Chats").child(thechatid).getRef().push();
                 ourChatRef.getRef().setValue(chatMessage);
                 messageAdapter.notifyDataSetChanged();

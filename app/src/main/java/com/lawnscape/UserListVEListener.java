@@ -29,10 +29,9 @@ public class UserListVEListener implements ValueEventListener {
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot){
-        System.out.println("GOING OVER CHATS " + dataSnapshot.getKey().toString());
+        usersList.clear();
         for (DataSnapshot jobNode : dataSnapshot.getChildren()) {
             //Either grabs all jobs, or the list of jobs passed via constructor
-            usersList.clear();
             if(usersToGet.contains(jobNode.getKey().toString())) {
                 String title = (String) jobNode.child("name").getValue().toString();
                 String location = (String) jobNode.child("location").getValue().toString();

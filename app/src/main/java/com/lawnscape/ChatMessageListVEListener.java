@@ -29,15 +29,17 @@ public class ChatMessageListVEListener implements ValueEventListener {
         //Add all the messages to the array list
         messageList.clear();
         for (DataSnapshot chatNode : dataSnapshot.getChildren()) {
-            String date = chatNode.child("date").getValue().toString();
-            String msg = chatNode.child("textMsg").getValue().toString();
-            ChatMessage newMsg = new ChatMessage();
-            newMsg.setTextMsg(msg);
-            newMsg.setDate(date);
-            messageList.add(newMsg);
+            if(chatNode.hasChild("date")&&chatNode.hasChild("textMsg")) {
+                String date = chatNode.child("date").getValue().toString();
+                String msg = chatNode.child("textMsg").getValue().toString();
+                ChatMessage newMsg = new ChatMessage();
+                newMsg.setTextMsg(msg);
+                newMsg.setDate(date);
+                messageList.add(newMsg);
+                messageAdapter.notifyDataSetChanged();
+            }
             //Tell the listview adaptor to update the listview based on the ArrayList updates
         }
-        messageAdapter.notifyDataSetChanged();
     }
 
     @Override

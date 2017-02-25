@@ -67,10 +67,8 @@ public class ViewAllChatsActivity extends Activity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             DatabaseReference myUserRef = database.getReference("Users");
-                            System.out.println("Checking chatids");
                             for (DataSnapshot curUserid : dataSnapshot.getChildren()) {
                                 useridList.add(curUserid.getKey().toString());
-                                System.out.println(curUserid.getKey().toString());
                             }
                             myUserRef.addValueEventListener(
                                     new UserListVEListener(ViewAllChatsActivity.this, userList, useridList, userAdapter));
