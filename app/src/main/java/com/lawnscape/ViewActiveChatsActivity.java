@@ -207,6 +207,7 @@ public class ViewActiveChatsActivity extends Activity {
                 savedJobsViewIntent.putExtra("View", "saved");
                 startActivity(savedJobsViewIntent);
                 finish();
+                return true;
             case R.id.viewPostsMenuSignOut:
                 auth.signOut();
                 finish();
