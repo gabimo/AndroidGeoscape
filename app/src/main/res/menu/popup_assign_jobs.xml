@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/longclickAssignJob"
+        android:title="Assign Job"/>
+    <item
+        android:id="@+id/longclickViewProfile"
+        android:title="View Profile"/>
+    <item
+        android:id="@+id/longclickDeleteChat"
+        android:title="Delete Request"/>
 </menu>
