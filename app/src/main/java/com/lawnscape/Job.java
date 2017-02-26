@@ -16,6 +16,7 @@ public class Job implements Parcelable {
     private String description;
     private String userid;
     private String postid;
+    private String activeworker;
 
     public Job(String t, String l, String u) {
         title = t;
@@ -30,6 +31,7 @@ public class Job implements Parcelable {
         description = d;
         userid = u;
         postid = "";
+        activeworker = "";
     }
     public Job(String t, String l, String d, String u, String p) {
         title = t;
@@ -37,6 +39,7 @@ public class Job implements Parcelable {
         description = d;
         userid = u;
         postid = p;
+        activeworker = "";
     }
 
     public void setPostid(String p){
@@ -44,6 +47,10 @@ public class Job implements Parcelable {
     }
 
     public String getPostid(){ return postid; }
+
+    public String getActiveworker(){return activeworker;}
+
+    public void setActiveworker(String worker){activeworker = worker; }
 
     public String getDescription() {
         return description;

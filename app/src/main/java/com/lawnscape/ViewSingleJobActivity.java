@@ -175,12 +175,15 @@ public class ViewSingleJobActivity extends Activity {
     }
     public void requestJob(View v){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference jobRequesterListRef = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
         //Dont let a user request their own job
         if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
-            jobRequesterListRef.addListenerForSingleValueEvent(
-                    new ToggleAddIDVEListener(ViewSingleJobActivity.this,currentUser.getUid().toString())
-            );
+            DatabaseReference ref = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
+            ref.addListenerForSingleValueEvent(
+                    new ToggleAddIDVEListener(ViewSingleJobActivity.this,currentUser.getUid().toString()));
+
+            ref = database.getReference("Users").child(currentUser.getUid()).child("requestedjobs");
+            ref.addListenerForSingleValueEvent(
+                    new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
         }
     }
     public void openChat(View v){

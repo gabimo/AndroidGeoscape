@@ -8,6 +8,6 @@
         android:id="@+id/longclickViewProfile"
         android:title="View Profile"/>
     <item
-        android:id="@+id/longclickDeleteChat"
+        android:id="@+id/longclickDeleteRequest"
         android:title="Delete Request"/>
 </menu>

@@ -198,13 +198,13 @@ public class ViewMyPostsActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewPostsMenuAllJobs:
-                Intent allJobsViewIntent = new Intent(ViewMyPostsActivity.this, JobListViewActivity.class);
+                Intent allJobsViewIntent = new Intent(ViewMyPostsActivity.this, ViewJobsListsActivity.class);
                 allJobsViewIntent.putExtra("View", "all");
                 startActivity(allJobsViewIntent);
                 finish();
                 return true;
             case R.id.viewPostsMenuSavedPosts:
-                Intent savedJobsViewIntent = new Intent(ViewMyPostsActivity.this, JobListViewActivity.class);
+                Intent savedJobsViewIntent = new Intent(ViewMyPostsActivity.this, ViewJobsListsActivity.class);
                 savedJobsViewIntent.putExtra("View", "saved");
                 startActivity(savedJobsViewIntent);
                 finish();

@@ -87,19 +87,21 @@ public class ViewJobRequestsActivity extends Activity {
                         final User selectedUser = (User) reuesterAdapter.getItem(position);
                         switch (item.getItemId()){
                             case R.id.longclickAssignJob:
-                                
-                                return true;
+
+                                //Also delete the request
+                                //return true;
                             case R.id.longclickDeleteChat:
                                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 //remove the job from the list of all jobs with a listener
                                 DatabaseReference jobRef = database.getReference("Jobs").child(selectedJob.getPostid()).child("requesters");
-
                                 jobRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         for(DataSnapshot reqUser: dataSnapshot.getChildren()) {
                                             System.out.println(reqUser.getKey());
                                             if (reqUser.getValue().toString().equals(selectedUser.getUserid())) {
+                                                DatabaseReference userReqRef = database.getReference("Users").child(reqUser.getValue().toString()).child("requestedjobs");
+                                                userReqRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewJobRequestsActivity.this,selectedJob.getPostid()));
                                                 reqUser.getRef().removeValue();
                                             }
                                         }

@@ -49,7 +49,7 @@ public class ViewActiveChatsActivity extends Activity {
                 if (user == null) {
                     // user auth state is changed - user is not logged in
                     // launch login activity
-                    //startActivity(new Intent(JobListViewActivity.this, LoginActivity.class));
+                    //startActivity(new Intent(ViewJobsListsActivity.this, LoginActivity.class));
                     //finish();
                     System.out.println("LOG IN ERROR ");
                 } else {
@@ -197,13 +197,13 @@ public class ViewActiveChatsActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewPostsMenuAllJobs:
-                Intent allJobsViewIntent = new Intent(ViewActiveChatsActivity.this, JobListViewActivity.class);
+                Intent allJobsViewIntent = new Intent(ViewActiveChatsActivity.this, ViewJobsListsActivity.class);
                 allJobsViewIntent.putExtra("View", "all");
                 startActivity(allJobsViewIntent);
                 finish();
                 return true;
             case R.id.viewPostsMenuSavedPosts:
-                Intent savedJobsViewIntent = new Intent(ViewActiveChatsActivity.this, JobListViewActivity.class);
+                Intent savedJobsViewIntent = new Intent(ViewActiveChatsActivity.this, ViewJobsListsActivity.class);
                 savedJobsViewIntent.putExtra("View", "saved");
                 startActivity(savedJobsViewIntent);
                 finish();
