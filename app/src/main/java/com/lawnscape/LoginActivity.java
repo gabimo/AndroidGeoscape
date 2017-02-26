@@ -105,6 +105,7 @@ public class LoginActivity extends Activity {
                     }
                 });
     }
+    /*********** SIGN UP ***********/
     public void createAccount(View v) {
         EditText emailBox = (EditText) findViewById(R.id.etSignUpEmail);
         EditText passBox = (EditText) findViewById(R.id.etSignUpEmail);

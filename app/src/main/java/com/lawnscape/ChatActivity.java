@@ -74,6 +74,7 @@ public class ChatActivity extends Activity {
                     addChatIDRef = database.getReference("Users").child(otherUserid).child("chatids");
                     addChatIDRef.addListenerForSingleValueEvent(
                             new ToggleAddIDVEListener(ChatActivity.this,currentUser.getUid().toString(),newChatID));
+                    idToFetch = newChatid.getKey().toString();
                 }
 
                 //Set up the listview to grab all the messages continuously

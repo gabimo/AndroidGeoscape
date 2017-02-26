@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ViewAllChatsActivity extends Activity {
+public class ViewActiveChatsActivity extends Activity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -61,17 +62,18 @@ public class ViewAllChatsActivity extends Activity {
                     //Put the jobs into the adaptor
                     //Find the listview widget and set up a connection to our ArrayList
                     userListView = (ListView) findViewById(R.id.lvJobRequesters);
-                    userAdapter = new UserListAdapter(ViewAllChatsActivity.this, userList);
+                    userAdapter = new UserListAdapter(ViewActiveChatsActivity.this, userList);
                     userListView.setAdapter(userAdapter);
-                    myChatsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    myChatsRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             DatabaseReference myUserRef = database.getReference("Users");
+                            useridList.clear();
                             for (DataSnapshot curUserid : dataSnapshot.getChildren()) {
                                 useridList.add(curUserid.getKey().toString());
                             }
                             myUserRef.addValueEventListener(
-                                    new UserListVEListener(ViewAllChatsActivity.this, userList, useridList, userAdapter));
+                                    new UserListVEListener(ViewActiveChatsActivity.this, userList, useridList, userAdapter));
                         }
 
                         @Override
@@ -88,11 +90,65 @@ public class ViewAllChatsActivity extends Activity {
                         public void onItemClick(AdapterView<?> parent, View view, int position,
                                                 long id) {
                             User selectedUser = (User) userAdapter.getItem(position);
-                            Intent singleJobViewIntent = new Intent(ViewAllChatsActivity.this, ViewSingleJobActivity.class);
-                            Intent chatIntent = new Intent(ViewAllChatsActivity.this, ChatActivity.class);
+                            Intent chatIntent = new Intent(ViewActiveChatsActivity.this, ChatActivity.class);
                             chatIntent.putExtra("otherid", selectedUser.getUserid());
                             startActivity(chatIntent);
-                            finish();
+                        }
+                    });
+                    // Hold down on a user in the chat list to get a popup
+                    userListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
+                                                long id) {
+                            //Creating the instance of PopupMenu
+                            PopupMenu popup = new PopupMenu(ViewActiveChatsActivity.this, view);
+                            popup.getMenuInflater().inflate(R.menu.popup_user_menu, popup.getMenu());
+                            //registering popup with OnMenuItemClickListener
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                public boolean onMenuItemClick(MenuItem item) {
+
+                                    final User selectedUser = (User) userAdapter.getItem(position);
+                                    switch (item.getItemId()){
+                                        case R.id.longclickDeleteChat:
+                                            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                            //remove the job from the list of all jobs with a listener
+                                            DatabaseReference myChatidRef = database.getReference("Users").child(currentUser.getUid().toString()).child("chatids");
+                                            //doesnt delete the actual chat log ;)
+                                            myChatidRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    dataSnapshot.child(selectedUser.getUserid()).getRef().removeValue();
+                                                }
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {  }
+                                            });
+                                            myChatidRef = database.getReference("Users").child(currentUser.getUid().toString()).child("chatids");
+                                            //doesnt delete the actual chat log ;)
+                                            myChatidRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    dataSnapshot.child(selectedUser.getUserid()).getRef().removeValue();
+                                                }
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {  }
+                                            });
+                                            userList.remove(selectedUser);
+                                            userAdapter.notifyDataSetChanged();
+                                            return true;
+                                        case R.id.longclickViewProfile:
+                                            Intent viewProfileIntent = new Intent(ViewActiveChatsActivity.this, ViewUserProfileActivity.class);
+                                            viewProfileIntent.putExtra("UserID", selectedUser.getUserid());
+                                            startActivity(viewProfileIntent);
+                                            return true;
+                                        case R.id.longclickAssignJob:
+                                            //nothing yet
+                                            return true;
+                                    }
+                                    return true;
+                                }
+                            });
+                            popup.show();//showing popup menu
+                            return true;
                         }
                     });
                 }
@@ -132,25 +188,25 @@ public class ViewAllChatsActivity extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.viewPostsMenuMyProfile:
-                startActivity(new Intent(ViewAllChatsActivity.this, ViewMyProfileActivity.class));
+                startActivity(new Intent(ViewActiveChatsActivity.this, ViewMyProfileActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuAllChats:
-                startActivity(new Intent(ViewAllChatsActivity.this, ViewAllChatsActivity.class));
+                startActivity(new Intent(ViewActiveChatsActivity.this, ViewActiveChatsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:
-                startActivity(new Intent(ViewAllChatsActivity.this, ViewMyPostsActivity.class));
+                startActivity(new Intent(ViewActiveChatsActivity.this, ViewMyPostsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuAllJobs:
-                Intent allJobsViewIntent = new Intent(ViewAllChatsActivity.this, JobListViewActivity.class);
+                Intent allJobsViewIntent = new Intent(ViewActiveChatsActivity.this, JobListViewActivity.class);
                 allJobsViewIntent.putExtra("View", "all");
                 startActivity(allJobsViewIntent);
                 finish();
                 return true;
             case R.id.viewPostsMenuSavedPosts:
-                Intent savedJobsViewIntent = new Intent(ViewAllChatsActivity.this, JobListViewActivity.class);
+                Intent savedJobsViewIntent = new Intent(ViewActiveChatsActivity.this, JobListViewActivity.class);
                 savedJobsViewIntent.putExtra("View", "saved");
                 startActivity(savedJobsViewIntent);
                 finish();

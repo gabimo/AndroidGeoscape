@@ -39,9 +39,9 @@ public class UserListVEListener implements ValueEventListener {
                 //String postid = (String) jobNode.getKey().toString();
                 usersList.add(new User(title, location, userid));
                 //Tell the listview adaptor to update the listview based on the ArrayList updates
+                userAdapter.notifyDataSetChanged();
             }
         }
-        userAdapter.notifyDataSetChanged();
     }
 
     @Override

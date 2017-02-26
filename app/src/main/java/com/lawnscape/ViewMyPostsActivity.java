@@ -150,7 +150,7 @@ public class ViewMyPostsActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewPostsMenuAllChats:
-                startActivity(new Intent(ViewMyPostsActivity.this, ViewAllChatsActivity.class));
+                startActivity(new Intent(ViewMyPostsActivity.this, ViewActiveChatsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:

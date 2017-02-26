@@ -120,7 +120,7 @@ public class ViewMyProfileActivity extends Activity {
                 setContentView(R.layout.activity_profile_settings);
                 return true;
             case R.id.profileMenu2:
-                startActivity(new Intent(ViewMyProfileActivity.this, ViewAllChatsActivity.class));
+                startActivity(new Intent(ViewMyProfileActivity.this, ViewActiveChatsActivity.class));
                 return true;
             case R.id.profileMenu3:
                 startActivity(new Intent(ViewMyProfileActivity.this, ViewMyPostsActivity.class));

@@ -96,7 +96,7 @@ public class JobListViewActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewPostsMenuAllChats:
-                startActivity(new Intent(JobListViewActivity.this, ViewAllChatsActivity.class));
+                startActivity(new Intent(JobListViewActivity.this, ViewActiveChatsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:
