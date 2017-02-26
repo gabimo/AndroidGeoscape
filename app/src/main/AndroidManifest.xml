@@ -28,7 +28,8 @@
         <activity android:name=".ViewActiveChatsActivity" />
         <activity
             android:name=".ViewUserProfileActivity"
-            android:label="@string/title_activity_view_user_profile"></activity>
+            android:label="@string/title_activity_view_user_profile" />
+        <activity android:name=".ViewJobRequestsActivity"></activity>
     </application>
 
 </manifest>

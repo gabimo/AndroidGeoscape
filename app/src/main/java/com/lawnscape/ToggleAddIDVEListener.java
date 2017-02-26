@@ -39,7 +39,10 @@ public class ToggleAddIDVEListener implements ValueEventListener {
     public void onDataChange(DataSnapshot dataSnapshot) {
         boolean isDuplicate = false;
         for (DataSnapshot node : dataSnapshot.getChildren()) {
-            if (node.getValue().toString().equals(id)) {
+            /*
+            * If anything causes logic errors I bet it will be the following if statement
+             */
+            if (node.getValue().toString().equals(id)||node.getKey().equals(id)) {
                 isDuplicate = true;
                 //Remove on reclick
                 node.getRef().removeValue();

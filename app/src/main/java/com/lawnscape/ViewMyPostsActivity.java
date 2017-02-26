@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -112,6 +113,44 @@ public class ViewMyPostsActivity extends Activity {
                             startActivity(singleJobViewIntent);
                         }
                     });
+                    // long click popup options menu for specific jobs
+                    myPostsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
+                                                       long id) {
+                            //Creating the instance of PopupMenu
+                            PopupMenu popup = new PopupMenu(ViewMyPostsActivity.this, view);
+                            popup.getMenuInflater().inflate(R.menu.popup_post_menu, popup.getMenu());
+                            //registering popup with OnMenuItemClickListener
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    final Job selectedJob = (Job) jobsAdaptor.getItem(position);
+                                    switch (item.getItemId()){
+                                        case R.id.longclickDeletePost:
+                                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                            //remove the job from the list of all jobs with a listener
+                                            DatabaseReference myJobRef = database.getReference("Jobs");
+                                            myJobRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewMyPostsActivity.this,selectedJob.getPostid()));
+                                            //remove the job from the users job list with a listener*
+                                            DatabaseReference myUserJobsRef = database.getReference("Users").child(user.getUid()).child("jobs");
+                                            myUserJobsRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewMyPostsActivity.this, selectedJob.getPostid()));
+                                            myJobList.remove(selectedJob);
+                                            jobsAdaptor.notifyDataSetChanged();
+                                            return true;
+                                        case R.id.longclickAssignJob:
+                                            //nothing yet
+                                            Intent assignJobIntent = new Intent(ViewMyPostsActivity.this, ViewJobRequestsActivity.class);
+                                            assignJobIntent.putExtra("Job", selectedJob);
+                                            startActivity(assignJobIntent);
+                                            return true;
+                                    }
+                                    return true;
+                                }
+                            });
+                            popup.show();//showing popup menu
+                            return true;
+                        }
+                    });
                 }
             }
         };
@@ -139,6 +178,7 @@ public class ViewMyPostsActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_view_posts, menu);
+
         return true;
     }
     @Override

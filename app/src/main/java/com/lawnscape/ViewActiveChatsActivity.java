@@ -122,12 +122,12 @@ public class ViewActiveChatsActivity extends Activity {
                                                 @Override
                                                 public void onCancelled(DatabaseError databaseError) {  }
                                             });
-                                            myChatidRef = database.getReference("Users").child(currentUser.getUid().toString()).child("chatids");
+                                            myChatidRef = database.getReference("Users").child(selectedUser.getUserid()).child("chatids");
                                             //doesnt delete the actual chat log ;)
                                             myChatidRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    dataSnapshot.child(selectedUser.getUserid()).getRef().removeValue();
+                                                    dataSnapshot.child(currentUser.getUid()).getRef().removeValue();
                                                 }
                                                 @Override
                                                 public void onCancelled(DatabaseError databaseError) {  }
@@ -139,9 +139,6 @@ public class ViewActiveChatsActivity extends Activity {
                                             Intent viewProfileIntent = new Intent(ViewActiveChatsActivity.this, ViewUserProfileActivity.class);
                                             viewProfileIntent.putExtra("UserID", selectedUser.getUserid());
                                             startActivity(viewProfileIntent);
-                                            return true;
-                                        case R.id.longclickAssignJob:
-                                            //nothing yet
                                             return true;
                                     }
                                     return true;
