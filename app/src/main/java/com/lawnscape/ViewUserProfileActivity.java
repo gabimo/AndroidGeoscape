@@ -56,12 +56,11 @@ public class ViewUserProfileActivity extends Activity {
                             numRatings += 1;
                             dataSnapshot.child("rating").getRef().setValue(totalStars);
                             dataSnapshot.child("numratings").getRef().setValue(numRatings);
-                            ratingBar.setRating(totalStars/numRatings);
                         }else{
                             dataSnapshot.child("rating").getRef().setValue(rating);
                             dataSnapshot.child("numratings").getRef().setValue(1);
-                            ratingBar.setRating(rating);
                         }
+                        ratingBar.setIsIndicator(true);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
