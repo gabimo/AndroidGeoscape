@@ -89,11 +89,11 @@ public class ViewJobRequestsActivity extends Activity {
                             case R.id.longclickAssignJob:
                                 //remove the job from the list of all jobs with a listener
                                 DatabaseReference jobRef = database.getReference("Jobs").child(selectedJob.getPostid());
-                                jobRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewJobRequestsActivity.this,"activeworker",selectedUser.getUserid()));
+                                jobRef.child("activeworkers").addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewJobRequestsActivity.this,selectedUser.getUserid()));
                                 DatabaseReference userRef = database.getReference("Users").child(selectedUser.getUserid());
-                                userRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewJobRequestsActivity.this,"activejobs",selectedJob.getPostid()));
+                                userRef.child("activejobs").addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewJobRequestsActivity.this,selectedJob.getPostid()));
                                 //Also delete the request
-                                return true;
+                                //return true;
                             case R.id.longclickDeleteChat:
                                 //remove the job from the list of all jobs with a listener
                                 jobRef = database.getReference("Jobs").child(selectedJob.getPostid()).child("requesters");

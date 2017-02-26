@@ -182,4 +182,25 @@ public class ViewJobsListsActivity extends Activity {
         myJobsRef.addListenerForSingleValueEvent(
                 new JobListVEListener(ViewJobsListsActivity.this, allPostDetailsList, jobsAdapter, jobsToFetch));
     }
+    public void viewActiveJobs(View v){
+        final ArrayList<String> jobsToFetch = new ArrayList<String>();
+        myListRef = database.getReference("Users").child(currentUser.getUid().toString()).child("activejobs").getRef();
+        allPostDetailsList.clear();
+        jobsAdapter.notifyDataSetChanged();
+        myListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Find each job made saved by the user
+                for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                    //make a list of the user's saved jobs
+                    jobsToFetch.add(messageSnapshot.getValue().toString());
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {/* idk what we would do*/ }
+        });
+        DatabaseReference myJobsRef = database.getReference("Jobs");
+        myJobsRef.addListenerForSingleValueEvent(
+                new JobListVEListener(ViewJobsListsActivity.this, allPostDetailsList, jobsAdapter, jobsToFetch));
+    }
 }
