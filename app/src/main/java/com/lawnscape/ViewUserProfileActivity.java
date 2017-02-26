@@ -2,6 +2,7 @@ package com.lawnscape;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,11 +30,43 @@ public class ViewUserProfileActivity extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 TextView tvName = (TextView) findViewById(R.id.tvUserProfileName);
                 TextView tvLoc = (TextView) findViewById(R.id.tvUserProfileLocation);
+                RatingBar rating = (RatingBar) findViewById(R.id.ratingBarUser);
                 tvName.setText(dataSnapshot.child("name").getValue().toString());
                 tvLoc.setText(dataSnapshot.child("location").getValue().toString());
+                if(dataSnapshot.hasChild("rating")) {
+                    rating.setRating(Float.valueOf(dataSnapshot.child("rating").getValue().toString()));
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBarUser);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(final RatingBar ratingBar, final float rating, boolean fromUser) {
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.hasChild("numratings")) {
+                            Float totalStars = Float.valueOf(dataSnapshot.child("rating").getValue().toString());
+                            int numRatings = Integer.valueOf(dataSnapshot.child("numratings").getValue().toString());
+                            totalStars += rating;
+                            numRatings += 1;
+                            dataSnapshot.child("rating").getRef().setValue(totalStars);
+                            dataSnapshot.child("numratings").getRef().setValue(numRatings);
+                            ratingBar.setRating(totalStars/numRatings);
+                        }else{
+                            dataSnapshot.child("rating").getRef().setValue(rating);
+                            dataSnapshot.child("numratings").getRef().setValue(1);
+                            ratingBar.setRating(rating);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
             }
         });
     }

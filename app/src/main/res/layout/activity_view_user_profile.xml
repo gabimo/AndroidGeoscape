@@ -31,4 +31,12 @@
         android:layout_below="@+id/tvUserProfileName"
         android:layout_centerHorizontal="true" />
 
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBarUser"
+        android:layout_below="@+id/tvUserProfileLocation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="108dp" />
+
 </RelativeLayout>
