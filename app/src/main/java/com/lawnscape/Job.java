@@ -17,15 +17,18 @@ public class Job implements Parcelable {
     private String userid;
     private String postid;
     private String activeworker;
+    private String date;
 
-    public Job(String t, String l, String u) {
+    public Job(String postDate, String t, String l, String u) {
+        date = postDate;
         title = t;
         location = l;
         userid = u;
         postid = "";
     }
 
-    public Job(String t, String l, String d, String u) {
+    public Job(String postDate, String t, String l, String d, String u) {
+        date = postDate;
         title = t;
         location = l;
         description = d;
@@ -33,7 +36,8 @@ public class Job implements Parcelable {
         postid = "";
         activeworker = "";
     }
-    public Job(String t, String l, String d, String u, String p) {
+    public Job(String postDate, String t, String l, String d, String u, String p) {
+        date = postDate;
         title = t;
         location = l;
         description = d;
@@ -67,6 +71,9 @@ public class Job implements Parcelable {
     public String getLocation() {
         return location;
     }
+
+    public String getDate() { return date;}
+    public void setDate(String newDate){date = newDate;}
 
 
 /***************** PARCEL PORTION *****************/

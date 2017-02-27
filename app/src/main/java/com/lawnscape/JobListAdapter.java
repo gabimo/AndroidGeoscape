@@ -50,6 +50,7 @@ public class JobListAdapter extends BaseAdapter {
             holder.tvTitle = (TextView) convertView.findViewById(R.id.tvPostLayoutTitle);
             holder.tvDescription = (TextView) convertView.findViewById(R.id.tvPostLayoutDescription);
             holder.tvLocation = (TextView) convertView.findViewById(R.id.tvPostLayoutLocation);
+            holder.tvDate = (TextView) convertView.findViewById(R.id.tvPostLayoutDate);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -58,6 +59,7 @@ public class JobListAdapter extends BaseAdapter {
         holder.tvTitle.setText(jobPostDetails.get(position).getTitle());
         holder.tvDescription.setText(jobPostDetails.get(position).getDescription());
         holder.tvLocation.setText(jobPostDetails.get(position).getLocation());
+        holder.tvDate.setText(jobPostDetails.get(position).getDate());
         return convertView;
     }
 
@@ -65,5 +67,6 @@ public class JobListAdapter extends BaseAdapter {
         TextView tvTitle;
         TextView tvDescription;
         TextView tvLocation;
+        TextView tvDate;
     }
 }

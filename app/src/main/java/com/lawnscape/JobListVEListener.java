@@ -53,9 +53,10 @@ public class JobListVEListener implements ValueEventListener {
                 String title = (String) jobNode.child("title").getValue();
                 String location = (String) jobNode.child("location").getValue();
                 String description = (String) jobNode.child("description").getValue();
+                String date = (String) jobNode.child("date").getValue();
                 String userid = (String) jobNode.child("userid").getValue();
                 String postid = (String) jobNode.getKey().toString();
-                allPostDetailsList.add(new Job(title, location, description, userid, postid));
+                allPostDetailsList.add(new Job(date, title, location, description, userid, postid));
                 //Tell the listview adaptor to update the listview based on the ArrayList updates
                 jobsAdaptor.notifyDataSetChanged();
             }

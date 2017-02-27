@@ -22,17 +22,26 @@ public class ToggleAddIDVEListener implements ValueEventListener {
     String id;
     String key;
     Context currentActivity;
+    boolean willRemove;
 
     public ToggleAddIDVEListener(Context activityContext, String desiredID){
         id = desiredID;
         currentActivity = activityContext;
         key = "";
+        willRemove = true;
     }
 
     public ToggleAddIDVEListener(Context activityContext, String keyVal, String desiredID){
         currentActivity = activityContext;
         id = desiredID;
         key = keyVal;
+        willRemove = true;
+    }
+    public ToggleAddIDVEListener(Context activityContext, String keyVal, String desiredID, boolean shouldRemove){
+        currentActivity = activityContext;
+        id = desiredID;
+        key = keyVal;
+        willRemove = shouldRemove;
     }
 
     @Override
@@ -42,10 +51,12 @@ public class ToggleAddIDVEListener implements ValueEventListener {
             /*
             * If anything causes logic errors I bet it will be the following if statement
              */
-            if (node.getValue().toString().equals(id)||node.getKey().equals(id)) {
+            if (node.getValue().toString().equals(id)&&willRemove||node.getKey().equals(id)) {
                 isDuplicate = true;
                 //Remove on reclick
-                node.getRef().removeValue();
+                if(willRemove) {
+                    node.getRef().removeValue();
+                }
             }
         }
         if (!isDuplicate) {

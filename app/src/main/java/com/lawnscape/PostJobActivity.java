@@ -11,6 +11,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PostJobActivity extends Activity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
@@ -75,7 +78,8 @@ public class PostJobActivity extends Activity {
         if(newDesc.equals("")){
             newDesc = "No description";
         }
-        Job newJob = new Job(newTitle, newLoc, newDesc, userID, newJobRef.getKey());
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd mm:ss");
+        Job newJob = new Job(sdf.format(new Date()),newTitle, newLoc, newDesc, userID, newJobRef.getKey());
         newJobRef.setValue(newJob);
         myUserJobRef.setValue(newJobRef.getKey());
         finish();
