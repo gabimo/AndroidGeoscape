@@ -1,6 +1,10 @@
 package com.lawnscape;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 //Profile Activity
-public class ViewMyProfileActivity extends Activity {
+public class ViewMyProfileActivity extends FragmentActivity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -46,6 +50,14 @@ public class ViewMyProfileActivity extends Activity {
                     //user is logged in
                     currentUser = user;
 
+                    /* Fragment navbar stuff */
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment navBarFragment = new NavBarFragment();
+                    //fragmentTransaction.add(navBarFragment, "NavBar");
+                    fragmentTransaction.attach(navBarFragment);
+                    fragmentTransaction.commit();
+                    /*************************/
                     final TextView emailTV = (TextView) findViewById(R.id.tvUserEmail);
                     final TextView useridTV = (TextView) findViewById(R.id.tvUserID);
                     final TextView locationTV = (TextView) findViewById(R.id.tvLocationProfile);
@@ -84,6 +96,7 @@ public class ViewMyProfileActivity extends Activity {
                             // Failed to read value
                         }
                     });
+
                 }
             }
         };

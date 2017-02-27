@@ -144,8 +144,7 @@ public class ViewJobsListsActivity extends Activity {
     public void viewAllJobs(View v){
         myListRef = database.getReference("Jobs");
         allPostDetailsList.clear();
-        jobsAdapter.notifyDataSetChanged();
-        myListRef.addListenerForSingleValueEvent(
+        myListRef.addValueEventListener(
                 new JobListVEListener(ViewJobsListsActivity.this, allPostDetailsList, jobsAdapter));
     }
     public void viewSavedJobs(View v){

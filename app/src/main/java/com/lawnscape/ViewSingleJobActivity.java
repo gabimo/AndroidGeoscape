@@ -65,7 +65,7 @@ public class ViewSingleJobActivity extends Activity {
                     Button saveButton = (Button) findViewById(R.id.buttonSaveJob);
                     Button editButton = (Button) findViewById(R.id.buttonEditPostDetails);
                     Button chatWithPostersButton = (Button) findViewById(R.id.buttonChatWithPoster);
-                    if(jobPost.getUserid().toString().equals(currentUser.getUid().toString())) {
+                    if(jobPost.getUserid().toString().equals(currentUser.getUid().toString())){
                         //show
                         deleteButton.setVisibility(View.VISIBLE);
                         editButton.setVisibility(View.VISIBLE);
@@ -74,6 +74,20 @@ public class ViewSingleJobActivity extends Activity {
                         saveButton.setVisibility(View.INVISIBLE);
                         chatWithPostersButton.setVisibility(View.INVISIBLE);
                     }
+                    DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference("Admins");
+                    adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.hasChild(currentUser.getUid().toString())){
+                                Button deleteButton = (Button) findViewById(R.id.buttonDeletePost);
+                                Button editButton = (Button) findViewById(R.id.buttonEditPostDetails);
+                                deleteButton.setVisibility(View.VISIBLE);
+                                editButton.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) { }
+                    });
 
                 }
             }
@@ -158,7 +172,7 @@ public class ViewSingleJobActivity extends Activity {
         DatabaseReference myJobRef = database.getReference("Jobs");
         myJobRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
         //remove the job from the users job list with a listener*
-        DatabaseReference myUserJobsRef = database.getReference("Users").child(currentUser.getUid()).child("jobs");
+        DatabaseReference myUserJobsRef = database.getReference("Users").child(jobPost.getUserid()).child("jobs");
         myUserJobsRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid()));
         finish();
     }
@@ -220,7 +234,7 @@ public class ViewSingleJobActivity extends Activity {
                 }
 
                 dataSnapshot.getRef().setValue(
-                        new Job(newTitle, newLoc, newDesc, userID, jobPost.getPostid()));
+                        new Job(jobPost.getDate(), newTitle, newLoc, newDesc, jobPost.getUserid(), jobPost.getPostid()));
             }
 
             @Override
