@@ -10,13 +10,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
+        android:text="View Chats"
+        android:layout_width="152dp"
         android:layout_height="wrap_content"
         android:id="@+id/button7" />
-    <Button
-        android:text="Button2"
-        android:layout_width="wrap_content"
+
+        <ImageButton
+            android:src="@android:drawable/ic_input_add"
+            android:layout_width="83dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton" />
+
+        <Button
+        android:text="All Jobs"
+        android:layout_width="119dp"
         android:layout_height="wrap_content"
         android:id="@+id/button10" />
     </LinearLayout>

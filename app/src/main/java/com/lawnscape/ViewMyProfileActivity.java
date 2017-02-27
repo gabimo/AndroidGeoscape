@@ -51,12 +51,12 @@ public class ViewMyProfileActivity extends FragmentActivity {
                     currentUser = user;
 
                     /* Fragment navbar stuff */
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    Fragment navBarFragment = new NavBarFragment();
+                    //FragmentManager fragmentManager = getSupportFragmentManager();
+                    //FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    //Fragment navBarFragment = new NavBarFragment();
                     //fragmentTransaction.add(navBarFragment, "NavBar");
-                    fragmentTransaction.attach(navBarFragment);
-                    fragmentTransaction.commit();
+                    //fragmentTransaction.attach(navBarFragment);
+                    //fragmentTransaction.commit();
                     /*************************/
                     final TextView emailTV = (TextView) findViewById(R.id.tvUserEmail);
                     final TextView useridTV = (TextView) findViewById(R.id.tvUserID);
