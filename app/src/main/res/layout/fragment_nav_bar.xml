@@ -5,13 +5,21 @@
     tools:context="com.lawnscape.NavBarFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <Button
-        android:text="nav btton"
+        android:text="Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button7" />
-
+    <Button
+        android:text="Button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button10" />
+    </LinearLayout>
 
 
 </FrameLayout>
