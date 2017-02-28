@@ -60,9 +60,9 @@ public class JobListVEListener implements ValueEventListener {
 
                 allPostDetailsList.add(new Job(date, title, location, description, userid, postid));
                 //Tell the listview adaptor to update the listview based on the ArrayList updates
-                jobsAdaptor.notifyDataSetChanged();
             }
         }
+        jobsAdaptor.notifyDataSetChanged();
     }
 
     @Override

@@ -159,7 +159,6 @@ public class ViewJobsListsActivity extends Activity {
     public void viewSomeJobs(View v, String jobSet){
         final ArrayList<String> jobsToFetch = new ArrayList<String>();
         myListRef = database.getReference("Users").child(currentUser.getUid().toString()).child(jobSet).getRef();
-        jobsAdapter.notifyDataSetChanged();
         myListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -167,13 +166,14 @@ public class ViewJobsListsActivity extends Activity {
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                     //make a list of the user's saved jobs
                     jobsToFetch.add(messageSnapshot.getValue().toString());
+                    System.out.println(messageSnapshot.getValue().toString());
                 }
+                DatabaseReference myJobsRef = database.getReference("Jobs");
+                myJobsRef.addListenerForSingleValueEvent(
+                        new JobListVEListener(ViewJobsListsActivity.this, allPostDetailsList, jobsAdapter, jobsToFetch));
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {/* idk what we would do*/ }
         });
-        DatabaseReference myJobsRef = database.getReference("Jobs");
-        myJobsRef.addListenerForSingleValueEvent(
-                new JobListVEListener(ViewJobsListsActivity.this, allPostDetailsList, jobsAdapter, jobsToFetch));
     }
 }
