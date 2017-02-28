@@ -154,7 +154,8 @@ public class ViewJobsListsActivity extends Activity {
         viewSomeJobs(v, "requestedjobs");
     }
     public void viewActiveJobs(View v){
-        viewSomeJobs(v, "activejobs");
+        startActivity(new Intent(this,MapsActivity.class));
+        //viewSomeJobs(v, "activejobs");
     }
     public void viewSomeJobs(View v, String jobSet){
         final ArrayList<String> jobsToFetch = new ArrayList<String>();

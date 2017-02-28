@@ -1,6 +1,8 @@
 package com.lawnscape;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
@@ -59,6 +61,8 @@ public class PostJobActivity extends Activity {
     }
 
     public void postJob(View v){
+        LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
         // grab the widgets as objects
         TextView etTitle = (TextView) findViewById(R.id.etPostJobTitle);
         TextView etLocation = (TextView) findViewById(R.id.etPostJobLocation);
