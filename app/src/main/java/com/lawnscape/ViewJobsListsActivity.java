@@ -85,6 +85,7 @@ public class ViewJobsListsActivity extends Activity {
                 Intent singleJobViewIntent = new Intent(ViewJobsListsActivity.this, ViewSingleJobActivity.class);
                 singleJobViewIntent.putExtra("Job",selectedJob);
                 startActivity(singleJobViewIntent);
+
             }
         });
     }
@@ -143,7 +144,6 @@ public class ViewJobsListsActivity extends Activity {
     }
     public void viewAllJobs(View v){
         myListRef = database.getReference("Jobs");
-        allPostDetailsList.clear();
         myListRef.addValueEventListener(
                 new JobListVEListener(ViewJobsListsActivity.this, allPostDetailsList, jobsAdapter));
     }
@@ -159,7 +159,6 @@ public class ViewJobsListsActivity extends Activity {
     public void viewSomeJobs(View v, String jobSet){
         final ArrayList<String> jobsToFetch = new ArrayList<String>();
         myListRef = database.getReference("Users").child(currentUser.getUid().toString()).child(jobSet).getRef();
-        allPostDetailsList.clear();
         jobsAdapter.notifyDataSetChanged();
         myListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

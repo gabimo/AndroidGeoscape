@@ -45,6 +45,25 @@
         android:id="@+id/tvSingleJobDescription"
         android:textSize="20sp" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Date:"
+            android:layout_width="53dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView10" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSingleJobDate"
+            android:layout_weight="1" />
+    </LinearLayout>
+
     <Button
         android:text="Request Job"
         android:layout_width="match_parent"

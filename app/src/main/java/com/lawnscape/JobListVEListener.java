@@ -47,6 +47,7 @@ public class JobListVEListener implements ValueEventListener {
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         //Add all the jobs to the array list
+        allPostDetailsList.clear();
         for (DataSnapshot jobNode : dataSnapshot.getChildren()) {
             //Either grabs all jobs, or the list of jobs passed via constructor
             if(jobsToGet==null|| jobsToGet.contains(jobNode.getKey().toString())) {
@@ -56,6 +57,7 @@ public class JobListVEListener implements ValueEventListener {
                 String date = (String) jobNode.child("date").getValue();
                 String userid = (String) jobNode.child("userid").getValue();
                 String postid = (String) jobNode.getKey().toString();
+
                 allPostDetailsList.add(new Job(date, title, location, description, userid, postid));
                 //Tell the listview adaptor to update the listview based on the ArrayList updates
                 jobsAdaptor.notifyDataSetChanged();

@@ -13,7 +13,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,14 +38,15 @@ public class ViewSingleJobActivity extends Activity {
         setContentView(R.layout.activity_view_single_job);
         Intent jobIntent = getIntent();
         jobPost = jobIntent.getParcelableExtra("Job");
-
         TextView tvTitle = (TextView) findViewById(R.id.tvSingleJobTitle);
         TextView tvLoc = (TextView) findViewById(R.id.tvSingleJobLocation);
         TextView tvDesc = (TextView) findViewById(R.id.tvSingleJobDescription);
+        TextView tvDate = (TextView) findViewById(R.id.tvSingleJobDate);
 
         tvTitle.setText(jobPost.getTitle());
         tvLoc.setText(jobPost.getLocation());
         tvDesc.setText(jobPost.getDescription());
+        tvDate.setText(jobPost.getDate());
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
@@ -81,6 +84,8 @@ public class ViewSingleJobActivity extends Activity {
                             if(dataSnapshot.hasChild(currentUser.getUid().toString())){
                                 Button deleteButton = (Button) findViewById(R.id.buttonDeletePost);
                                 Button editButton = (Button) findViewById(R.id.buttonEditPostDetails);
+                                deleteButton.setText("Admin Delete");
+                                editButton.setText("Admin Edit");
                                 deleteButton.setVisibility(View.VISIBLE);
                                 editButton.setVisibility(View.VISIBLE);
                             }
@@ -208,9 +213,15 @@ public class ViewSingleJobActivity extends Activity {
     }
     public void editJob(View v){
         setContentView(R.layout.activity_edit_job);
+        EditText etTitle = (EditText) findViewById(R.id.etEditPostJobTitle);
+        EditText etLocation = (EditText) findViewById(R.id.etEditPostJobLocation);
+        EditText etDesc = (EditText) findViewById(R.id.etEditPostJobDescription);
+        etTitle.setText(jobPost.getTitle());
+        etLocation.setText(jobPost.getLocation());
+        etDesc.setText(jobPost.getDescription());
     }
     public void dontChange(View v){
-        setContentView(R.layout.activity_view_single_job);
+        recreate();
     }
 
     public void postChanges(View v){
@@ -220,21 +231,26 @@ public class ViewSingleJobActivity extends Activity {
         myUserJobRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                TextView etTitle = (TextView) findViewById(R.id.etEditPostJobTitle);
-                TextView etLocation = (TextView) findViewById(R.id.etEditPostJobLocation);
-                TextView etDescription = (TextView) findViewById(R.id.etEditPostJobDescription);
+                EditText etTitle = (EditText) findViewById(R.id.etEditPostJobTitle);
+                EditText etLocation = (EditText) findViewById(R.id.etEditPostJobLocation);
+                EditText etDescription = (EditText) findViewById(R.id.etEditPostJobDescription);
 
                 String newTitle = etTitle.getText().toString();
                 String newLoc = etLocation.getText().toString();
                 String newDesc = etDescription.getText().toString();
-                String userID = currentUser.getUid().toString();
+
                 // changes are made
                 if(newDesc.equals("")){
                     newDesc = "No description";
                 }
 
-                dataSnapshot.getRef().setValue(
-                        new Job(jobPost.getDate(), newTitle, newLoc, newDesc, jobPost.getUserid(), jobPost.getPostid()));
+                jobPost.setTitle(newTitle);
+                jobPost.setLocation(newLoc);
+                jobPost.setDescription(newDesc);
+
+                dataSnapshot.getRef().setValue(jobPost);
+                getIntent().putExtra("Job",jobPost);
+                recreate();
             }
 
             @Override
@@ -242,6 +258,5 @@ public class ViewSingleJobActivity extends Activity {
 
             }
         });
-        finish();
     }
 }

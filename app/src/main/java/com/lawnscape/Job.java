@@ -3,6 +3,8 @@ package com.lawnscape;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Map;
+
 /**
  * Created by Mellis on 2/17/2017.
  *
@@ -16,7 +18,8 @@ public class Job implements Parcelable {
     private String description;
     private String userid;
     private String postid;
-    private String activeworker;
+    private Map<String,String> activeworkers;
+    private Map<String,String> requesters;
     private String date;
 
     public Job(String postDate, String t, String l, String u) {
@@ -34,7 +37,6 @@ public class Job implements Parcelable {
         description = d;
         userid = u;
         postid = "";
-        activeworker = "";
     }
     public Job(String postDate, String t, String l, String d, String u, String p) {
         date = postDate;
@@ -43,33 +45,35 @@ public class Job implements Parcelable {
         description = d;
         userid = u;
         postid = p;
-        activeworker = "";
-    }
-
-    public void setPostid(String p){
-        postid=p;
     }
 
     public String getPostid(){ return postid; }
 
-    public String getActiveworker(){return activeworker;}
+    public Map<String,String> getActiveworkers(){return activeworkers;}
+    public Map<String,String> getRequesters(){return requesters;}
 
-    public void setActiveworker(String worker){activeworker = worker; }
+    public void setActiveworker(String key, String userid){activeworkers.put(key,userid); }
 
     public String getDescription() {
         return description;
     }
+    public void setDescription(String d){ description = d;}
 
     public String getTitle() {
         return title;
     }
-
+    public void setTitle(String t){
+        title = t;
+    }
     public String getUserid() {
         return userid;
     }
 
     public String getLocation() {
         return location;
+    }
+    public void setLocation(String l){
+        location = l;
     }
 
     public String getDate() { return date;}
@@ -79,7 +83,7 @@ public class Job implements Parcelable {
 /***************** PARCEL PORTION *****************/
 //Assumes the job has a post id assigned
     public Job(Parcel in){
-        String[] data= new String[5];
+        String[] data= new String[6];
 
         in.readStringArray(data);
         this.title= data[0];
@@ -87,6 +91,7 @@ public class Job implements Parcelable {
         this.description= data[2];
         this.userid= data[3];
         this.postid= data[4];
+        this.date= data[5];
     }
     @Override
     public int describeContents() {
@@ -100,7 +105,8 @@ public class Job implements Parcelable {
                 this.location,
                 this.description,
                 this.userid,
-                this.postid
+                this.postid,
+                this.date
         });
     }
 

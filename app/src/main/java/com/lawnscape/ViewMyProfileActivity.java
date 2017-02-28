@@ -182,7 +182,7 @@ public class ViewMyProfileActivity extends FragmentActivity {
             newUserRef.setValue(new User(newName, newLoc));
         }
         //"return" to profile activity
-        setContentView(R.layout.activity_profile);
+        recreate();
     }
     public void backToProfile(View v){
         setContentView(R.layout.activity_profile);
