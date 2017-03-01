@@ -21,32 +21,41 @@ public class Job implements Parcelable {
     private Map<String,String> activeworkers;
     private Map<String,String> requesters;
     private String date;
+    private String latitude, longitude;
 
-    public Job(String postDate, String t, String l, String u) {
+    public Job(String postDate, String t, String l, String u, String lat, String lng) {
         date = postDate;
         title = t;
         location = l;
         userid = u;
         postid = "";
+        latitude = lat;
+        longitude = lng;
     }
 
-    public Job(String postDate, String t, String l, String d, String u) {
+    public Job(String postDate, String t, String l, String d, String u, String lat, String lng) {
         date = postDate;
         title = t;
         location = l;
         description = d;
         userid = u;
         postid = "";
+        latitude = lat;
+        longitude = lng;
     }
-    public Job(String postDate, String t, String l, String d, String u, String p) {
+    public Job(String postDate, String t, String l, String d, String u, String p, String lat, String lng) {
         date = postDate;
         title = t;
         location = l;
         description = d;
         userid = u;
         postid = p;
+        latitude = lat;
+        longitude = lng;
     }
 
+    public String getLatitude(){return latitude;}
+    public String getLongitude(){return longitude;}
     public String getPostid(){ return postid; }
 
     public Map<String,String> getActiveworkers(){return activeworkers;}
@@ -83,7 +92,7 @@ public class Job implements Parcelable {
 /***************** PARCEL PORTION *****************/
 //Assumes the job has a post id assigned
     public Job(Parcel in){
-        String[] data= new String[6];
+        String[] data= new String[8];
 
         in.readStringArray(data);
         this.title= data[0];
@@ -92,6 +101,8 @@ public class Job implements Parcelable {
         this.userid= data[3];
         this.postid= data[4];
         this.date= data[5];
+        this.latitude = data[6];
+        this.longitude= data[7];
     }
     @Override
     public int describeContents() {
@@ -106,7 +117,9 @@ public class Job implements Parcelable {
                 this.description,
                 this.userid,
                 this.postid,
-                this.date
+                this.date,
+                this.latitude,
+                this.longitude
         });
     }
 

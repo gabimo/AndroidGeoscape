@@ -76,8 +76,10 @@ public class ViewMyPostsActivity extends Activity {
                             String location = (String) dataSnapshot.child("location").getValue();
                             String description = (String) dataSnapshot.child("description").getValue();
                             String userid = (String) dataSnapshot.child("userid").getValue();
+                            String lat = (String) dataSnapshot.child("latitude").getValue();
+                            String lng = (String) dataSnapshot.child("longitude").getValue();
                             String postid = (String) dataSnapshot.getKey().toString();
-                            myJobList.add(new Job(title, location,description,userid,postid));
+                            myJobList.add(new Job(title, location,description,userid,postid, lat, lng));
                             //Tell the listview adaptor to update the listview based on the ArrayList updates
                             jobsAdaptor.notifyDataSetChanged();
                         }

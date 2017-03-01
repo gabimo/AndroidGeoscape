@@ -243,7 +243,7 @@ public class ViewSingleJobActivity extends Activity {
                 if(newDesc.equals("")){
                     newDesc = "No description";
                 }
-
+                // Replace the data and just set the node equal to the updated job on the client side
                 jobPost.setTitle(newTitle);
                 jobPost.setLocation(newLoc);
                 jobPost.setDescription(newDesc);

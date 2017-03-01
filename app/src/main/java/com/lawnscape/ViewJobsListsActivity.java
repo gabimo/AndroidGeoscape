@@ -153,10 +153,7 @@ public class ViewJobsListsActivity extends Activity {
     public void viewRequestedJobs(View v){
         viewSomeJobs(v, "requestedjobs");
     }
-    public void viewActiveJobs(View v){
-        startActivity(new Intent(this,MapsActivity.class));
-        //viewSomeJobs(v, "activejobs");
-    }
+    public void viewActiveJobs(View v){ viewSomeJobs(v, "activejobs"); }
     public void viewSomeJobs(View v, String jobSet){
         final ArrayList<String> jobsToFetch = new ArrayList<String>();
         myListRef = database.getReference("Users").child(currentUser.getUid().toString()).child(jobSet).getRef();
