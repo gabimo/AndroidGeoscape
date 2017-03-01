@@ -80,8 +80,8 @@ public class PostJobActivity extends Activity {
         if (authListener != null) {
             auth.removeAuthStateListener(authListener);
         }
-
     }
+/**************** END LIFECYCLE METHODS ******************/
     public void postJob(View v) {
         if (LOCATION_SERVICES_ENABLED) {
             // Acquire a reference to the system Location Manager
@@ -132,7 +132,8 @@ public class PostJobActivity extends Activity {
                     PERMISSION_ACCESS_COARSE_LOCATION);
         }
     }
-
+/**********************************************************************************/
+/************************** LOCATION GETTING STUFF ********************************/
     @Override
     public void onRequestPermissionsResult ( int requestCode, String[] permissions,
     int[] grantResults){
