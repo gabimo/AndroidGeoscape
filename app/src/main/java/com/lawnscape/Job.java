@@ -10,6 +10,8 @@ import java.util.Map;
  *
  * By being a parcelable object, any Job object can be passed as an intent extra
  * See the bottom half of this class file to understand
+ *
+ * Must have a get method for any variable to be 'parcelable'
  */
 
 public class Job implements Parcelable {

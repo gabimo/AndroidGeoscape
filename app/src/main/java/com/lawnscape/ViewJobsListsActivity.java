@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ViewJobsListsActivity extends Activity {
     //Firebase global init
@@ -30,6 +31,7 @@ public class ViewJobsListsActivity extends Activity {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     ArrayList<Job> allPostDetailsList;
+    ArrayList<String> jobsToFetch;
     JobListAdapter jobsAdapter;
     DatabaseReference myListRef;
 
@@ -43,7 +45,7 @@ public class ViewJobsListsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_job_lists);
-
+        jobsToFetch = null;
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
@@ -123,12 +125,11 @@ public class ViewJobsListsActivity extends Activity {
                 recreate();
                 return true;
             case R.id.viewPostsMenuJobsMap:
-                Intent savedJobsViewIntent = new Intent(this, MapJobsActivity.class);
-                startActivity(savedJobsViewIntent);
+                Intent MapAllJobsViewIntent = new Intent(this, MapJobsActivity.class);
+                startActivity(MapAllJobsViewIntent);
                 return true;
             case R.id.viewPostsMenuSignOut:
                 auth.signOut();
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -141,6 +142,7 @@ public class ViewJobsListsActivity extends Activity {
     }
     public void viewAllJobs(View v){
         myListRef = database.getReference("Jobs");
+        jobsToFetch = null;
         myListRef.addValueEventListener(
                 new JobListVEListener(ViewJobsListsActivity.this, allPostDetailsList, jobsAdapter));
     }
@@ -152,7 +154,7 @@ public class ViewJobsListsActivity extends Activity {
     }
     public void viewActiveJobs(View v){ viewSomeJobs(v, "activejobs"); }
     public void viewSomeJobs(View v, String jobSet){
-        final ArrayList<String> jobsToFetch = new ArrayList<String>();
+        jobsToFetch = new ArrayList<String>();
         myListRef = database.getReference("Users").child(currentUser.getUid().toString()).child(jobSet).getRef();
         myListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -161,7 +163,6 @@ public class ViewJobsListsActivity extends Activity {
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                     //make a list of the user's saved jobs
                     jobsToFetch.add(messageSnapshot.getValue().toString());
-                    System.out.println(messageSnapshot.getValue().toString());
                 }
                 DatabaseReference myJobsRef = database.getReference("Jobs");
                 myJobsRef.addListenerForSingleValueEvent(
@@ -170,5 +171,18 @@ public class ViewJobsListsActivity extends Activity {
             @Override
             public void onCancelled(DatabaseError databaseError) {/* idk what we would do*/ }
         });
+    }
+
+    public void showMapOfJobs(View v){
+
+        Intent MapJobsViewIntent = new Intent(this, MapJobsActivity.class);
+        if(jobsToFetch != null) {
+            MapJobsViewIntent.putStringArrayListExtra("JobsList", jobsToFetch);
+            System.out.println("FETCHING");
+        }else{
+
+            System.out.println("NOT FETCHING");
+        }
+        startActivity(MapJobsViewIntent);
     }
 }

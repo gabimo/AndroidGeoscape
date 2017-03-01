@@ -1,65 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+ xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_job_list_view"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.lawnscape.ViewJobsListsActivity">
-
-    <ListView
+    android:layout_width="match_parent">
+    <RelativeLayout
+        android:id="@+id/activity_job_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lvJobs"
-        android:layout_marginTop="54dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.lawnscape.ViewJobsListsActivity">
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/lvJobs"
+                android:layout_marginTop="54dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
-    <Button
-        android:text="Requests"
+            <Button
+                android:text="Requests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonRequestedJobs"
+                android:onClick="viewRequestedJobs"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:text="Active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonViewActiveJobsList"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/buttonViewSavedJobs"
+                android:layout_toStartOf="@+id/buttonRequestedJobs"
+                android:onClick="viewActiveJobs" />
+
+            <Button
+                android:text="All Jobs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonViewAllJobs"
+                android:onClick="viewAllJobs"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:text="Saved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonViewSavedJobs"
+                android:onClick="viewSavedJobs"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/buttonViewAllJobs"
+                android:layout_toEndOf="@+id/buttonViewAllJobs"
+                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp" />
+
+
+
+    </RelativeLayout>
+
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonRequestedJobs"
-        android:onClick="viewRequestedJobs"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="Active"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonViewActiveJobsList"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/buttonViewSavedJobs"
-        android:layout_toStartOf="@+id/buttonRequestedJobs"
-        android:onClick="viewActiveJobs" />
-
-    <Button
-        android:text="All Jobs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonViewAllJobs"
-        android:onClick="viewAllJobs"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Saved"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonViewSavedJobs"
-        android:onClick="viewSavedJobs"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/buttonViewAllJobs"
-        android:layout_toEndOf="@+id/buttonViewAllJobs"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp" />
-
-
-</RelativeLayout>
+        android:layout_gravity="bottom|right"
+        android:gravity="bottom|right"
+        android:onClick="showMapOfJobs"
+        app:srcCompat="@drawable/plus_add_green"
+        android:src="@drawable/plus_add_green"
+        android:id="@+id/imageButton" />
+</FrameLayout>

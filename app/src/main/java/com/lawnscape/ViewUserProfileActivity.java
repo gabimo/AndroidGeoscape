@@ -12,19 +12,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ViewUserProfileActivity extends Activity {
     //userid the user wants to see
     private String userid;
     private FirebaseUser currentUser;
 
+    private StorageReference mStorageRef;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user_profile);
+
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
         /*********************** IMPORTANT ****************************/
         userid = getIntent().getExtras().get("UserID").toString();
+
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference userRef = database.getReference("Users").child(userid);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {

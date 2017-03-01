@@ -146,8 +146,8 @@ public class ViewMyProfileActivity extends FragmentActivity {
                 finish();
                 return true;
             case R.id.profileMenu5:
-                Intent savedJobsViewIntent = new Intent(ViewMyProfileActivity.this, MapJobsActivity.class);
-                startActivity(savedJobsViewIntent);
+                Intent MapAllJobsViewIntent = new Intent(ViewMyProfileActivity.this, MapJobsActivity.class);
+                startActivity(MapAllJobsViewIntent);
                 return true;
             case R.id.profileMenu6:
                 auth.signOut();
@@ -185,6 +185,5 @@ public class ViewMyProfileActivity extends FragmentActivity {
     }
     public void backToProfile(View v){
         setContentView(R.layout.activity_profile);
-
     }
 }

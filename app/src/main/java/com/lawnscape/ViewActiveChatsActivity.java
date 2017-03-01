@@ -64,6 +64,7 @@ public class ViewActiveChatsActivity extends Activity {
                     userListView = (ListView) findViewById(R.id.lvJobRequesters);
                     userAdapter = new UserListAdapter(ViewActiveChatsActivity.this, userList);
                     userListView.setAdapter(userAdapter);
+                    //Get the users the current user has chat messages with
                     myChatsRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -72,6 +73,7 @@ public class ViewActiveChatsActivity extends Activity {
                             for (DataSnapshot curUserid : dataSnapshot.getChildren()) {
                                 useridList.add(curUserid.getKey().toString());
                             }
+                            //Causes the listview to update with a list of user objects using UserListAdapter
                             myUserRef.addValueEventListener(
                                     new UserListVEListener(ViewActiveChatsActivity.this, userList, useridList, userAdapter));
                         }
@@ -111,7 +113,7 @@ public class ViewActiveChatsActivity extends Activity {
                                     switch (item.getItemId()){
                                         case R.id.longclickDeleteChat:
                                             final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                            //remove the job from the list of all jobs with a listener
+                                            //remove the chat from the list of all chats for both users with a listener
                                             DatabaseReference myChatidRef = database.getReference("Users").child(currentUser.getUid().toString()).child("chatids");
                                             //doesnt delete the actual chat log ;)
                                             myChatidRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -123,7 +125,6 @@ public class ViewActiveChatsActivity extends Activity {
                                                 public void onCancelled(DatabaseError databaseError) {  }
                                             });
                                             myChatidRef = database.getReference("Users").child(selectedUser.getUserid()).child("chatids");
-                                            //doesnt delete the actual chat log ;)
                                             myChatidRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -203,8 +204,7 @@ public class ViewActiveChatsActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewPostsMenuJobsMap:
-                Intent savedJobsViewIntent = new Intent(ViewActiveChatsActivity.this, ViewJobsListsActivity.class);
-                savedJobsViewIntent.putExtra("View", "saved");
+                Intent savedJobsViewIntent = new Intent(ViewActiveChatsActivity.this, MapJobsActivity.class);
                 startActivity(savedJobsViewIntent);
                 finish();
                 return true;

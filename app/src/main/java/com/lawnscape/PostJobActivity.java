@@ -33,19 +33,20 @@ public class PostJobActivity extends Activity {
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
     private Location myCurLoc;
-    private final int PERMISSION_ACCESS_COARSE_LOCATION = 1;// no reason, just a 16 bit number
+
+    private final int PERMISSION_ACCESS_FINE_LOCATION = 1;// no reason, just a 16 bit number
     private boolean LOCATION_SERVICES_ENABLED;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_job);
-
+        //Check for access to location data
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            LOCATION_SERVICES_ENABLED = false;
+            // If no access to location services, then ask for permission
             ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION },
-                    PERMISSION_ACCESS_COARSE_LOCATION);
+                    PERMISSION_ACCESS_FINE_LOCATION);
         }
 
 
@@ -87,11 +88,15 @@ public class PostJobActivity extends Activity {
             // Acquire a reference to the system Location Manager
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             // Register the listener with the Location Manager to receive location updates
-
             try {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, (long) 0, (float) 0, locationListener);
+                //Find the best method to get location(gps, wifi... whatever)
                 String provider = locationManager.getBestProvider(new Criteria(), true);
+                //This makes the location sensors turn on I think
+                locationManager.requestLocationUpdates(provider, (long) 0, (float) 0, locationListener);
+                //Set the curLoc, our listener also does this but who cares
                 myCurLoc = locationManager.getLastKnownLocation(provider);
+                //clean up
+                locationManager.removeUpdates(locationListener);
             } catch (SecurityException e) {
                 e.printStackTrace();
             }
@@ -109,36 +114,38 @@ public class PostJobActivity extends Activity {
                 String userID = currentUser.getUid().toString();
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
+                //Add the job to a list of jobs for the user
                 DatabaseReference myJobsRef = database.getReference("Jobs");
                 DatabaseReference myUserJobRef = database.getReference("Users").child(currentUser.getUid().toString()).child("jobs").push();
 
-                // Add a job
+                // Add a job, newJobRef will now hold the jobid value(a string)
                 DatabaseReference newJobRef = myJobsRef.push();
                 if (newDesc.equals("")) {
                     newDesc = "No description";
                 }
+                //Records current date and time
                 SimpleDateFormat sdf = new SimpleDateFormat("MM-dd mm:ss");
                 Job newJob = new Job(sdf.format(new Date()), newTitle, newLoc, newDesc, userID, newJobRef.getKey(), lat, lng);
+                //Here the job is actually added
                 newJobRef.setValue(newJob);
                 myUserJobRef.setValue(newJobRef.getKey());
                 Intent showLocOnMap = new Intent(this, MapJobsActivity.class);
-                showLocOnMap.putExtra("latitude", lat);
-                showLocOnMap.putExtra("longitude", lng);
                 startActivity(showLocOnMap);
                 finish();
             }
         } else {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
-                    PERMISSION_ACCESS_COARSE_LOCATION);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSION_ACCESS_FINE_LOCATION);
         }
     }
-/**********************************************************************************/
-/************************** LOCATION GETTING STUFF ********************************/
+/******************************* NECESSARY FOR ************************************/
+/************************** LOCATION GETTING METHOD *******************************/
+    // triggered when the user responds to the request for location data
     @Override
-    public void onRequestPermissionsResult ( int requestCode, String[] permissions,
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
     int[] grantResults){
         switch (requestCode) {
-            case PERMISSION_ACCESS_COARSE_LOCATION:
+            case PERMISSION_ACCESS_FINE_LOCATION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     LOCATION_SERVICES_ENABLED = true;
                 } else {
@@ -152,12 +159,13 @@ public class PostJobActivity extends Activity {
                 break;
         }
     }
-
+    // This is nothing more than a variable stored for later user
     LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             // Called when a new location is found by the network location provider.
             myCurLoc = location;
         }
+        //These do not matter since there exists a method bestProvider() returns the best provider
         public void onStatusChanged(String provider, int status, Bundle extras) {}
         public void onProviderEnabled(String provider) {}
         public void onProviderDisabled(String provider) { }

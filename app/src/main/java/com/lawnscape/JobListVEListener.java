@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -29,56 +30,29 @@ public class JobListVEListener implements ValueEventListener {
     ArrayList<String> jobsToGet;
     JobListAdapter jobsAdaptor;
     Context thisContext;
-    boolean justJobs;
 
-    public JobListVEListener(Context context, ArrayList<Job> jobsList){
-        thisContext = context;
-        allPostDetailsList = jobsList;
-        jobsToGet = null;
-        justJobs = true;
-    }
+    //Used to get all jobs
     public JobListVEListener(Context context, ArrayList<Job> jobsList, JobListAdapter jobPostAdaptor){
         thisContext = context;
         allPostDetailsList = jobsList;
         jobsAdaptor = jobPostAdaptor;
         jobsToGet = null;
-        justJobs = false;
     }
-    //used to get specific jobs
+    //used to get specific jobs by an arraylist of their id's
     public JobListVEListener(Context context, ArrayList<Job> jobsList, JobListAdapter jobPostAdaptor, ArrayList<String>JobIDsToGet){
         thisContext = context;
         allPostDetailsList = jobsList;
         jobsAdaptor = jobPostAdaptor;
         jobsToGet = JobIDsToGet;
-        justJobs = false;
     }
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         allPostDetailsList.clear();
-        if(!justJobs) {
+        //Either grabs all jobs, or the list of jobs passed via constructor
+        if (jobsToGet == null) {
             //Add all the jobs to the array list
             for (DataSnapshot jobNode : dataSnapshot.getChildren()) {
-                //Either grabs all jobs, or the list of jobs passed via constructor
-                if (jobsToGet == null || jobsToGet.contains(jobNode.getKey().toString())) {
-                    String title = (String) jobNode.child("title").getValue();
-                    String location = (String) jobNode.child("location").getValue();
-                    String description = (String) jobNode.child("description").getValue();
-                    String date = (String) jobNode.child("date").getValue();
-                    String lat = (String) jobNode.child("latitude").getValue();
-                    String lng = (String) jobNode.child("longitude").getValue();
-                    String userid = (String) jobNode.child("userid").getValue();
-                    String postid = (String) jobNode.getKey().toString();
-
-                    allPostDetailsList.add(new Job(date, title, location, description, userid, postid, lat, lng));
-                    //Tell the listview adaptor to update the listview based on the ArrayList updates
-                }
-            }
-            jobsAdaptor.notifyDataSetChanged();
-        }else{
-            for (DataSnapshot jobNode : dataSnapshot.getChildren()) {
-
-                System.out.println("JOBJOBJOB");
                 String title = (String) jobNode.child("title").getValue();
                 String location = (String) jobNode.child("location").getValue();
                 String description = (String) jobNode.child("description").getValue();
@@ -87,15 +61,27 @@ public class JobListVEListener implements ValueEventListener {
                 String lng = (String) jobNode.child("longitude").getValue();
                 String userid = (String) jobNode.child("userid").getValue();
                 String postid = (String) jobNode.getKey().toString();
-                Job newJob = new Job(date, title, location, description, userid, postid, lat, lng);
-                allPostDetailsList.add(newJob);
 
-                System.out.println(allPostDetailsList.contains(newJob));
+                allPostDetailsList.add(new Job(date, title, location, description, userid, postid, lat, lng));
+                //Tell the listview adaptor to update the listview based on the ArrayList updates
+            }
+        }else{
+            for (String jobid : jobsToGet) {
+                DataSnapshot jobNode = dataSnapshot.child(jobid);
+                String title = (String) jobNode.child("title").getValue();
+                String location = (String) jobNode.child("location").getValue();
+                String description = (String) jobNode.child("description").getValue();
+                String date = (String) jobNode.child("date").getValue();
+                String lat = (String) jobNode.child("latitude").getValue();
+                String lng = (String) jobNode.child("longitude").getValue();
+                String userid = (String) jobNode.child("userid").getValue();
+                String postid = (String) jobNode.getKey().toString();
+                allPostDetailsList.add(new Job(date, title, location, description, userid, postid, lat, lng));
                 //Tell the listview adaptor to update the listview based on the ArrayList updates
             }
         }
+        jobsAdaptor.notifyDataSetChanged();
     }
-
     @Override
     public void onCancelled(DatabaseError firebaseError) {
         Toast.makeText(thisContext ,"DB ERROR: Could not get jobs",Toast.LENGTH_SHORT).show();
