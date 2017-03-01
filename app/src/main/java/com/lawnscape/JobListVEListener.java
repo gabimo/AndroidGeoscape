@@ -29,12 +29,20 @@ public class JobListVEListener implements ValueEventListener {
     ArrayList<String> jobsToGet;
     JobListAdapter jobsAdaptor;
     Context thisContext;
+    boolean justJobs;
 
+    public JobListVEListener(Context context, ArrayList<Job> jobsList){
+        thisContext = context;
+        allPostDetailsList = jobsList;
+        jobsToGet = null;
+        justJobs = true;
+    }
     public JobListVEListener(Context context, ArrayList<Job> jobsList, JobListAdapter jobPostAdaptor){
         thisContext = context;
         allPostDetailsList = jobsList;
         jobsAdaptor = jobPostAdaptor;
         jobsToGet = null;
+        justJobs = false;
     }
     //used to get specific jobs
     public JobListVEListener(Context context, ArrayList<Job> jobsList, JobListAdapter jobPostAdaptor, ArrayList<String>JobIDsToGet){
@@ -42,15 +50,35 @@ public class JobListVEListener implements ValueEventListener {
         allPostDetailsList = jobsList;
         jobsAdaptor = jobPostAdaptor;
         jobsToGet = JobIDsToGet;
+        justJobs = false;
     }
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        //Add all the jobs to the array list
         allPostDetailsList.clear();
-        for (DataSnapshot jobNode : dataSnapshot.getChildren()) {
-            //Either grabs all jobs, or the list of jobs passed via constructor
-            if(jobsToGet==null|| jobsToGet.contains(jobNode.getKey().toString())) {
+        if(!justJobs) {
+            //Add all the jobs to the array list
+            for (DataSnapshot jobNode : dataSnapshot.getChildren()) {
+                //Either grabs all jobs, or the list of jobs passed via constructor
+                if (jobsToGet == null || jobsToGet.contains(jobNode.getKey().toString())) {
+                    String title = (String) jobNode.child("title").getValue();
+                    String location = (String) jobNode.child("location").getValue();
+                    String description = (String) jobNode.child("description").getValue();
+                    String date = (String) jobNode.child("date").getValue();
+                    String lat = (String) jobNode.child("latitude").getValue();
+                    String lng = (String) jobNode.child("longitude").getValue();
+                    String userid = (String) jobNode.child("userid").getValue();
+                    String postid = (String) jobNode.getKey().toString();
+
+                    allPostDetailsList.add(new Job(date, title, location, description, userid, postid, lat, lng));
+                    //Tell the listview adaptor to update the listview based on the ArrayList updates
+                }
+            }
+            jobsAdaptor.notifyDataSetChanged();
+        }else{
+            for (DataSnapshot jobNode : dataSnapshot.getChildren()) {
+
+                System.out.println("JOBJOBJOB");
                 String title = (String) jobNode.child("title").getValue();
                 String location = (String) jobNode.child("location").getValue();
                 String description = (String) jobNode.child("description").getValue();
@@ -59,12 +87,13 @@ public class JobListVEListener implements ValueEventListener {
                 String lng = (String) jobNode.child("longitude").getValue();
                 String userid = (String) jobNode.child("userid").getValue();
                 String postid = (String) jobNode.getKey().toString();
+                Job newJob = new Job(date, title, location, description, userid, postid, lat, lng);
+                allPostDetailsList.add(newJob);
 
-                allPostDetailsList.add(new Job(date, title, location, description, userid, postid, lat, lng));
+                System.out.println(allPostDetailsList.contains(newJob));
                 //Tell the listview adaptor to update the listview based on the ArrayList updates
             }
         }
-        jobsAdaptor.notifyDataSetChanged();
     }
 
     @Override

@@ -146,13 +146,12 @@ public class ViewMyProfileActivity extends FragmentActivity {
                 finish();
                 return true;
             case R.id.profileMenu5:
-                Intent savedJobsViewIntent = new Intent(ViewMyProfileActivity.this, ViewJobsListsActivity.class);
-                savedJobsViewIntent.putExtra("View", "saved");
+                Intent savedJobsViewIntent = new Intent(ViewMyProfileActivity.this, MapJobsActivity.class);
                 startActivity(savedJobsViewIntent);
-                finish();
                 return true;
             case R.id.profileMenu6:
                 auth.signOut();
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

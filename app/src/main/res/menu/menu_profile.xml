@@ -13,7 +13,7 @@
         android:title="View All Jobs" >
     </item>
     <item android:id="@+id/profileMenu5"
-        android:title="My Saved Posts" >
+        android:title="Map of All Jobs" >
     </item>
     <item android:id="@+id/profileMenu6"
         android:title="Sign Out" >

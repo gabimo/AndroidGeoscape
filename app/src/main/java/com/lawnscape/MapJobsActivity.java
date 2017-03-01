@@ -9,11 +9,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private String lat, lng;
+    private ArrayList<Job> jobsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +30,6 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        lat = getIntent().getExtras().get("latitude").toString();
-        lng = getIntent().getExtras().get("longitude").toString();
     }
 
 
@@ -41,9 +46,31 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng yourLoc = new LatLng(Double.valueOf(lat),Double.valueOf(lng));
-        mMap.addMarker(new MarkerOptions().position(yourLoc).title("Marker where you posted the job"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(yourLoc));
+        // Add a marker in Sydney and move the camera;
+        DatabaseReference jobsRef = FirebaseDatabase.getInstance().getReference("Jobs");
+        jobsList = new ArrayList<Job>();
+        jobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot jobNode : dataSnapshot.getChildren()) {
+                    String title = (String) jobNode.child("title").getValue();
+                    String location = (String) jobNode.child("location").getValue();
+                    String description = (String) jobNode.child("description").getValue();
+                    String date = (String) jobNode.child("date").getValue();
+                    String lat = (String) jobNode.child("latitude").getValue();
+                    String lng = (String) jobNode.child("longitude").getValue();
+                    String userid = (String) jobNode.child("userid").getValue();
+                    String postid = (String) jobNode.getKey().toString();
+                    Job newJob = new Job(date, title, location, description, userid, postid, lat, lng);
+                    jobsList.add(newJob);
+                    LatLng loc = new LatLng(Double.valueOf(lat),Double.valueOf(lng));
+                    mMap.addMarker(new MarkerOptions().position(loc).title(newJob.getTitle()));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
     }
 }
