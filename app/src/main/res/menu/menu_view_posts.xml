@@ -12,8 +12,8 @@
     <item android:id="@+id/viewPostsMenuAllJobs"
         android:title="View All Jobs">
     </item>
-    <item android:id="@+id/viewPostsMenuSavedPosts"
-        android:title="My Saved Posts" >
+    <item android:id="@+id/viewPostsMenuJobsMap"
+        android:title="Map of All Jobs" >
     </item>
     <item android:id="@+id/viewPostsMenuSignOut"
         android:title="Sign Out" >

@@ -122,12 +122,9 @@ public class ViewJobsListsActivity extends Activity {
                 }
                 recreate();
                 return true;
-            case R.id.viewPostsMenuSavedPosts:
-                if(getIntent().getExtras().get("View").toString().equals("all")) {
-                    getIntent().removeExtra("View");
-                    getIntent().putExtra("View", "saved");
-                }
-                recreate();
+            case R.id.viewPostsMenuJobsMap:
+                Intent savedJobsViewIntent = new Intent(this, MapJobsActivity.class);
+                startActivity(savedJobsViewIntent);
                 return true;
             case R.id.viewPostsMenuSignOut:
                 auth.signOut();
