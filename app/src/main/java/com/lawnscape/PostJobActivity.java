@@ -121,8 +121,11 @@ public class PostJobActivity extends Activity {
                 Job newJob = new Job(sdf.format(new Date()), newTitle, newLoc, newDesc, userID, newJobRef.getKey(), lat, lng);
                 newJobRef.setValue(newJob);
                 myUserJobRef.setValue(newJobRef.getKey());
+                Intent showLocOnMap = new Intent(this, MapJobsActivity.class);
+                showLocOnMap.putExtra("latitude", lat);
+                showLocOnMap.putExtra("longitude", lng);
+                startActivity(showLocOnMap);
                 finish();
-
             }
         } else {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
