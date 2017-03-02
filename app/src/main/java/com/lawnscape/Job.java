@@ -35,7 +35,7 @@ public class Job implements Parcelable {
         longitude = lng;
     }
 
-    public Job(String postDate, String t, String l, String d, String u, String lat, String lng) {
+    /*public Job(String postDate, String t, String l, String d, String u, String lat, String lng) {
         date = postDate;
         title = t;
         location = l;
@@ -44,7 +44,7 @@ public class Job implements Parcelable {
         postid = "";
         latitude = lat;
         longitude = lng;
-    }
+    }*/
     public Job(String postDate, String t, String l, String d, String u, String p, String lat, String lng) {
         date = postDate;
         title = t;

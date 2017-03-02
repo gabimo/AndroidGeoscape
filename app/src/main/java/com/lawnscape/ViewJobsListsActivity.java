@@ -172,16 +172,12 @@ public class ViewJobsListsActivity extends Activity {
             public void onCancelled(DatabaseError databaseError) {/* idk what we would do*/ }
         });
     }
-
+/********************* Switch to map view ********************/
     public void showMapOfJobs(View v){
 
         Intent MapJobsViewIntent = new Intent(this, MapJobsActivity.class);
         if(jobsToFetch != null) {
             MapJobsViewIntent.putStringArrayListExtra("JobsList", jobsToFetch);
-            System.out.println("FETCHING");
-        }else{
-
-            System.out.println("NOT FETCHING");
         }
         startActivity(MapJobsViewIntent);
     }

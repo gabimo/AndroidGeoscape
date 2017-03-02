@@ -116,6 +116,7 @@ public class ChatActivity extends Activity {
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd mm:ss");
         chatMessage.setDate(sdf.format(new Date()));
         chatMessage.setTextMsg(messageText.getText().toString());
+        chatMessage.setSentByUid(currentUser.getUid());
         messageText.setText("");
         // User listeners to push data to the database
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -123,6 +124,7 @@ public class ChatActivity extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String thechatid = dataSnapshot.getValue().toString();
                 DatabaseReference ourChatRef = database.getReference("Chats").child(thechatid).getRef().push();
+                chatMessage.setMsgId(ourChatRef.getKey());
                 ourChatRef.getRef().setValue(chatMessage);
                 messageAdapter.notifyDataSetChanged();
             }

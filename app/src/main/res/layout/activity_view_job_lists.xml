@@ -75,7 +75,9 @@
         android:layout_gravity="bottom|right"
         android:gravity="bottom|right"
         android:onClick="showMapOfJobs"
-        app:srcCompat="@drawable/plus_add_green"
-        android:src="@drawable/plus_add_green"
+        android:paddingBottom="8dp"
+        android:paddingRight="8dp"
+        app:srcCompat="@drawable/ic_explore_black_24dp"
+        android:src="@drawable/ic_explore_black_24dp"
         android:id="@+id/imageButton" />
 </FrameLayout>

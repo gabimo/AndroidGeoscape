@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -94,7 +95,8 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
                         jobsList.add(newJob);
                         LatLng loc = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
                         // add a point on the map
-                        mMap.addMarker(new MarkerOptions().position(loc).title(newJob.getTitle()));
+                        Marker m = mMap.addMarker(new MarkerOptions().position(loc).title(newJob.getTitle()));
+
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
                         //zoom
                         mMap.animateCamera(CameraUpdateFactory.zoomIn());

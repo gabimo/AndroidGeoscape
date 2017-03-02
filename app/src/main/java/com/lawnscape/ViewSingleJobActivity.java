@@ -152,7 +152,6 @@ public class ViewSingleJobActivity extends Activity {
                 return true;
             case R.id.viewSinglePostMenuSignOut:
                 auth.signOut();
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 //Profile Activity
 public class ViewMyProfileActivity extends FragmentActivity {
@@ -28,6 +29,8 @@ public class ViewMyProfileActivity extends FragmentActivity {
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
 
+    private FirebaseDatabase database;
+
     /************** Begin LifeCycle Functions ****************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,39 +38,31 @@ public class ViewMyProfileActivity extends FragmentActivity {
         setContentView(R.layout.activity_profile);
 
         //get firebase auth instance
+        database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         //make sure user is logged in and has an account
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser == null) {
                     // user auth state is changed - user is null
                     // launch login activity
                     startActivity(new Intent(ViewMyProfileActivity.this, LoginActivity.class));
                     finish();
                 }else{
                     //user is logged in
-                    currentUser = user;
-
-                    /* Fragment navbar stuff */
-                    //FragmentManager fragmentManager = getSupportFragmentManager();
-                    //FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    //Fragment navBarFragment = new NavBarFragment();
-                    //fragmentTransaction.add(navBarFragment, "NavBar");
-                    //fragmentTransaction.attach(navBarFragment);
-                    //fragmentTransaction.commit();
-                    /*************************/
                     final TextView emailTV = (TextView) findViewById(R.id.tvUserEmail);
                     final TextView useridTV = (TextView) findViewById(R.id.tvUserID);
                     final TextView locationTV = (TextView) findViewById(R.id.tvLocationProfile);
                     final TextView nameTV = (TextView) findViewById(R.id.tvNameProfile);
+                    //image API for android
+                    Picasso.with(ViewMyProfileActivity.this);
+                    emailTV.setText(currentUser.getEmail().toString());
+                    useridTV.setText(currentUser.getUid().toString());
 
-                    emailTV.setText(user.getEmail().toString());
-                    useridTV.setText(user.getUid().toString());
-
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myNameRef = database.getReference("Users/"+user.getUid()+"/name");
+                    DatabaseReference myNameRef = database
+                            .getReference("Users/"+currentUser.getUid()+"/name");
                     myNameRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -76,13 +71,11 @@ public class ViewMyProfileActivity extends FragmentActivity {
                             String value = dataSnapshot.getValue(String.class);
                             nameTV.setText(value);
                         }
-
                         @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                        }
+                        public void onCancelled(DatabaseError error) { }
                     });
-                    DatabaseReference myLocRef = database.getReference("Users/"+user.getUid()+"/location");
+                    DatabaseReference myLocRef = database
+                            .getReference("Users/"+currentUser.getUid()+"/location");
                     myLocRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -92,11 +85,8 @@ public class ViewMyProfileActivity extends FragmentActivity {
                             locationTV.setText(value);
                         }
                         @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                        }
+                        public void onCancelled(DatabaseError error) { }
                     });
-
                 }
             }
         };
@@ -114,9 +104,6 @@ public class ViewMyProfileActivity extends FragmentActivity {
         }
     }
     /************** End LifeCycle ****************/
-    public void signout(View v){
-        auth.signOut();
-    }
     /******************* Menu Handling *******************/
     //make the menu show up
     @Override
@@ -151,7 +138,6 @@ public class ViewMyProfileActivity extends FragmentActivity {
                 return true;
             case R.id.profileMenu6:
                 auth.signOut();
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -173,8 +159,6 @@ public class ViewMyProfileActivity extends FragmentActivity {
         String newLoc = etLocation.getText().toString();
 
         // Set name of user and location
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
         DatabaseReference usersRef = database.getReference("Users").child(currentUser.getUid().toString());
         if(!newName.isEmpty()&&!newLoc.isEmpty()){
             DatabaseReference newUserRef = usersRef;

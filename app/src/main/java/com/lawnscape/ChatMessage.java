@@ -8,8 +8,7 @@ public class ChatMessage {
     private String msgId, textMsg, sentByUid, date;
     private boolean isRead;
 
-    public ChatMessage() {
-    }
+    public ChatMessage() { }
 
     public String getMsgId() {
         return msgId;

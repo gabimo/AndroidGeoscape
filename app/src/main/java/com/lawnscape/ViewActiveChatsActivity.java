@@ -210,7 +210,6 @@ public class ViewActiveChatsActivity extends Activity {
                 return true;
             case R.id.viewPostsMenuSignOut:
                 auth.signOut();
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

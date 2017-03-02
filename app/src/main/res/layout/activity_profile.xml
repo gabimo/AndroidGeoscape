@@ -106,5 +106,4 @@
         android:layout_alignEnd="@+id/updateButton"
         android:onClick="gotoPostNewJob" />
 
-
 </RelativeLayout>

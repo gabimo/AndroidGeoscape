@@ -72,14 +72,15 @@ public class ViewMyPostsActivity extends Activity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             //Add all the jobs to the array list
+                            String date = (String) dataSnapshot.child("date").getValue();
                             String title = (String) dataSnapshot.child("title").getValue();
                             String location = (String) dataSnapshot.child("location").getValue();
                             String description = (String) dataSnapshot.child("description").getValue();
                             String userid = (String) dataSnapshot.child("userid").getValue();
                             String lat = (String) dataSnapshot.child("latitude").getValue();
                             String lng = (String) dataSnapshot.child("longitude").getValue();
-                            String postid = (String) dataSnapshot.getKey().toString();
-                            myJobList.add(new Job(title, location,description,userid,postid, lat, lng));
+                            String postid = dataSnapshot.getKey().toString();
+                            myJobList.add(new Job(date, title, location,description,userid,postid, lat, lng));
                             //Tell the listview adaptor to update the listview based on the ArrayList updates
                             jobsAdaptor.notifyDataSetChanged();
                         }
@@ -171,9 +172,6 @@ public class ViewMyPostsActivity extends Activity {
         }
     }
     /************** End LifeCycle ****************/
-    public void signout(View v){
-        auth.signOut();
-    }
     /******************* Menu Handling *******************/
     //make the menu show up
     @Override
