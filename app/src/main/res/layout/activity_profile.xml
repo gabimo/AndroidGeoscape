@@ -106,4 +106,12 @@
         android:layout_alignEnd="@+id/updateButton"
         android:onClick="gotoPostNewJob" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLocationProfile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/ivProfileImage" />
+
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.lawnscape;
 
 import android.app.Activity;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -11,8 +13,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +25,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.IOException;
 
 //Profile Activity
 public class ViewMyProfileActivity extends FragmentActivity {
@@ -30,15 +41,13 @@ public class ViewMyProfileActivity extends FragmentActivity {
     private FirebaseUser currentUser;
 
     private FirebaseDatabase database;
-
+    private StorageReference mStorageRef;
     /************** Begin LifeCycle Functions ****************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
         //get firebase auth instance
-        database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         //make sure user is logged in and has an account
         authListener = new FirebaseAuth.AuthStateListener() {
@@ -52,6 +61,23 @@ public class ViewMyProfileActivity extends FragmentActivity {
                     finish();
                 }else{
                     //user is logged in
+                    database = FirebaseDatabase.getInstance();
+                    //file storage uri/objects are not the same as database storage uri/objects
+                    mStorageRef = FirebaseStorage.getInstance().getReference("UserProfileImages").child("grandma.png");
+                    File localFile = null;
+                    try {
+                        localFile = File.createTempFile("images", "png");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mStorageRef.getDownloadUrl()
+                            .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Picasso.with(ViewMyProfileActivity.this).load(uri.toString()).resize(190, 150).into((ImageView)findViewById(R.id.ivProfileImage));
+                                }
+                            });
+
                     final TextView emailTV = (TextView) findViewById(R.id.tvUserEmail);
                     final TextView useridTV = (TextView) findViewById(R.id.tvUserID);
                     final TextView locationTV = (TextView) findViewById(R.id.tvLocationProfile);
