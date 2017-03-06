@@ -12,6 +12,9 @@
     <item android:id="@+id/viewPostsMenuAllJobs"
         android:title="View All Jobs">
     </item>
+    <item android:id="@+id/viewPostsMenuSearch"
+        android:title="Search Jobs">
+    </item>
     <item android:id="@+id/viewPostsMenuJobsMap"
         android:title="Map of All Jobs" >
     </item>

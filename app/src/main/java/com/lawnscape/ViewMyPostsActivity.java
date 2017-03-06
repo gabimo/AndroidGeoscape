@@ -203,6 +203,9 @@ public class ViewMyPostsActivity extends Activity {
                 startActivity(allJobsViewIntent);
                 finish();
                 return true;
+            case R.id.profileMenuSearch:
+                startActivity(new Intent(ViewMyPostsActivity.this, SearchActivity.class));
+                return true;
             case R.id.viewPostsMenuJobsMap:
                 Intent MapAllJobsViewIntent = new Intent(ViewMyPostsActivity.this, ViewJobsListsActivity.class);
                 MapAllJobsViewIntent.putExtra("View", "saved");

@@ -186,25 +186,29 @@ public class ViewActiveChatsActivity extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.viewPostsMenuMyProfile:
-                startActivity(new Intent(ViewActiveChatsActivity.this, ViewMyProfileActivity.class));
+                startActivity(new Intent(this, ViewMyProfileActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuAllChats:
-                startActivity(new Intent(ViewActiveChatsActivity.this, ViewActiveChatsActivity.class));
+                startActivity(new Intent(this, ViewActiveChatsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:
-                startActivity(new Intent(ViewActiveChatsActivity.this, ViewMyPostsActivity.class));
+                startActivity(new Intent(this, ViewMyPostsActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuAllJobs:
-                Intent allJobsViewIntent = new Intent(ViewActiveChatsActivity.this, ViewJobsListsActivity.class);
+                Intent allJobsViewIntent = new Intent(this, ViewJobsListsActivity.class);
                 allJobsViewIntent.putExtra("View", "all");
                 startActivity(allJobsViewIntent);
                 finish();
                 return true;
+
+            case R.id.viewPostsMenuSearch:
+                startActivity(new Intent(this, SearchActivity.class));
+                return true;
             case R.id.viewPostsMenuJobsMap:
-                Intent savedJobsViewIntent = new Intent(ViewActiveChatsActivity.this, MapJobsActivity.class);
+                Intent savedJobsViewIntent = new Intent(this, MapJobsActivity.class);
                 startActivity(savedJobsViewIntent);
                 finish();
                 return true;

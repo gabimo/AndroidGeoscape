@@ -147,6 +147,9 @@ public class ViewSingleJobActivity extends Activity {
                 startActivity(new Intent(ViewSingleJobActivity.this, ViewMyPostsActivity.class));
                 finish();
                 return true;
+            case R.id.viewSinglePostMenuSearch:
+                startActivity(new Intent(ViewSingleJobActivity.this, SearchActivity.class));
+                return true;
             case R.id.viewSinglePostMenuBackToJobsList:
                 finish();
                 return true;

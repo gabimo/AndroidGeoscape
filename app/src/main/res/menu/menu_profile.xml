@@ -6,6 +6,9 @@
     <item android:id="@+id/profileMenu2"
         android:title="My Chats" >
     </item>
+    <item android:id="@+id/profileMenuSearch"
+        android:title="Search Jobs">
+    </item>
     <item android:id="@+id/profileMenu3"
         android:title="My Job Posts" >
     </item>

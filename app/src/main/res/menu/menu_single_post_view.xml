@@ -9,6 +9,9 @@
     <item android:id="@+id/viewSinglePostMenuMyJobs"
         android:title="My Job Posts">
     </item>
+    <item android:id="@+id/viewSinglePostMenuSearch"
+        android:title="Search Jobs">
+    </item>
     <item android:id="@+id/viewSinglePostMenuBackToJobsList"
         android:title="Back to Jobs">
     </item>

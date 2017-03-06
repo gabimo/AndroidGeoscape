@@ -124,6 +124,10 @@ public class ViewJobsListsActivity extends Activity {
                 }
                 recreate();
                 return true;
+            case R.id.viewPostsMenuSearch:
+                Intent SearchIntent = new Intent(this, SearchActivity.class);
+                startActivity(SearchIntent);
+                return true;
             case R.id.viewPostsMenuJobsMap:
                 Intent MapAllJobsViewIntent = new Intent(this, MapJobsActivity.class);
                 startActivity(MapAllJobsViewIntent);

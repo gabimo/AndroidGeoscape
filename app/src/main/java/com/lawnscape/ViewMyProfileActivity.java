@@ -64,6 +64,7 @@ public class ViewMyProfileActivity extends FragmentActivity {
                     //user is logged in
                     database = FirebaseDatabase.getInstance();
                     //file storage uri/objects are not the same as database storage uri/objects
+                    /*
                     mStorageRef = FirebaseStorage.getInstance().getReference("UserProfileImages").child(currentUser.getUid());
                     mStorageRef.getDownloadUrl()
                             .addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -81,7 +82,7 @@ public class ViewMyProfileActivity extends FragmentActivity {
                                     System.out.println("Fail");
                                 }
                             });
-
+*/
                     final TextView emailTV = (TextView) findViewById(R.id.tvUserEmail);
                     final TextView useridTV = (TextView) findViewById(R.id.tvUserID);
                     final TextView locationTV = (TextView) findViewById(R.id.tvLocationProfile);
@@ -151,6 +152,9 @@ public class ViewMyProfileActivity extends FragmentActivity {
                 return true;
             case R.id.profileMenu2:
                 startActivity(new Intent(ViewMyProfileActivity.this, ViewActiveChatsActivity.class));
+                return true;
+            case R.id.profileMenuSearch:
+                startActivity(new Intent(ViewMyProfileActivity.this, SearchActivity.class));
                 return true;
             case R.id.profileMenu3:
                 startActivity(new Intent(ViewMyProfileActivity.this, ViewMyPostsActivity.class));
