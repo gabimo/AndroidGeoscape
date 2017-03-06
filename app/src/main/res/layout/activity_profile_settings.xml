@@ -62,26 +62,12 @@
             android:layout_alignStart="@+id/etProfSettingsName"
             android:layout_marginTop="12dp" />
 
-        <CheckBox
-            android:text="Let anyone message me"
-            android:layout_width="wrap_content"
+        <Button
+            android:text="Upload Photo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/checkBox"
-            android:layout_below="@+id/checkBox3"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:layout_weight="0.25"
-            android:textAlignment="center"/>
-
-        <CheckBox
-            android:text="Let anyone discover my profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox3"
-            android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/checkBox"
-            android:layout_alignStart="@+id/checkBox"
-            android:layout_weight="0.54" />
+            android:id="@+id/button7"
+            android:onClick="uploadPhoto" />
 
         <Button
             android:text="Apply Changes"

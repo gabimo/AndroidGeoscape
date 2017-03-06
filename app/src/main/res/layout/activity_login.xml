@@ -17,12 +17,12 @@
         android:inputType="textEmailAddress"
         android:hint="Email"
         android:ems="10"
+        android:id="@+id/etLoginEmail"
+        app:bootstrapSize="lg"
+        app:bootstrapBrand="primary"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/etLoginEmail"
-        android:layout_marginTop="71dp"
-        app:bootstrapSize="lg"
-        app:bootstrapBrand="primary" />
+        android:layout_marginTop="13dp" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
         android:layout_width="wrap_content"
@@ -30,49 +30,49 @@
         android:inputType="textPassword"
         android:hint="Password"
         android:ems="10"
-        android:layout_alignLeft="@+id/etLoginEmail"
-        android:layout_alignStart="@+id/etLoginEmail"
-        android:layout_below="@id/etLoginEmail"
         android:id="@+id/etLoginPassword"
-        android:layout_marginTop="65dp"
+        android:typeface="sans"
+        android:layout_marginTop="34dp"
         app:bootstrapSize="lg"
         app:bootstrapBrand="primary"
-        />
+        android:layout_below="@+id/etLoginEmail"
+        android:layout_alignLeft="@+id/etLoginEmail"
+        android:layout_alignStart="@+id/etLoginEmail" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Log In"
-        android:layout_marginBottom="56dp"
         android:id="@+id/loginbutton"
         android:onClick="login"
-        android:layout_above="@+id/textView"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView"
         app:bootstrapBrand="primary"
         app:bootstrapSize="lg"
         app:buttonMode="regular"
         app:showOutline="false"
-        app:roundedCorners="true" />
+        app:roundedCorners="true"
+        android:layout_below="@+id/etLoginPassword"
+        android:layout_alignLeft="@+id/etLoginPassword"
+        android:layout_alignStart="@+id/etLoginPassword"
+        android:layout_marginTop="42dp"
+        android:layout_alignRight="@+id/etLoginPassword"
+        android:layout_alignEnd="@+id/etLoginPassword" />
 
     <TextView
         android:text="Don't have an account?\nClick here"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="51dp"
         android:id="@+id/textView"
         android:typeface="normal"
         android:textSize="18sp"
         android:textAlignment="center"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/etLoginPassword"
-        android:layout_alignStart="@+id/etLoginPassword"
-        android:layout_alignRight="@+id/etLoginPassword"
-        android:layout_alignEnd="@+id/etLoginPassword"
         android:textStyle="normal|italic"
-        android:onClick="signup"/>
+        android:onClick="signup"
+        android:layout_alignTop="@+id/loginbutton"
+        android:layout_alignLeft="@+id/loginbutton"
+        android:layout_alignStart="@+id/loginbutton"
+        android:layout_marginTop="56dp"
+        android:layout_alignRight="@+id/loginbutton"
+        android:layout_alignEnd="@+id/loginbutton" />
 
 
 </RelativeLayout>

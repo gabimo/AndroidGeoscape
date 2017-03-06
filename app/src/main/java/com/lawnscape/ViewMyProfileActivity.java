@@ -60,21 +60,25 @@ public class ViewMyProfileActivity extends FragmentActivity {
                     startActivity(new Intent(ViewMyProfileActivity.this, LoginActivity.class));
                     finish();
                 }else{
+                    setContentView(R.layout.activity_profile);
                     //user is logged in
                     database = FirebaseDatabase.getInstance();
                     //file storage uri/objects are not the same as database storage uri/objects
-                    mStorageRef = FirebaseStorage.getInstance().getReference("UserProfileImages").child("grandma.png");
-                    File localFile = null;
-                    try {
-                        localFile = File.createTempFile("images", "png");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    mStorageRef = FirebaseStorage.getInstance().getReference("UserProfileImages").child(currentUser.getUid());
                     mStorageRef.getDownloadUrl()
                             .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Picasso.with(ViewMyProfileActivity.this).load(uri.toString()).resize(190, 150).into((ImageView)findViewById(R.id.ivProfileImage));
+                                    try {
+                                        Picasso.with(ViewMyProfileActivity.this).load(uri.toString()).resize(190, 150).into((ImageView) findViewById(R.id.ivProfileImage));
+                                    }catch (Exception e){
+
+                                    }
+                                }
+                            }).addOnFailureListener(ViewMyProfileActivity.this, new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    System.out.println("Fail");
                                 }
                             });
 
@@ -195,5 +199,10 @@ public class ViewMyProfileActivity extends FragmentActivity {
     }
     public void backToProfile(View v){
         setContentView(R.layout.activity_profile);
+    }
+    public void uploadPhoto(View v){
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickPhoto , 1);//one can be replaced with any action code
     }
 }
