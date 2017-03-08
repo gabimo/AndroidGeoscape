@@ -35,13 +35,15 @@
         android:stackFromBottom="true"/>
 
     <Button
-        android:text="Send"
+        android:id="@+id/buttonSendMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/etEnterMessage"
-        android:id="@+id/buttonSendMessage"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="sendMessage" />
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/etEnterMessage"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:onClick="sendMessage"
+        android:text="Send"
+        android:textColor="@android:color/white" />
 </RelativeLayout>

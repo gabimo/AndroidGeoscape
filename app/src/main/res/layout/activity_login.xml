@@ -20,9 +20,8 @@
         android:id="@+id/etLoginEmail"
         app:bootstrapSize="lg"
         app:bootstrapBrand="primary"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp" />
+        android:layout_above="@+id/etLoginPassword"
+        android:layout_centerHorizontal="true" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
         android:layout_width="wrap_content"
@@ -32,47 +31,74 @@
         android:ems="10"
         android:id="@+id/etLoginPassword"
         android:typeface="sans"
-        android:layout_marginTop="34dp"
         app:bootstrapSize="lg"
         app:bootstrapBrand="primary"
-        android:layout_below="@+id/etLoginEmail"
+        android:layout_above="@+id/loginbutton"
         android:layout_alignLeft="@+id/etLoginEmail"
-        android:layout_alignStart="@+id/etLoginEmail" />
+        android:layout_alignStart="@+id/etLoginEmail"
+        android:layout_marginBottom="56dp" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/loginbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log In"
-        android:id="@+id/loginbutton"
+        android:layout_above="@+id/textView"
+        android:layout_alignEnd="@+id/etLoginPassword"
+        android:layout_alignLeft="@+id/etLoginPassword"
+        android:layout_alignRight="@+id/etLoginPassword"
+        android:layout_alignStart="@+id/etLoginPassword"
+        android:layout_marginBottom="57dp"
+        android:backgroundTint="@android:color/holo_green_light"
         android:onClick="login"
+        android:text="Log In"
+        android:visibility="visible"
         app:bootstrapBrand="primary"
         app:bootstrapSize="lg"
         app:buttonMode="regular"
-        app:showOutline="false"
         app:roundedCorners="true"
-        android:layout_below="@+id/etLoginPassword"
-        android:layout_alignLeft="@+id/etLoginPassword"
-        android:layout_alignStart="@+id/etLoginPassword"
-        android:layout_marginTop="42dp"
-        android:layout_alignRight="@+id/etLoginPassword"
-        android:layout_alignEnd="@+id/etLoginPassword" />
+        app:showOutline="false" />
 
     <TextView
-        android:text="Don't have an account?\nClick here"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:typeface="normal"
-        android:textSize="18sp"
-        android:textAlignment="center"
-        android:textStyle="normal|italic"
-        android:onClick="signup"
-        android:layout_alignTop="@+id/loginbutton"
-        android:layout_alignLeft="@+id/loginbutton"
-        android:layout_alignStart="@+id/loginbutton"
-        android:layout_marginTop="56dp"
+        android:layout_alignEnd="@+id/loginbutton"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/loginbutton"
-        android:layout_alignEnd="@+id/loginbutton" />
+        android:layout_marginBottom="27dp"
+        android:layout_toRightOf="@+id/textView11"
+        android:onClick="signup"
+        android:text="Sign up"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_green_light"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:text="Don't have an account?"
+        android:layout_alignBaseline="@+id/textView"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignLeft="@+id/loginbutton"
+        android:layout_alignStart="@+id/loginbutton" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="62dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_geoscape" />
 
 
 </RelativeLayout>
