@@ -11,6 +11,43 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lawnscape.ViewMyProfileActivity">
 
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="37dp"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:onClick="gotoPostNewJob"
+        android:text="Post New Job"
+        android:visibility="visible"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="lg"
+        app:buttonMode="regular"
+        app:roundedCorners="true"
+        app:showOutline="false" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/updateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="49dp"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:onClick="gotoProfileSettings"
+        android:text="Edit Profile"
+        android:visibility="visible"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="lg"
+        app:buttonMode="regular"
+        app:roundedCorners="true"
+        app:showOutline="false"
+        android:layout_above="@+id/button5"
+        android:layout_alignRight="@+id/button5"
+        android:layout_alignEnd="@+id/button5"
+        android:layout_alignLeft="@+id/button5"
+        android:layout_alignStart="@+id/button5" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,16 +102,6 @@
         android:layout_marginTop="15dp"
         android:id="@+id/tvLocationProfile" />
 
-    <Button
-        android:text="Update Profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/updateButton"
-        android:layout_below="@+id/tvLocationProfile"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="103dp"
-        android:onClick="gotoProfileSettings" />
-
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
@@ -92,19 +119,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/tvUserID"
         android:layout_alignStart="@+id/tvUserID" />
-
-    <Button
-        android:text="Post New Job"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/updateButton"
-        android:layout_alignLeft="@+id/updateButton"
-        android:layout_alignStart="@+id/updateButton"
-        android:layout_marginTop="43dp"
-        android:id="@+id/button5"
-        android:layout_alignRight="@+id/updateButton"
-        android:layout_alignEnd="@+id/updateButton"
-        android:onClick="gotoPostNewJob" />
 
     <ImageView
         android:layout_width="wrap_content"
