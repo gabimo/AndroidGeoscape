@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_chat"
     android:layout_width="match_parent"
@@ -9,6 +10,23 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lawnscape.ChatActivity">
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/bootstrapButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/lvMessageWindow"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:onClick="sendMessage"
+        android:text="Send"
+        android:visibility="visible"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="lg"
+        app:buttonMode="regular"
+        app:roundedCorners="true"
+        app:showOutline="false" />
 
     <EditText
 
@@ -22,8 +40,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/etEnterMessage"
-        android:layout_toLeftOf="@+id/buttonSendMessage"
-        android:layout_toStartOf="@+id/buttonSendMessage" />
+        android:layout_toStartOf="@+id/bootstrapButton2"
+        android:layout_toLeftOf="@+id/bootstrapButton2" />
 
     <ListView
         android:layout_width="match_parent"
@@ -34,16 +52,4 @@
         android:transcriptMode="alwaysScroll"
         android:stackFromBottom="true"/>
 
-    <Button
-        android:id="@+id/buttonSendMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/etEnterMessage"
-        android:backgroundTint="@android:color/holo_green_light"
-        android:onClick="sendMessage"
-        android:text="Send"
-        android:textColor="@android:color/white" />
 </RelativeLayout>
