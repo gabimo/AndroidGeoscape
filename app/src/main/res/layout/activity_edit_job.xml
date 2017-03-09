@@ -54,7 +54,7 @@
         android:layout_alignRight="@+id/button8"
         android:layout_marginBottom="58dp"
         android:ems="10"
-        android:hint="Provide a detailed description of the job."
+        android:hint="Provide a detailed description of the job"
         android:inputType="textMultiLine" />
 
     <TextView
@@ -82,13 +82,13 @@
         android:id="@+id/etEditPostJobLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:ems="10"
-        android:hint="Address of job"
-        android:inputType="textPersonName"
         android:layout_above="@+id/textView19"
         android:layout_alignLeft="@+id/etEditPostJobTitle"
-        android:layout_alignStart="@+id/etEditPostJobTitle" />
+        android:layout_alignStart="@+id/etEditPostJobTitle"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="Address"
+        android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/textViewEditJobPost"

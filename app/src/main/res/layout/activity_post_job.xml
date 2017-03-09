@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_post_job"
     android:layout_width="match_parent"
@@ -10,13 +11,33 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lawnscape.PostJobActivity">
 
-    <TextView
-        android:text="Job Title"
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:onClick="postJob"
+        android:text="Post Job"
+        android:visibility="visible"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="lg"
+        app:buttonMode="regular"
+        app:roundedCorners="true"
+        app:showOutline="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/etPostJobDescription"
+        android:layout_alignStart="@+id/etPostJobDescription"
+        android:layout_alignRight="@+id/textViewNewJobPost"
+        android:layout_alignEnd="@+id/textViewNewJobPost" />
+
+    <TextView
         android:id="@+id/textView8"
-        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="18sp"
+        android:layout_above="@+id/etPostJobTitle"
         android:layout_alignLeft="@+id/etPostJobTitle"
         android:layout_alignStart="@+id/etPostJobTitle" />
 
@@ -27,63 +48,68 @@
         android:ems="10"
         android:id="@+id/etPostJobTitle"
         android:hint="Job Title"
-        android:layout_below="@+id/textView8"
+        android:layout_marginBottom="29dp"
+        android:layout_above="@+id/textView9"
         android:layout_centerHorizontal="true" />
 
     <EditText
+        android:id="@+id/etPostJobDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
+        android:layout_marginBottom="63dp"
         android:ems="10"
-        android:id="@+id/etPostJobDescription"
-        android:hint="Put a concise job description here, anything you want to say"
-        android:layout_centerVertical="true"
+        android:hint="Provide a detailed description of the job."
+        android:inputType="textMultiLine"
+        android:layout_above="@+id/button3"
         android:layout_alignLeft="@+id/textView19"
         android:layout_alignStart="@+id/textView19" />
 
     <TextView
-        android:text="Location"
+        android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView9"
-        android:layout_below="@+id/etPostJobTitle"
+        android:text="Location"
+        android:textSize="18sp"
+        android:layout_marginBottom="38dp"
+        android:layout_alignBottom="@+id/etPostJobLocation"
         android:layout_alignLeft="@+id/etPostJobTitle"
-        android:layout_alignStart="@+id/etPostJobTitle"
-        android:layout_marginTop="11dp" />
+        android:layout_alignStart="@+id/etPostJobTitle" />
 
     <EditText
+        android:id="@+id/etPostJobLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/etPostJobLocation"
-        android:hint="Location of job"
-        android:layout_alignTop="@+id/textView9"
+        android:hint="Address"
+        android:inputType="textPersonName"
+        android:layout_above="@+id/textView19"
         android:layout_alignLeft="@+id/textView9"
         android:layout_alignStart="@+id/textView9"
-        android:layout_marginTop="23dp" />
+        android:layout_marginBottom="29dp" />
 
     <TextView
-        android:text="Description"
+        android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView19"
-        android:layout_marginBottom="12dp"
+        android:text="Description"
+        android:textSize="18sp"
         android:layout_above="@+id/etPostJobDescription"
         android:layout_alignLeft="@+id/etPostJobLocation"
-        android:layout_alignStart="@+id/etPostJobLocation" />
+        android:layout_alignStart="@+id/etPostJobLocation"
+        android:layout_marginBottom="13dp" />
 
-    <Button
-        android:text="Post Job"
+    <TextView
+        android:id="@+id/textViewNewJobPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button3"
-        android:onClick="postJob"
-        android:layout_below="@+id/etPostJobDescription"
-        android:layout_alignLeft="@+id/etPostJobDescription"
-        android:layout_alignStart="@+id/etPostJobDescription"
-        android:layout_marginTop="44dp"
-        android:layout_alignRight="@+id/etPostJobDescription"
-        android:layout_alignEnd="@+id/etPostJobDescription" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="New Job Post"
+        android:textColor="@android:color/holo_purple"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
 
 </RelativeLayout>
