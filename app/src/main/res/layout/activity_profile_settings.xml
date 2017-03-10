@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_profile_settings"
     android:layout_width="match_parent"
@@ -11,22 +12,15 @@
     android:gravity="center"
     tools:context="com.lawnscape.ViewMyProfileActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:weightSum="1">
-
         <TextView
-            android:text="Your Name"
+            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView5"
+            android:text="Name:"
             android:textSize="18sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/textView3"
-            android:layout_alignEnd="@+id/textView3" />
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/textView3"
+            android:layout_alignStart="@+id/textView3" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -35,59 +29,100 @@
             android:ems="10"
             android:id="@+id/etProfSettingsName"
             android:hint="Your Name"
-            android:layout_marginTop="33dp"
-            android:layout_below="@+id/textView5"
-            android:layout_centerHorizontal="true" />
+            android:layout_marginLeft="19dp"
+            android:layout_marginStart="19dp"
+            android:layout_alignBaseline="@+id/textView5"
+            android:layout_alignBottom="@+id/textView5"
+            android:layout_toRightOf="@+id/textView5"
+            android:layout_toEndOf="@+id/textView5" />
 
         <TextView
-            android:text="Your Location"
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView3"
+            android:layout_weight="0.13"
+            android:text="Location:"
             android:textSize="18sp"
-            android:layout_marginTop="39dp"
             android:layout_below="@+id/etProfSettingsName"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="0.13" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
             android:id="@+id/etProfSettingsLocation"
-            android:hint="Your Location"
-            android:layout_below="@+id/textView3"
-            android:layout_alignLeft="@+id/etProfSettingsName"
-            android:layout_alignStart="@+id/etProfSettingsName"
-            android:layout_marginTop="12dp" />
-
-        <Button
-            android:text="Upload Photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button7"
-            android:onClick="uploadPhoto" />
-
-        <Button
-            android:text="Apply Changes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/changeUserInfoButton"
-            android:layout_marginBottom="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/etProfSettingsLocation"
-            android:layout_alignStart="@+id/etProfSettingsLocation"
-            android:layout_alignRight="@+id/etProfSettingsLocation"
-            android:layout_alignEnd="@+id/etProfSettingsLocation"
-            android:onClick="updateUserInfo" />
+            android:ems="10"
+            android:hint="Your Address"
+            android:inputType="textPersonName"
+            android:layout_below="@+id/etProfSettingsName"
+            android:layout_alignLeft="@+id/etProfSettingsName"
+            android:layout_alignStart="@+id/etProfSettingsName" />
 
-        <Button
-            android:text="Back to Profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/button4"
-            android:onClick="backToProfile" />
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:onClick="backToProfile"
+            android:text="Back to Profile"
+            android:visibility="visible"
+            app:bootstrapBrand="primary"
+            app:bootstrapSize="lg"
+            app:buttonMode="regular"
+            app:roundedCorners="true"
+            app:showOutline="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/etProfSettingsLocation"
+        android:layout_alignStart="@+id/etProfSettingsLocation"
+        android:layout_alignRight="@+id/changeUserInfoButton"
+        android:layout_alignEnd="@+id/changeUserInfoButton" />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/changeUserInfoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:onClick="updateUserInfo"
+            android:text="Apply Changes"
+            android:visibility="visible"
+            app:bootstrapBrand="primary"
+            app:bootstrapSize="lg"
+            app:buttonMode="regular"
+            app:roundedCorners="true"
+            app:showOutline="false"
+            android:layout_above="@+id/button4"
+            android:layout_toRightOf="@+id/textView3"
+            android:layout_toEndOf="@+id/textView3"
+            android:layout_marginBottom="38dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/button4"
+        android:layout_alignLeft="@+id/etProfSettingsName"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/button4"
+        android:layout_alignStart="@+id/etProfSettingsName"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <TextView
+        android:id="@+id/button7"
+        android:onClick="uploadPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imageView4"
+        android:layout_alignRight="@+id/imageView4"
+        android:layout_below="@+id/imageView4"
+        android:layout_toRightOf="@+id/textView3"
+        android:fontFamily="sans-serif"
+        android:text="Edit"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_green_light"
+        android:textStyle="bold" />
 
 </RelativeLayout>
