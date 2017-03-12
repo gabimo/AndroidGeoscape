@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_sign_up"
     android:layout_width="match_parent"
@@ -9,51 +10,91 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lawnscape.LoginActivity">
-    <Button
-        android:text="Back to Login Page"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button"
-        android:layout_marginTop="78dp"
-        android:id="@+id/button2"
-        android:onClick="backToLogin"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button" />
 
-    <Button
-        android:text="Create Account"
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
+        android:backgroundTint="@android:color/holo_green_light"
         android:onClick="createAccount"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/etSignUpPassword"
-        android:layout_alignStart="@+id/etSignUpPassword"
-        android:layout_alignRight="@+id/etSignUpPassword"
-        android:layout_alignEnd="@+id/etSignUpPassword" />
+        android:text="Create Account"
+        android:visibility="visible"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="lg"
+        app:buttonMode="regular"
+        app:roundedCorners="true"
+        app:showOutline="false"
+        android:layout_marginTop="67dp"
+        android:layout_below="@+id/textView15"
+        android:layout_centerHorizontal="true" />
 
     <EditText
+        android:id="@+id/etSignUpEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
         android:ems="10"
-        android:layout_marginBottom="49dp"
-        android:id="@+id/etSignUpEmail"
-        android:hint="Email Address"
-        android:layout_above="@+id/etSignUpPassword"
-        android:layout_alignLeft="@+id/etSignUpPassword"
-        android:layout_alignStart="@+id/etSignUpPassword" />
+        android:hint="E-mail Address"
+        android:inputType="textEmailAddress"
+        android:layout_below="@+id/textView14"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:layout_marginBottom="43dp"
         android:id="@+id/etSignUpPassword"
         android:hint="Password"
-        android:layout_above="@+id/button"
+        android:layout_below="@+id/textView15"
+        android:layout_alignLeft="@+id/etSignUpEmail"
+        android:layout_alignStart="@+id/etSignUpEmail" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="WELCOME!"
+        android:textColor="@android:color/holo_purple"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        android:visibility="visible"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E-mail:"
+        android:textSize="18sp"
+        android:layout_marginTop="80dp"
+        android:layout_below="@+id/textView12"
+        android:layout_alignLeft="@+id/etSignUpEmail"
+        android:layout_alignStart="@+id/etSignUpEmail" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password:"
+        android:textSize="18sp"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/etSignUpEmail"
+        android:layout_alignLeft="@+id/etSignUpPassword"
+        android:layout_alignStart="@+id/etSignUpPassword" />
+
+    <TextView
+        android:id="@+id/textViewBackToLogin"
+        android:onClick="backToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="Back to Login"
+        android:textColor="@android:color/holo_green_light"
+        android:visibility="visible" />
 </RelativeLayout>
