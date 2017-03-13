@@ -30,6 +30,7 @@ public class Splash extends Activity {
                 iv.startAnimation(an2);
                 finish();
                 Intent i = new Intent(Splash.this, ViewMyProfileActivity.class);
+
                 startActivity(i);
             }
 
