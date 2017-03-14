@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,9 +38,9 @@ public class ViewJobsListsActivity extends Activity {
 
     ListView allPostsList;
 
-    Button savedJobsButton;
-    Button allJobsButton;
-    Button activeJobsButton;
+    TextView savedJobsButton;
+    TextView allJobsButton;
+    TextView activeJobsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +53,9 @@ public class ViewJobsListsActivity extends Activity {
         //make sure user is logged in and has an account
 
         currentUser = auth.getCurrentUser();
-        allJobsButton = (Button) findViewById(R.id.buttonViewAllJobs);
-        savedJobsButton = (Button) findViewById(R.id.buttonViewSavedJobs);
-        activeJobsButton = (Button) findViewById(R.id.buttonViewActiveJobsList);
+        allJobsButton = (TextView) findViewById(R.id.buttonViewAllJobs);
+        savedJobsButton = (TextView) findViewById(R.id.buttonViewSavedJobs);
+        activeJobsButton = (TextView) findViewById(R.id.buttonViewActiveJobsList);
         //Gonna hold all the jobs, must init for adaptor
         allPostDetailsList = new ArrayList<Job>();
         //Put the jobs into the adaptor

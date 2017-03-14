@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.app.AlertDialog;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,9 +105,9 @@ public class PostJobActivity extends Activity {
                 String lat = String.valueOf(myCurLoc.getLatitude());
                 String lng = String.valueOf(myCurLoc.getLongitude());
 
-                TextView etTitle = (TextView) findViewById(R.id.etPostJobTitle);
-                TextView etLocation = (TextView) findViewById(R.id.etPostJobLocation);
-                TextView etDescription = (TextView) findViewById(R.id.etPostJobDescription);
+                EditText etTitle = (EditText) findViewById(R.id.etPostJobTitle);
+                EditText etLocation = (EditText) findViewById(R.id.etPostJobLocation);
+                EditText etDescription = (EditText) findViewById(R.id.etPostJobDescription);
 
                 String newTitle = etTitle.getText().toString();
                 String newLoc = etLocation.getText().toString();

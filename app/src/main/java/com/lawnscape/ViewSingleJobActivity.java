@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -64,10 +65,10 @@ public class ViewSingleJobActivity extends Activity {
                     //user is logged in
                     currentUser = FirebaseAuth.getInstance().getCurrentUser();
                     Button deleteButton = (Button) findViewById(R.id.buttonDeletePost);
-                    Button requestButton = (Button) findViewById(R.id.buttonRequestJob);
-                    Button saveButton = (Button) findViewById(R.id.buttonSaveJob);
+                    BootstrapButton requestButton = (BootstrapButton) findViewById(R.id.buttonRequestJob);
+                    BootstrapButton saveButton = (BootstrapButton) findViewById(R.id.buttonSaveJob);
                     Button editButton = (Button) findViewById(R.id.buttonEditPostDetails);
-                    Button chatWithPostersButton = (Button) findViewById(R.id.buttonChatWithPoster);
+                    BootstrapButton chatWithPostersButton = (BootstrapButton) findViewById(R.id.buttonChatWithPoster);
                     if(jobPost.getUserid().toString().equals(currentUser.getUid().toString())){
                         //show
                         deleteButton.setVisibility(View.VISIBLE);
