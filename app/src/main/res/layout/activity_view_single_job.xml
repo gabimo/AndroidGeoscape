@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_view_single_job"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -64,20 +65,31 @@
             android:layout_weight="1" />
     </LinearLayout>
 
-    <Button
-        android:text="Request Job"
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/buttonRequestJob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonRequestJob"
-        android:onClick="requestJob" />
-    <Button
-        android:text="Save Job"
+        android:onClick="requestJob"
+        android:layout_marginBottom="12dp"
+        app:bootstrapBrand="regular"
+        app:bootstrapSize="lg"
+        app:bootstrapText="Request Job"
+        app:roundedCorners="true"
+        app:showOutline="false" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/buttonSaveJob"
         android:elevation="0dp"
+        android:layout_marginBottom="12dp"
         android:gravity="bottom|center_horizontal"
-        android:onClick="saveJob" />
+        android:onClick="saveJob"
+        app:bootstrapText="Save Job"
+        app:bootstrapBrand="info"
+        app:bootstrapSize="lg"
+        app:roundedCorners="true"
+        app:showOutline="false" />
 
     <Button
         android:text="Edit Post Details"
@@ -87,12 +99,17 @@
         android:visibility="gone"
         android:onClick="editJob" />
 
-    <Button
-        android:text="Chat with poster"
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/buttonChatWithPoster"
-        android:onClick="openChat"/>
+        android:onClick="openChat"
+        app:bootstrapText="Chat with poster"
+        app:bootstrapSize="lg"
+        app:bootstrapBrand="success"
+        app:roundedCorners="true"
+        app:showOutline="false" />
+
 
     <Button
         android:text="Delete This Post"
