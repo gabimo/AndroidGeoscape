@@ -92,12 +92,13 @@
         android:adjustViewBounds="true"
         android:cropToPadding="true"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/ic_geoscape"
+        android:background="@drawable/ic_geoscape"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/etLoginEmail" />
 
 
 </RelativeLayout>
