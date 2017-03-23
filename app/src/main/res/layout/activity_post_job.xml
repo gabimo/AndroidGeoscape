@@ -102,14 +102,13 @@
         android:id="@+id/textViewNewJobPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="New Job Post"
         android:textColor="@android:color/holo_purple"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

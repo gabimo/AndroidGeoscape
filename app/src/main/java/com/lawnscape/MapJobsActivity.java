@@ -2,6 +2,10 @@ package com.lawnscape;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallback{
 
     private GoogleMap mMap;
     private ArrayList<Job> jobsList;
@@ -32,6 +36,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        //start anim
     }
     /**
      * Manipulates the map once available.
@@ -44,6 +49,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
         // Add a marker in Sydney and move the camera;
         DatabaseReference jobsRef = FirebaseDatabase.getInstance().getReference("Jobs");
@@ -97,9 +103,9 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
                         // add a point on the map
                         Marker m = mMap.addMarker(new MarkerOptions().position(loc).title(newJob.getTitle()));
 
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
                         //zoom
                         mMap.animateCamera(CameraUpdateFactory.zoomIn());
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
                     }
                 }
 
@@ -109,4 +115,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
             });
         }
     }
+
+
+
 }
