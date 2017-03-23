@@ -99,30 +99,32 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/button4"
-        android:layout_alignLeft="@+id/etProfSettingsName"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/button4"
-        android:layout_alignStart="@+id/etProfSettingsName"
         android:adjustViewBounds="true"
         android:cropToPadding="true"
         android:scaleType="fitCenter"
         android:visibility="visible"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        android:background="@android:drawable/ic_menu_gallery"
+        android:layout_above="@+id/textView5"
+        android:layout_alignRight="@+id/etProfSettingsName"
+        android:layout_alignEnd="@+id/etProfSettingsName"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
 
     <TextView
         android:id="@+id/button7"
         android:onClick="uploadPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/imageView4"
-        android:layout_alignRight="@+id/imageView4"
-        android:layout_below="@+id/imageView4"
-        android:layout_toRightOf="@+id/textView3"
         android:fontFamily="sans-serif"
         android:text="Edit"
         android:textAlignment="center"
         android:textColor="@android:color/holo_green_light"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_above="@+id/textView5"
+        android:layout_alignLeft="@+id/imageView4"
+        android:layout_alignStart="@+id/imageView4"
+        android:layout_alignRight="@+id/etProfSettingsName"
+        android:layout_alignEnd="@+id/etProfSettingsName" />
 
 </RelativeLayout>
