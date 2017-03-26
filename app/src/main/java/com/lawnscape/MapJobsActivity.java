@@ -1,8 +1,7 @@
 package com.lawnscape;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.app.ProgressDialog;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import dmax.dialog.SpotsDialog;
+
 public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -33,11 +34,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        ProgressDialog progress = new ProgressDialog(this,R.style.MyTheme);
-        progress.setCancelable(false);
-        progress.setMessage("Loading maps...");
-        progress.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
-        progress.show();
+        new SpotsDialog(this, R.style.Custom).show();
     }
     /**
      * Manipulates the map once available.

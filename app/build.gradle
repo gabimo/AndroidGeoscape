@@ -42,6 +42,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:10.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.beardedhen:androidbootstrap:2.3.1'
+    compile 'com.github.d-max:spots-dialog:0.7@aar'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
