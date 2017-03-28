@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -19,7 +21,9 @@ import java.util.ArrayList;
 public class PhotoGridAdapter extends BaseAdapter {
     ArrayList<Uri> photoUriList;
     private LayoutInflater layoutInflater;
+    Context context;
     PhotoGridAdapter(Context ctx, ArrayList<Uri> pList){
+        context = ctx;
         photoUriList = pList;
         layoutInflater = LayoutInflater.from(ctx);
     }
@@ -50,8 +54,9 @@ public class PhotoGridAdapter extends BaseAdapter {
         } else {
             holder = (PhotoGridAdapter.ViewHolder) convertView.getTag();
         }
-
-        holder.ivPhoto.setImageURI(photoUriList.get(position));
+      
+        Picasso.with(context).load(photoUriList.get(position)).into(holder.ivPhoto);
+        //holder.ivPhoto.setImageURI(photoUriList.get(position));
         return convertView;
     }
 
