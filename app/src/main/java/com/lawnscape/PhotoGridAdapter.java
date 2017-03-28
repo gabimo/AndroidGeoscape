@@ -30,12 +30,12 @@ public class PhotoGridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return photoUriList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return photoUriList.get(position);
     }
 
     @Override

@@ -28,7 +28,9 @@ public class UploadPhotosActivity extends Activity {
     }
 
     public void pickImage(View v){
-        Intent photoGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent photoGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
+        photoGalleryIntent.setType("image/*");
+        //photoGalleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         startActivityForResult(photoGalleryIntent, PICK_PHOTO_FROM_GALLERY);
     }
 
