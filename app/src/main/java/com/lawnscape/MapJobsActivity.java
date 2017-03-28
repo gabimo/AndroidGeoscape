@@ -25,6 +25,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private ArrayList<Job> jobsList;
     private ArrayList<String> jobsToFetch = null;
+    private SpotsDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,8 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        new SpotsDialog(this, R.style.Custom).show();
+        loadingBar = new SpotsDialog(this, R.style.Custom);
+        loadingBar.show();
     }
     /**
      * Manipulates the map once available.
@@ -99,17 +101,15 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
                         LatLng loc = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
                         // add a point on the map
                         Marker m = mMap.addMarker(new MarkerOptions().position(loc).title(newJob.getTitle()));
-
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
-                        //zoom
-                        mMap.animateCamera(CameraUpdateFactory.zoomIn());
                     }
+                    loadingBar.dismiss();
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(35.23,-80.84),8));
         }
     }
 }
