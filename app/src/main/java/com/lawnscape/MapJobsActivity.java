@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import dmax.dialog.SpotsDialog;
 
 public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallback {
-
     private GoogleMap mMap;
     private ArrayList<Job> jobsList;
     private ArrayList<String> jobsToFetch = null;
