@@ -92,12 +92,12 @@
         app:showOutline="false" />
 
     <Button
-        android:text="Edit Post Details"
+        android:id="@+id/buttonEditPostDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonEditPostDetails"
-        android:visibility="gone"
-        android:onClick="editJob" />
+        android:onClick="editJob"
+        android:text="Edit Post Details"
+        android:visibility="gone" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="match_parent"
@@ -112,10 +112,10 @@
 
 
     <Button
-        android:text="Delete This Post"
+        android:id="@+id/buttonDeletePost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonDeletePost"
         android:onClick="deletePost"
+        android:text="Delete This Post"
         android:visibility="gone" />
 </LinearLayout>

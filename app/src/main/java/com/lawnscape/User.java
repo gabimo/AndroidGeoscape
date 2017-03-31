@@ -3,6 +3,8 @@ package com.lawnscape;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * Created by Mellis on 2/17/2017.
  */

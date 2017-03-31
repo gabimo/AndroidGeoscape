@@ -22,20 +22,17 @@ public class ToggleAddIDVEListener implements ValueEventListener {
     String id;
     String key;
     Context currentActivity;
-    boolean willRemove;
+    boolean willRemove = true;
 
     public ToggleAddIDVEListener(Context activityContext, String desiredID){
         id = desiredID;
         currentActivity = activityContext;
         key = "";
-        willRemove = true;
     }
-
     public ToggleAddIDVEListener(Context activityContext, String keyVal, String desiredID){
         currentActivity = activityContext;
         id = desiredID;
         key = keyVal;
-        willRemove = true;
     }
     public ToggleAddIDVEListener(Context activityContext, String keyVal, String desiredID, boolean shouldRemove){
         currentActivity = activityContext;
