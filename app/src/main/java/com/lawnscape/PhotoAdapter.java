@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 /**
  * Created by Mellis on 3/23/2017.
+ *
+ * Used to populate List containers(GridView, Listview, etc.) with ImageViews via Uri List
+ *
  */
 
 public class PhotoAdapter extends BaseAdapter {
@@ -52,12 +55,10 @@ public class PhotoAdapter extends BaseAdapter {
         } else {
             holder = (PhotoAdapter.ViewHolder) convertView.getTag();
         }
-      
         Picasso.with(context).load(photoUriList.get(position)).into(holder.ivPhoto);
-        //holder.ivPhoto.setImageURI(photoUriList.get(position));
         return convertView;
     }
-
+    //Holds the java objects for the widgets in the R.layout.layout_photo_grid_item above
     static class ViewHolder {
         ImageView ivPhoto;
     }

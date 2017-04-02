@@ -92,7 +92,7 @@ public class ViewMyProfileActivity extends FragmentActivity {
         startActivity(new Intent(this,EditProfileActivity.class));
     }
     public void gotoPostNewJob(View v){
-        startActivity( new Intent( ViewMyProfileActivity.this, PostJobActivity.class));
+        startActivity( new Intent( this, PostJobActivity.class));
     }
     /******************* Menu Handling *******************/
     //make the menu show up
@@ -107,26 +107,24 @@ public class ViewMyProfileActivity extends FragmentActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.profileMenuSettings:
-                setContentView(R.layout.activity_profile_settings);
+                startActivity(new Intent(this, EditProfileActivity.class));
                 return true;
             case R.id.profileMenuChats:
-                startActivity(new Intent(ViewMyProfileActivity.this, ViewActiveChatsActivity.class));
+                startActivity(new Intent(this, ViewActiveChatsActivity.class));
                 return true;
             case R.id.profileMenuSearch:
-                startActivity(new Intent(ViewMyProfileActivity.this, SearchActivity.class));
+                startActivity(new Intent(this, SearchActivity.class));
                 return true;
             case R.id.profileMenuMyJobs:
-                startActivity(new Intent(ViewMyProfileActivity.this, ViewMyPostsActivity.class));
-                finish();
+                startActivity(new Intent(this, ViewMyPostsActivity.class));
                 return true;
             case R.id.profileMenuAllJobs:
-                Intent allJobsViewIntent = new Intent(ViewMyProfileActivity.this, ViewJobsListsActivity.class);
+                Intent allJobsViewIntent = new Intent(this, ViewJobsListsActivity.class);
                 allJobsViewIntent.putExtra("View", "all");
                 startActivity(allJobsViewIntent);
-                finish();
                 return true;
             case R.id.profileMenuAllJobsMap:
-                Intent MapAllJobsViewIntent = new Intent(ViewMyProfileActivity.this, MapJobsActivity.class);
+                Intent MapAllJobsViewIntent = new Intent(this, MapJobsActivity.class);
                 startActivity(MapAllJobsViewIntent);
                 return true;
             case R.id.profileMenuSignOut:
@@ -137,20 +135,18 @@ public class ViewMyProfileActivity extends FragmentActivity {
         }
     }
     public void searchJobsButton(View v){
-        startActivity(new Intent(ViewMyProfileActivity.this, SearchActivity.class));
+        startActivity(new Intent(this, SearchActivity.class));
     }
     public void listAllJobsButton(View v){
-        Intent allJobsViewIntent = new Intent(ViewMyProfileActivity.this, ViewJobsListsActivity.class);
+        Intent allJobsViewIntent = new Intent(this, ViewJobsListsActivity.class);
         allJobsViewIntent.putExtra("View", "all");
         startActivity(allJobsViewIntent);
-        finish();
     }
     public void mapJobsButton(View v){
-        Intent MapAllJobsViewIntent = new Intent(ViewMyProfileActivity.this, MapJobsActivity.class);
+        Intent MapAllJobsViewIntent = new Intent(this, MapJobsActivity.class);
         startActivity(MapAllJobsViewIntent);
     }
     public void myPostsButton(View v){
-        startActivity(new Intent(ViewMyProfileActivity.this, ViewMyPostsActivity.class));
-        finish();
+        startActivity(new Intent(this, ViewMyPostsActivity.class));
     }
 }

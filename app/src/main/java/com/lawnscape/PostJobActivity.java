@@ -38,7 +38,8 @@ public class PostJobActivity extends Activity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private FirebaseStorage storage;
+    private FirebaseDatabase database;
     //photo vars
     private GridView gvUploadPhotos;
     private ArrayList<Uri> uriList;
@@ -49,10 +50,13 @@ public class PostJobActivity extends Activity {
     private final int PERMISSION_ACCESS_COARSE_LOCATION = 1;// no reason, just a 16 bit number
     private boolean LOCATION_SERVICES_ENABLED;
 
+    private EditText etTitle;
+    private EditText etLocation;
+    private EditText etDescription;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_job);
         //Check for access to location data
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -62,13 +66,6 @@ public class PostJobActivity extends Activity {
         }else{
             LOCATION_SERVICES_ENABLED = true;
         }
-        //get firebase auth instance
-        mAuth = FirebaseAuth.getInstance();
-        //Photos part
-        gvUploadPhotos = (GridView) findViewById(R.id.gvPostJob);
-        uriList = new ArrayList<Uri>();
-        photoAdapter = new PhotoAdapter(PostJobActivity.this, uriList);
-        gvUploadPhotos.setAdapter(photoAdapter);
         //make sure user is logged in and has an account
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -81,7 +78,16 @@ public class PostJobActivity extends Activity {
                     finish();
                 } else {
                     //user is logged in
-
+                    setContentView(R.layout.activity_post_job);
+                    //get firebase auth instance
+                    mAuth = FirebaseAuth.getInstance();
+                    storage = FirebaseStorage.getInstance();
+                    database = FirebaseDatabase.getInstance();
+                    //Photos part
+                    gvUploadPhotos = (GridView) findViewById(R.id.gvPostJob);
+                    uriList = new ArrayList<Uri>();
+                    photoAdapter = new PhotoAdapter(PostJobActivity.this, uriList);
+                    gvUploadPhotos.setAdapter(photoAdapter);
                 }
             }
         };
@@ -119,31 +125,25 @@ public class PostJobActivity extends Activity {
                 e.printStackTrace();
             }
             if (myCurLoc != null) {
-                String lat = String.valueOf(myCurLoc.getLatitude());
-                String lng = String.valueOf(myCurLoc.getLongitude());
-
-                EditText etTitle = (EditText) findViewById(R.id.etPostJobTitle);
-                EditText etLocation = (EditText) findViewById(R.id.etPostJobLocation);
-                EditText etDescription = (EditText) findViewById(R.id.etPostJobDescription);
-
+                etTitle = (EditText) findViewById(R.id.etPostJobTitle);
+                etLocation = (EditText) findViewById(R.id.etPostJobLocation);
+                etDescription = (EditText) findViewById(R.id.etPostJobDescription);
                 String newTitle = etTitle.getText().toString();
                 String newLoc = etLocation.getText().toString();
                 String newDesc = etDescription.getText().toString();
                 String userID = currentUser.getUid().toString();
-
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                String lat = String.valueOf(myCurLoc.getLatitude());
+                String lng = String.valueOf(myCurLoc.getLongitude());
                 //Add the job to a list of jobs for the user
                 DatabaseReference myJobsRef = database.getReference("Jobs");
                 DatabaseReference myUserJobRef = database.getReference("Users").child(currentUser.getUid().toString()).child("jobs").push();
-
                 // Add a job, newJobRef will now hold the jobid value(a string)
                 DatabaseReference newJobRef = myJobsRef.push();
-                //upload the first photo
+                //upload the first photo if there are any
                 if(!uriList.isEmpty()){
                     StorageReference pathReference = storage.getReference().child("jobphotos").child(newJobRef.getKey());
                     pathReference.putFile(uriList.get(0));
                 }
-
                 if (newDesc.equals("")) {
                     newDesc = "No description";
                 }
