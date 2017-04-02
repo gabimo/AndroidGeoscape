@@ -1,11 +1,7 @@
 package com.lawnscape;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,11 +18,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallback{
+import dmax.dialog.SpotsDialog;
 
+public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private ArrayList<Job> jobsList;
     private ArrayList<String> jobsToFetch = null;
+    private SpotsDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +34,9 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        //start anim
+        //start loading bar
+        loadingBar = new SpotsDialog(this, R.style.Custom);
+        loadingBar.show();
     }
     /**
      * Manipulates the map once available.
@@ -102,17 +102,15 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
                         LatLng loc = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
                         // add a point on the map
                         Marker m = mMap.addMarker(new MarkerOptions().position(loc).title(newJob.getTitle()));
-
-                        //zoom
-                        mMap.animateCamera(CameraUpdateFactory.zoomIn());
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
                     }
+                    loadingBar.dismiss();
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(35.23,-80.84),8));
         }
     }
 
