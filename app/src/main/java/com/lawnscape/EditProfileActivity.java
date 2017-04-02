@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +31,7 @@ public class EditProfileActivity extends Activity {
     //Location Vars
     private Location myCurLoc;
     private final int PERMISSION_ACCESS_COARSE_LOCATION = 1;// no reason, just a 16 bit number
+    private ImageView ivProfileImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,17 @@ public class EditProfileActivity extends Activity {
 
         database = FirebaseDatabase.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        ivProfileImage = (ImageView) findViewById(R.id.ivEditProfile);
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent photoGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                photoGalleryIntent.setType("image/*");
+                //photoGalleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(photoGalleryIntent, PICK_PHOTO_FROM_GALLERY);
+            }
+        });
     }
 
     public void updateUserInfo(View v){
@@ -61,21 +74,13 @@ public class EditProfileActivity extends Activity {
     }
 
     public void pickImage(View v){
-        Intent photoGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
-        photoGalleryIntent.setType("image/*");
-        //photoGalleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(photoGalleryIntent, PICK_PHOTO_FROM_GALLERY);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_PHOTO_FROM_GALLERY && resultCode == RESULT_OK) {
             Uri targetURI = data.getData();
-            if(!uriList.isEmpty()){
-                uriList.clear();
-            }
-            uriList.add(targetURI);
-            photoAdapter.notifyDataSetChanged();
+            ivProfileImage.setImageURI(targetURI);
         }
     }
 }
