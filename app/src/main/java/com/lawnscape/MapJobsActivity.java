@@ -34,6 +34,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        //start loading bar
         loadingBar = new SpotsDialog(this, R.style.Custom);
         loadingBar.show();
     }
@@ -48,6 +49,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
         // Add a marker in Sydney and move the camera;
         DatabaseReference jobsRef = FirebaseDatabase.getInstance().getReference("Jobs");
@@ -111,4 +113,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(35.23,-80.84),8));
         }
     }
+
+
+
 }

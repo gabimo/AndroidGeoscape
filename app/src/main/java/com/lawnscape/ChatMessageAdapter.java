@@ -50,7 +50,9 @@ public class ChatMessageAdapter extends BaseAdapter {
         }
 
         holder.tvTime.setText(messages.get(position).getDate());
+
         holder.tvMessage.setText(messages.get(position).getTextMsg());
+
         return convertView;
     }
 

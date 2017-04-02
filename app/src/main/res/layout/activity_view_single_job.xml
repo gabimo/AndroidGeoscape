@@ -10,7 +10,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.lawnscape.ViewSingleJobActivity">
+    tools:context="com.lawnscape.ViewSingleJobActivity"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/ivSingleJobPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.18"
+        app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_000" />
 
     <TextView
         android:text="TextView"
