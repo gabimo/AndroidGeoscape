@@ -21,84 +21,96 @@
         android:visibility="visible"
         app:srcCompat="@drawable/ic_explore_black_24dp" />
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/activity_job_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.lawnscape.ViewJobsListsActivity">
 
-        <ListView
-            android:id="@+id/lvJobs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="54dp" />
-
         <TextView
             android:id="@+id/buttonViewAllJobs"
-            android:onClick="viewAllJobs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="18dp"
+            android:layout_marginRight="27dp"
+            android:onClick="viewAllJobs"
             android:text="All Jobs"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintRight_toLeftOf="@+id/buttonViewActiveJobsList"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/lvJobs"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" />
 
         <TextView
             android:id="@+id/buttonViewActiveJobsList"
-            android:onClick="viewActiveJobs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginRight="30dp"
+            android:onClick="viewActiveJobs"
             android:text="Active"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_alignBaseline="@+id/buttonViewAllJobs"
-            android:layout_alignBottom="@+id/buttonViewAllJobs"
-            android:layout_toRightOf="@+id/buttonViewAllJobs"
-            android:layout_toEndOf="@+id/buttonViewAllJobs" />
+            app:layout_constraintRight_toLeftOf="@+id/buttonViewSavedJobs"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/lvJobs" />
 
         <TextView
             android:id="@+id/buttonRequestedJobs"
-            android:onClick="viewRequestedJobsJobs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="viewRequestedJobsJobs"
             android:text="Requests"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_alignBaseline="@+id/buttonViewActiveJobsList"
-            android:layout_alignBottom="@+id/buttonViewActiveJobsList"
-            android:layout_toRightOf="@+id/buttonViewActiveJobsList"
-            android:layout_toEndOf="@+id/buttonViewActiveJobsList"
-            android:layout_marginLeft="42dp"
-            android:layout_marginStart="42dp" />
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/lvJobs"
+            android:layout_marginRight="34dp"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
             android:id="@+id/buttonViewSavedJobs"
-            android:onClick="viewSavedJobs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/buttonRequestedJobs"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="27dp"
+            android:onClick="viewSavedJobs"
             android:text="Saved"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_alignBottom="@+id/buttonRequestedJobs"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            app:layout_constraintRight_toLeftOf="@+id/buttonRequestedJobs"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/lvJobs" />
+
+        <ListView
+            android:id="@+id/lvJobs"
+            android:layout_width="366dp"
+            android:layout_height="442dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/buttonViewAllJobs"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="45dp"
+            tools:layout_editor_absoluteX="8dp" />
 
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 </FrameLayout>

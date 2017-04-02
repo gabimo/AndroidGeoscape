@@ -21,23 +21,23 @@
         app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_000" />
 
     <TextView
-        android:text="TextView"
+        android:id="@+id/tvSingleJobTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="36dp"
-        android:id="@+id/tvSingleJobTitle"
-        android:textSize="24sp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginBottom="36dp"
+        android:layout_marginStart="5dp"
+        android:text="TextView"
+        android:textSize="24sp" />
 
     <TextView
-        android:text="Location:"
+        android:id="@+id/tvSingleJobLocationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvSingleJobLocation"
         android:layout_marginBottom="6dp"
-        android:id="@+id/textView13" />
+        android:text="Location:" />
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
@@ -60,10 +60,10 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="Date:"
+            android:id="@+id/tvSingleJobDateLabel"
             android:layout_width="53dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textView10" />
+            android:text="Date:" />
 
         <TextView
             android:text="TextView"

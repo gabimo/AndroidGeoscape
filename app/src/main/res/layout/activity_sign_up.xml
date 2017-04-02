@@ -12,7 +12,7 @@
     tools:context="com.lawnscape.LoginActivity">
 
     <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/button2"
+        android:id="@+id/buttonSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/holo_green_light"
@@ -24,8 +24,8 @@
         app:buttonMode="regular"
         app:roundedCorners="true"
         app:showOutline="false"
-        android:layout_marginTop="67dp"
-        android:layout_below="@+id/textView15"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/etSignUpPassword"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -35,8 +35,10 @@
         android:ems="10"
         android:hint="E-mail Address"
         android:inputType="textEmailAddress"
-        android:layout_below="@+id/textView14"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignBaseline="@+id/tvSignUpEmailLabel"
+        android:layout_alignBottom="@+id/tvSignUpEmailLabel"
+        android:layout_alignLeft="@+id/tvSignUpHeader"
+        android:layout_alignStart="@+id/tvSignUpHeader" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -45,15 +47,15 @@
         android:ems="10"
         android:id="@+id/etSignUpPassword"
         android:hint="Password"
-        android:layout_below="@+id/textView15"
+        android:layout_below="@+id/etSignUpEmail"
         android:layout_alignLeft="@+id/etSignUpEmail"
-        android:layout_alignStart="@+id/etSignUpEmail" />
+        android:layout_alignStart="@+id/etSignUpEmail"
+        android:layout_marginTop="16dp" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/tvSignUpHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="WELCOME!"
         android:textColor="@android:color/holo_purple"
@@ -65,35 +67,35 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/tvSignUpEmailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="E-mail:"
         android:textSize="18sp"
-        android:layout_marginTop="80dp"
-        android:layout_below="@+id/textView12"
-        android:layout_alignLeft="@+id/etSignUpEmail"
-        android:layout_alignStart="@+id/etSignUpEmail" />
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/tvSignUpHeader"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/tvSignUpPasswordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password:"
-        android:textSize="18sp"
-        android:layout_marginTop="26dp"
-        android:layout_below="@+id/etSignUpEmail"
-        android:layout_alignLeft="@+id/etSignUpPassword"
-        android:layout_alignStart="@+id/etSignUpPassword" />
-
-    <TextView
-        android:id="@+id/textViewBackToLogin"
-        android:onClick="backToLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBaseline="@+id/etSignUpPassword"
+        android:layout_alignBottom="@+id/etSignUpPassword"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:text="Password:"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvSignUpLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonSignUp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:onClick="backToLogin"
         android:text="Back to Login"
         android:textColor="@android:color/holo_green_light"
         android:visibility="visible" />

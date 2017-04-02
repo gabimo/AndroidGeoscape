@@ -193,13 +193,6 @@ public class ViewSingleJobActivity extends Activity {
     }
 
     public void deletePost(View v){
-        /*
-        Firebase does this thing where it wants you to push data to the DB
-        and you get a unique post ID like Kdksk12sskw-2k_sk3mwk__jdk3k
-        but you cant just get the post and delete it like this next line of this comment
-       -- FirebaseDatabase.getInstance().getReference("Kdksk12sskw-2k_sk3mwk__jdk3k").removeValue();
-        you have to instead delete it like I have implemented below with listeners
-        */
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         //remove the job from the list of all jobs with a listener
         DatabaseReference myJobRef = database.getReference("Jobs");
@@ -248,43 +241,5 @@ public class ViewSingleJobActivity extends Activity {
         etLocation.setText(jobPost.getLocation());
         etDesc.setText(jobPost.getDescription());
     }
-    public void dontChange(View v){
-        recreate();
-    }
 
-    public void postChanges(View v){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myUserJobRef = database.getReference("Jobs").child(jobPost.getPostid());
-
-        myUserJobRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                EditText etTitle = (EditText) findViewById(R.id.etEditJobTitle);
-                EditText etLocation = (EditText) findViewById(R.id.etEditJobLocation);
-                EditText etDescription = (EditText) findViewById(R.id.etEditJobDescription);
-
-                String newTitle = etTitle.getText().toString();
-                String newLoc = etLocation.getText().toString();
-                String newDesc = etDescription.getText().toString();
-
-                // changes are made
-                if(newDesc.equals("")){
-                    newDesc = "No description";
-                }
-                // Replace the data and just set the node equal to the updated job on the client side
-                jobPost.setTitle(newTitle);
-                jobPost.setLocation(newLoc);
-                jobPost.setDescription(newDesc);
-
-                dataSnapshot.getRef().setValue(jobPost);
-                getIntent().putExtra("Job",jobPost);
-                recreate();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 }

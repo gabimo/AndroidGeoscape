@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
@@ -10,7 +11,16 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tvPostLayoutLocation"
-        android:text="DATE" />
+        android:text="DATE"
+        android:textSize="12sp"
+        tools:layout_editor_absoluteY="2dp"
+        app:layout_constraintLeft_toRightOf="@+id/tvPostLayoutTitle"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.963"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/tvPostLayoutTitle"
@@ -22,35 +32,56 @@
         android:text="TITLE"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="2dp"
+        app:layout_constraintLeft_toRightOf="@+id/ivPostLayoutThumbnail"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp" />
 
     <TextView
         android:id="@+id/tvPostLayoutDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="302dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/tvPostLayoutTitle"
+        android:layout_marginLeft="8dp"
+        android:layout_toEndOf="@+id/ivPostLayoutThumbnail"
+        android:layout_toRightOf="@+id/ivPostLayoutThumbnail"
         android:text="DESCRIPTION"
         android:textSize="14sp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginStart="23dp"
-        android:layout_below="@+id/tvPostLayoutTitle"
-        android:layout_toRightOf="@+id/ivPostLayoutThumbnail"
-        android:layout_toEndOf="@+id/ivPostLayoutThumbnail" />
+        app:layout_constraintLeft_toRightOf="@+id/ivPostLayoutThumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostLayoutLocation"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/tvPostLayoutLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#343434"
-        android:text="LOCATION"
-        android:textSize="14sp"
         android:layout_alignBottom="@+id/tvPostLayoutTitle"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:text="LOCATION"
+        android:textColor="#343434"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostLayoutTitle"
+        android:layout_marginRight="7dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/ivPostLayoutThumbnail"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="7dp" />
 
     <ImageView
         android:id="@+id/ivPostLayoutThumbnail"
-        android:layout_width="50dp"
-        android:layout_height="60dp"
-        app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_005" />
+        android:layout_width="68dp"
+        android:layout_height="65dp"
+        app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_005"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="2dp" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

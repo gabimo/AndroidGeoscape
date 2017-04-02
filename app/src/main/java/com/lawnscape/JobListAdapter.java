@@ -81,7 +81,8 @@ public class JobListAdapter extends BaseAdapter {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+                //Default no image
+                holder.ivJobPic.setImageDrawable(null);
             }
         });
 

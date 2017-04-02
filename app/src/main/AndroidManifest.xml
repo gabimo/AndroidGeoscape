@@ -36,7 +36,8 @@
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".PostJobActivity"
-            android:label="@string/title_activity_post_job" />
+            android:label="@string/title_activity_post_job"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ViewMyPostsActivity"
             android:label="@string/title_activity_view_my_posts" />
@@ -46,7 +47,8 @@
         <activity android:name=".ViewActiveChatsActivity" />
         <activity
             android:name=".ViewUserProfileActivity"
-            android:label="@string/title_activity_view_user_profile" />
+            android:label="@string/title_activity_view_user_profile"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ViewJobRequestsActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
