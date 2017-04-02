@@ -1,5 +1,8 @@
 package com.lawnscape;
 
+import android.net.Uri;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,14 +10,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 //Profile Activity
 public class ViewMyProfileActivity extends FragmentActivity {
@@ -22,10 +31,12 @@ public class ViewMyProfileActivity extends FragmentActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private FirebaseStorage storage;
     private TextView tvEmail;
     private TextView tvUserID;
     private TextView tvLocation;
     private TextView tvName;
+    private ImageView ivProfilePhoto;
 
     private FirebaseDatabase database;
     /************** Begin LifeCycle Functions ****************/
@@ -52,8 +63,28 @@ public class ViewMyProfileActivity extends FragmentActivity {
                     tvUserID = (TextView) findViewById(R.id.tvMyProfileUserID);
                     tvLocation = (TextView) findViewById(R.id.tvMyProfileLocation);
                     tvName = (TextView) findViewById(R.id.tvMyProfileName);
+                    ivProfilePhoto = (ImageView) findViewById(R.id.ivMyProfileImage);
                     tvEmail.setText(currentUser.getEmail().toString());
                     tvUserID.setText(currentUser.getUid().toString());
+
+                    storage = FirebaseStorage.getInstance();
+                    //load profile photo
+                    StorageReference pathReference = storage.getReference().child("userprofilephotos").child(currentUser.getUid());
+                    pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            // Got the download URL for 'users/me/profile.png'
+                            // Pass it to Picasso to download, show in ImageView and caching
+                            Picasso.with(ViewMyProfileActivity.this).load(uri).into(ivProfilePhoto);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            //Default no image
+                            ivProfilePhoto.setImageDrawable(null);
+                        }
+                    });
+
 
                     database.getReference("Users").child(currentUser.getUid())
                             .addListenerForSingleValueEvent(new ValueEventListener() {
