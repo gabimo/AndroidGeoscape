@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvPostLayoutDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvPostLayoutLocation"
+        android:text="DATE" />
+
     <TextView
         android:id="@+id/tvPostLayoutTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:layout_alignLeft="@+id/tvPostLayoutDescription"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tvPostLayoutDescription"
+        android:text="TITLE"
         android:textSize="16sp"
-        android:text="TITLE TITLE"
-        android:typeface="sans"/>
+        android:textStyle="bold"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/tvPostLayoutDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DESCRIPTION"
-        android:layout_below="@id/tvPostLayoutTitle"
-        android:layout_marginTop="5dip"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
+        android:layout_below="@+id/tvPostLayoutTitle"
+        android:layout_toRightOf="@+id/ivPostLayoutThumbnail"
+        android:layout_toEndOf="@+id/ivPostLayoutThumbnail" />
 
     <TextView
         android:id="@+id/tvPostLayoutLocation"
@@ -30,13 +47,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:text="DATE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPostLayoutDescription"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/tvPostLayoutDate" />
+    <ImageView
+        android:id="@+id/ivPostLayoutThumbnail"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_005" />
 
 </RelativeLayout>
