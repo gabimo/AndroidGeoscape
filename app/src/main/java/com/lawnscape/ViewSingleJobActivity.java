@@ -95,13 +95,14 @@ public class ViewSingleJobActivity extends Activity {
                     Button editButton = (Button) findViewById(R.id.buttonEditPostDetails);
                     BootstrapButton chatWithPostersButton = (BootstrapButton) findViewById(R.id.buttonChatWithPoster);
                     if(jobPost.getUserid().toString().equals(currentUser.getUid().toString())){
-                        //show
-                        deleteButton.setVisibility(View.VISIBLE);
-                        editButton.setVisibility(View.VISIBLE);
                         //hide
                         requestButton.setVisibility(View.INVISIBLE);
                         saveButton.setVisibility(View.INVISIBLE);
                         chatWithPostersButton.setVisibility(View.INVISIBLE);
+                    }else{
+                        //hide
+                        deleteButton.setVisibility(View.INVISIBLE);
+                        editButton.setVisibility(View.INVISIBLE);
                     }
                     DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference("Admins");
                     adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
