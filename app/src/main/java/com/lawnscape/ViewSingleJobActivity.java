@@ -35,8 +35,8 @@ import com.squareup.picasso.Picasso;
 
 public class ViewSingleJobActivity extends Activity {
 
-    private FirebaseAuth auth;
-    private FirebaseAuth.AuthStateListener authListener;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser currentUser;
     private Job jobPost;
     // Create a storage reference from our app
@@ -75,9 +75,9 @@ public class ViewSingleJobActivity extends Activity {
         tvDate.setText(jobPost.getDate());
 
         //get firebase auth instance
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         //make sure user is logged in and has an account
-        authListener = new FirebaseAuth.AuthStateListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -130,20 +130,20 @@ public class ViewSingleJobActivity extends Activity {
     public void onStart() {
         super.onStart();
         // Boiler Plate Authentication
-        auth.addAuthStateListener(authListener);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         // Boiler Plate Authentication
-        if (authListener != null) {
-            auth.removeAuthStateListener(authListener);
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
     /************** End LifeCycle ****************/
     public void signout(View v){
-        auth.signOut();
+        mAuth.signOut();
     }
     /******************* Menu Handling *******************/
     //make the menu show up
@@ -180,7 +180,7 @@ public class ViewSingleJobActivity extends Activity {
                 finish();
                 return true;
             case R.id.viewSinglePostMenuSignOut:
-                auth.signOut();
+                mAuth.signOut();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

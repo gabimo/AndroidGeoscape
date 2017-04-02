@@ -204,6 +204,9 @@ public class PostJobActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_PHOTO_FROM_GALLERY && resultCode == RESULT_OK) {
             Uri targetURI = data.getData();
+            if(!uriList.isEmpty()){
+                uriList.clear();
+            }
             uriList.add(targetURI);
             photoAdapter.notifyDataSetChanged();
         }
