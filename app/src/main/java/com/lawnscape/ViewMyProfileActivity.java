@@ -22,6 +22,10 @@ public class ViewMyProfileActivity extends FragmentActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private TextView tvEmail;
+    private TextView tvUserID;
+    private TextView tvLocation;
+    private TextView tvName;
 
     private FirebaseDatabase database;
     /************** Begin LifeCycle Functions ****************/
@@ -42,36 +46,27 @@ public class ViewMyProfileActivity extends FragmentActivity {
                     startActivity(new Intent(ViewMyProfileActivity.this, LoginActivity.class));
                     finish();
                 }else{
-                    setContentView(R.layout.activity_view_my_profile);
                     //user is logged in
                     database = FirebaseDatabase.getInstance ();
-                    final TextView emailTV = (TextView) findViewById(R.id.tvMyProfileUserEmail);
-                    final TextView useridTV = (TextView) findViewById(R.id.tvMyProfileUserID);
-                    final TextView locationTV = (TextView) findViewById(R.id.tvMyProfileLocation);
-                    final TextView nameTV = (TextView) findViewById(R.id.tvMyProfileName);
-                    emailTV.setText(currentUser.getEmail().toString());
-                    useridTV.setText(currentUser.getUid().toString());
+                    tvEmail = (TextView) findViewById(R.id.tvMyProfileUserEmail);
+                    tvUserID = (TextView) findViewById(R.id.tvMyProfileUserID);
+                    tvLocation = (TextView) findViewById(R.id.tvMyProfileLocation);
+                    tvName = (TextView) findViewById(R.id.tvMyProfileName);
+                    tvEmail.setText(currentUser.getEmail().toString());
+                    tvUserID.setText(currentUser.getUid().toString());
 
-                    database.getReference("Users").child(currentUser.getUid()).child("name")
+                    database.getReference("Users").child(currentUser.getUid())
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
-                            String value = dataSnapshot.getValue(String.class);
-                            nameTV.setText(value);
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError error) { }
-                    });
-                    database.getReference("Users").child(currentUser.getUid()).child("location")
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            // This method is called once with the initial value and again
-                            // whenever data at this location is updated.
-                            String value = dataSnapshot.getValue(String.class);
-                            locationTV.setText(value);
+                            if(dataSnapshot.hasChild("name")) {
+                                tvName.setText(dataSnapshot.child("name").getValue().toString());
+                            }
+                            if(dataSnapshot.hasChild("location")) {
+                                tvLocation.setText(dataSnapshot.child("location").getValue().toString());
+                            }
                         }
                         @Override
                         public void onCancelled(DatabaseError error) { }
