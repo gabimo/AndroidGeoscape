@@ -39,61 +39,71 @@ public class ViewSingleJobActivity extends Activity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser currentUser;
     private Job jobPost;
+    private TextView tvTitle;
+    private TextView tvLoc;
+    private TextView tvDesc;
+    private TextView tvDate;
+    private ImageView ivPhoto;
+    private BootstrapButton chatWithPostersButton;
+    private BootstrapButton saveButton;
+    private BootstrapButton requestButton;
+    private Button deleteButton;
+    private Button editButton;
     // Create a storage reference from our app
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_single_job);
-        Intent jobIntent = getIntent();
-        jobPost = jobIntent.getParcelableExtra("Job");
-        TextView tvTitle = (TextView) findViewById(R.id.tvSingleJobTitle);
-        TextView tvLoc = (TextView) findViewById(R.id.tvSingleJobLocation);
-        TextView tvDesc = (TextView) findViewById(R.id.tvSingleJobDescription);
-        TextView tvDate = (TextView) findViewById(R.id.tvSingleJobDate);
-        final ImageView ivPhoto = (ImageView) findViewById(R.id.ivSingleJobPhoto);
-        //This finds the photo data by the job id from firebase storage, nothing is passed around
-        StorageReference pathReference = storage.getReference().child("jobphotos").child(jobPost.getPostid());
-        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                // Pass it to Picasso to download, show in ImageView and caching
-                Picasso.with(ViewSingleJobActivity.this).load(uri.toString()).into(ivPhoto);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-
-        tvTitle.setText(jobPost.getTitle());
-        tvLoc.setText(jobPost.getLocation());
-        tvDesc.setText(jobPost.getDescription());
-        tvDate.setText(jobPost.getDate());
-
         //get firebase auth instance
         mAuth = FirebaseAuth.getInstance();
         //make sure user is logged in and has an account
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser == null) {
                     // user auth state is changed - user is null
                     // launch login activity
                     startActivity(new Intent(ViewSingleJobActivity.this, LoginActivity.class));
                     finish();
                 } else {
                     //user is logged in
-                    currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                    Button deleteButton = (Button) findViewById(R.id.buttonDeletePost);
-                    BootstrapButton requestButton = (BootstrapButton) findViewById(R.id.buttonRequestJob);
-                    BootstrapButton saveButton = (BootstrapButton) findViewById(R.id.buttonSaveJob);
-                    Button editButton = (Button) findViewById(R.id.buttonEditPostDetails);
-                    BootstrapButton chatWithPostersButton = (BootstrapButton) findViewById(R.id.buttonChatWithPoster);
+                    deleteButton = (Button) findViewById(R.id.buttonDeletePost);
+                    requestButton = (BootstrapButton) findViewById(R.id.buttonRequestJob);
+                    saveButton = (BootstrapButton) findViewById(R.id.buttonSaveJob);
+                    editButton = (Button) findViewById(R.id.buttonEditPostDetails);
+                    chatWithPostersButton = (BootstrapButton) findViewById(R.id.buttonChatWithPoster);
+
+                    tvTitle = (TextView) findViewById(R.id.tvSingleJobTitle);
+                    tvLoc = (TextView) findViewById(R.id.tvSingleJobLocation);
+                    tvDesc = (TextView) findViewById(R.id.tvSingleJobDescription);
+                    tvDate = (TextView) findViewById(R.id.tvSingleJobDate);
+                    ivPhoto = (ImageView) findViewById(R.id.ivSingleJobPhoto);
+                    Intent jobIntent = getIntent();
+                    jobPost = jobIntent.getParcelableExtra("Job");
+                    //This finds the photo data by the job id from firebase storage, nothing is passed around
+                    StorageReference jobPhotoRef = storage.getReference().child("jobphotos").child(jobPost.getPostid());
+                    jobPhotoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            // Got the download URL for 'users/me/profile.png'
+                            // Pass it to Picasso to download, show in ImageView and caching
+                            Picasso.with(ViewSingleJobActivity.this).load(uri.toString()).into(ivPhoto);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                        }
+                    });
+
+                    tvTitle.setText(jobPost.getTitle());
+                    tvLoc.setText(jobPost.getLocation());
+                    tvDesc.setText(jobPost.getDescription());
+                    tvDate.setText(jobPost.getDate());
                     if(jobPost.getUserid().toString().equals(currentUser.getUid().toString())){
                         //hide
                         requestButton.setVisibility(View.INVISIBLE);
@@ -143,9 +153,6 @@ public class ViewSingleJobActivity extends Activity {
         }
     }
     /************** End LifeCycle ****************/
-    public void signout(View v){
-        mAuth.signOut();
-    }
     /******************* Menu Handling *******************/
     //make the menu show up
     @Override
@@ -187,7 +194,6 @@ public class ViewSingleJobActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    // this will be for later maybe, feel free to remove
     public void gotoPostNewJob(View v){
         startActivity( new Intent( ViewSingleJobActivity.this, PostJobActivity.class));
         finish();
@@ -205,23 +211,19 @@ public class ViewSingleJobActivity extends Activity {
     }
 
     public void saveJob(View v){
-        /* before saving a job, check to make sure it isnt already saved to aoid duplication */
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs");
         //Dont save your own jobs
         if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
+            DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs");
             mySavedJobsRef.addListenerForSingleValueEvent(
                     new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
         }
     }
     public void requestJob(View v){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         //Dont let a user request their own job
         if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
             DatabaseReference ref = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
             ref.addListenerForSingleValueEvent(
                     new ToggleAddIDVEListener(ViewSingleJobActivity.this,currentUser.getUid().toString()));
-
             ref = database.getReference("Users").child(currentUser.getUid()).child("requestedjobs");
             ref.addListenerForSingleValueEvent(
                     new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
@@ -242,5 +244,27 @@ public class ViewSingleJobActivity extends Activity {
         etLocation.setText(jobPost.getLocation());
         etDesc.setText(jobPost.getDescription());
     }
-
+    public void postChanges(View v){
+        DatabaseReference myUserJobRef = database.getReference("Jobs").child(jobPost.getPostid());
+        myUserJobRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            TextView etTitle = (TextView) findViewById(R.id.etEditJobTitle);
+            TextView etLocation = (TextView) findViewById(R.id.etEditJobLocation);
+            TextView etDescription = (TextView) findViewById(R.id.etEditJobDescription);
+            String newTitle = etTitle.getText().toString();
+            String newLoc = etLocation.getText().toString();
+            String newDesc = etDescription.getText().toString();
+            // changes are made
+            if(newDesc.equals("")){
+                newDesc = "No description";
+            }
+            dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this,"title", newTitle));
+            dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this,"location", newLoc));
+            dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this,"description", newDesc));
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
 }

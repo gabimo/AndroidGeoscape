@@ -44,7 +44,7 @@ public class ViewMyProfileActivity extends FragmentActivity {
                 }else{
                     setContentView(R.layout.activity_view_my_profile);
                     //user is logged in
-                    database = FirebaseDatabase.getInstance();
+                    database = FirebaseDatabase.getInstance ();
                     final TextView emailTV = (TextView) findViewById(R.id.tvMyProfileUserEmail);
                     final TextView useridTV = (TextView) findViewById(R.id.tvMyProfileUserID);
                     final TextView locationTV = (TextView) findViewById(R.id.tvMyProfileLocation);
@@ -140,5 +140,22 @@ public class ViewMyProfileActivity extends FragmentActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    public void searchJobsButton(View v){
+        startActivity(new Intent(ViewMyProfileActivity.this, SearchActivity.class));
+    }
+    public void listAllJobsButton(View v){
+        Intent allJobsViewIntent = new Intent(ViewMyProfileActivity.this, ViewJobsListsActivity.class);
+        allJobsViewIntent.putExtra("View", "all");
+        startActivity(allJobsViewIntent);
+        finish();
+    }
+    public void mapJobsButton(View v){
+        Intent MapAllJobsViewIntent = new Intent(ViewMyProfileActivity.this, MapJobsActivity.class);
+        startActivity(MapAllJobsViewIntent);
+    }
+    public void myPostsButton(View v){
+        startActivity(new Intent(ViewMyProfileActivity.this, ViewMyPostsActivity.class));
+        finish();
     }
 }
