@@ -12,12 +12,11 @@
     tools:context="com.lawnscape.ViewMyProfileActivity">
 
     <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/button5"
+        android:id="@+id/buttonPostNewJob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="37dp"
         android:backgroundTint="@android:color/holo_green_light"
         android:onClick="gotoPostNewJob"
         android:text="Post New Job"
@@ -26,13 +25,17 @@
         app:bootstrapSize="lg"
         app:buttonMode="regular"
         app:roundedCorners="true"
-        app:showOutline="false" />
+        app:showOutline="false"/>
 
     <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/updateButton"
+        android:id="@+id/buttonEditProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="49dp"
+        android:layout_above="@+id/buttonPostNewJob"
+        android:layout_alignEnd="@+id/buttonPostNewJob"
+        android:layout_alignLeft="@+id/buttonPostNewJob"
+        android:layout_alignRight="@+id/buttonPostNewJob"
+        android:layout_alignStart="@+id/buttonPostNewJob"
         android:backgroundTint="@android:color/holo_green_light"
         android:onClick="gotoProfileSettings"
         android:text="Edit Profile"
@@ -41,91 +44,84 @@
         app:bootstrapSize="lg"
         app:buttonMode="regular"
         app:roundedCorners="true"
-        app:showOutline="false"
-        android:layout_above="@+id/button5"
-        android:layout_alignRight="@+id/button5"
-        android:layout_alignEnd="@+id/button5"
-        android:layout_alignLeft="@+id/button5"
-        android:layout_alignStart="@+id/button5" />
+        app:showOutline="false"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:id="@+id/tvMyProfileEmailLabel"
         android:text="Email: " />
 
     <TextView
         android:text="User ID: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/tvMyProfileEmailLabel"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="11dp"
-        android:id="@+id/textView4" />
+        android:id="@+id/tvMyProfileUserIDLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:text="Your Name: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:id="@+id/textView6"
-        android:layout_below="@+id/textView4"
+        android:id="@+id/tvMyProfileNameLabel"
+        android:layout_below="@+id/tvMyProfileUserIDLabel"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
+        android:id="@+id/tvMyProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvNameProfile"
-        android:layout_below="@+id/textView6"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2"
-        android:layout_marginTop="14dp" />
+        android:layout_below="@+id/tvMyProfileNameLabel"
+        android:layout_toEndOf="@+id/tvMyProfileEmailLabel"
+        android:layout_toRightOf="@+id/tvMyProfileEmailLabel"
+        android:text="TextView" />
 
     <TextView
-        android:text="Your Location"
+        android:id="@+id/tvMyProfileLocationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:id="@+id/textView7"
-        android:layout_below="@+id/tvNameProfile"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView7"
-        android:layout_alignLeft="@+id/tvNameProfile"
-        android:layout_alignStart="@+id/tvNameProfile"
-        android:layout_marginTop="15dp"
-        android:id="@+id/tvLocationProfile" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvUserID"
-        android:layout_above="@+id/textView6"
-        android:layout_toRightOf="@+id/textView7"
-        android:layout_toEndOf="@+id/textView7" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvUserEmail"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/tvUserID"
-        android:layout_alignStart="@+id/tvUserID" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLocationProfile"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/ivProfileImage" />
+        android:layout_below="@+id/tvMyProfileName"
+        android:text="Your Location:" />
 
+    <TextView
+        android:id="@+id/tvMyProfileLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvMyProfileName"
+        android:layout_alignStart="@+id/tvMyProfileName"
+        android:layout_below="@+id/tvMyProfileLocationLabel"
+        android:text="TextView" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvMyProfileUserID"
+        android:layout_above="@+id/tvMyProfileNameLabel"
+        android:layout_toRightOf="@+id/tvMyProfileLocationLabel"
+        android:layout_toEndOf="@+id/tvMyProfileLocationLabel" />
+
+    <TextView
+        android:id="@+id/tvMyProfileUserEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvMyProfileUserID"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tvMyProfileUserID"
+        android:text="TextView"/>
+
+    <ImageView
+        android:id="@+id/ivMyProfileImage"
+        android:layout_width="137dp"
+        android:layout_height="89dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvMyProfileLocation"/>
 </RelativeLayout>

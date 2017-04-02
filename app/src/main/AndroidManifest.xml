@@ -64,6 +64,7 @@
             android:name=".MapJobsActivity"
             android:label="@string/title_activity_map_jobs" />
         <activity android:name=".SearchActivity" />
+        <activity android:name=".EditProfileActivity"></activity>
     </application>
 
 </manifest>

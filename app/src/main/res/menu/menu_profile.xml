@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/profileMenu1"
+    <item android:id="@+id/profileMenuSettings"
         android:title="Settings">
     </item>
-    <item android:id="@+id/profileMenu2"
+    <item android:id="@+id/profileMenuChats"
         android:title="My Chats" >
     </item>
     <item android:id="@+id/profileMenuSearch"
         android:title="Search Jobs">
     </item>
-    <item android:id="@+id/profileMenu3"
+    <item android:id="@+id/profileMenuMyJobs"
         android:title="My Job Posts" >
     </item>
-    <item android:id="@+id/profileMenu4"
+    <item android:id="@+id/profileMenuAllJobs"
         android:title="View All Jobs" >
     </item>
-    <item android:id="@+id/profileMenu5"
+    <item android:id="@+id/profileMenuAllJobsMap"
         android:title="Map of All Jobs" >
     </item>
-    <item android:id="@+id/profileMenu6"
+    <item android:id="@+id/profileMenuSignOut"
         android:title="Sign Out" >
     </item>
 </menu>

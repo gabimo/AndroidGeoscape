@@ -18,8 +18,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import static com.lawnscape.R.id.imageView;
-
 /**
  * Created by Mellis on 2/19/2017.
  *

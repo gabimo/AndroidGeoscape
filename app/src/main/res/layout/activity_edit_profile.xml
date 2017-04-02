@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lawnscape.EditProfileActivity">
+    <TextView
+        android:id="@+id/tvEditProfileNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:textSize="18sp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/etEditProfileName"
+        android:layout_toStartOf="@+id/etEditProfileName"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="23dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/etEditProfileName"
+        android:hint="Your Name"
+        android:layout_marginRight="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_alignBaseline="@+id/tvEditProfileNameLabel"
+        android:layout_alignBottom="@+id/tvEditProfileNameLabel"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/tvEditProfileLocationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.13"
+        android:text="Location:"
+        android:textSize="18sp"
+        android:layout_alignBaseline="@+id/etEditProfileLocation"
+        android:layout_alignBottom="@+id/etEditProfileLocation"
+        android:layout_alignRight="@+id/tvEditProfileNameLabel"
+        android:layout_alignEnd="@+id/tvEditProfileNameLabel" />
+
+    <EditText
+        android:id="@+id/etEditProfileLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Your Address"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/etEditProfileName"
+        android:layout_alignLeft="@+id/etEditProfileName"
+        android:layout_alignStart="@+id/etEditProfileName"/>
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/buttonEditProfileBackToProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:onClick="backToProfile"
+        android:text="Back to Profile"
+        android:visibility="visible"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="lg"
+        app:buttonMode="regular"
+        app:roundedCorners="true"
+        app:showOutline="false"
+        android:layout_below="@+id/buttonEditProfileEditProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/buttonEditProfileEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:onClick="updateUserInfo"
+        android:text="Apply Changes"
+        android:visibility="visible"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="lg"
+        app:buttonMode="regular"
+        app:roundedCorners="true"
+        app:showOutline="false"
+        android:layout_below="@+id/ivEditProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <ImageView
+        android:id="@+id/ivEditProfile"
+        android:layout_width="145dp"
+        android:layout_height="132dp"
+        android:adjustViewBounds="true"
+        android:background="@android:drawable/ic_menu_gallery"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/etEditProfileLocation"
+        android:layout_alignLeft="@+id/buttonEditProfileBackToProfile"
+        android:layout_alignStart="@+id/buttonEditProfileBackToProfile" />
+
+</RelativeLayout>

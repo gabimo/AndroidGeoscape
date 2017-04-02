@@ -12,12 +12,12 @@
     tools:context="com.lawnscape.ChatActivity">
 
     <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/bootstrapButton2"
+        android:id="@+id/buttonChatMessageSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/lvMessageWindow"
+        android:layout_below="@+id/lvChatMessageView"
         android:backgroundTint="@android:color/holo_green_light"
         android:onClick="sendMessage"
         android:text="Send"
@@ -39,16 +39,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/etEnterMessage"
-        android:layout_toStartOf="@+id/bootstrapButton2"
-        android:layout_toLeftOf="@+id/bootstrapButton2" />
+        android:id="@+id/etChatMessage"
+        android:layout_toStartOf="@+id/buttonChatMessageSend"
+        android:layout_toLeftOf="@+id/buttonChatMessageSend" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/etEnterMessage"
+        android:layout_above="@+id/etChatMessage"
         android:layout_centerHorizontal="true"
-        android:id="@+id/lvMessageWindow"
+        android:id="@+id/lvChatMessageView"
         android:transcriptMode="alwaysScroll"
         android:stackFromBottom="true"/>
 

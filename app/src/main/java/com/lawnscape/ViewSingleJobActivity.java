@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -242,9 +241,9 @@ public class ViewSingleJobActivity extends Activity {
     }
     public void editJob(View v){
         setContentView(R.layout.activity_edit_job);
-        EditText etTitle = (EditText) findViewById(R.id.etEditPostJobTitle);
-        EditText etLocation = (EditText) findViewById(R.id.etEditPostJobLocation);
-        EditText etDesc = (EditText) findViewById(R.id.etEditPostJobDescription);
+        EditText etTitle = (EditText) findViewById(R.id.etEditJobTitle);
+        EditText etLocation = (EditText) findViewById(R.id.etEditJobLocation);
+        EditText etDesc = (EditText) findViewById(R.id.etEditJobDescription);
         etTitle.setText(jobPost.getTitle());
         etLocation.setText(jobPost.getLocation());
         etDesc.setText(jobPost.getDescription());
@@ -260,9 +259,9 @@ public class ViewSingleJobActivity extends Activity {
         myUserJobRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                EditText etTitle = (EditText) findViewById(R.id.etEditPostJobTitle);
-                EditText etLocation = (EditText) findViewById(R.id.etEditPostJobLocation);
-                EditText etDescription = (EditText) findViewById(R.id.etEditPostJobDescription);
+                EditText etTitle = (EditText) findViewById(R.id.etEditJobTitle);
+                EditText etLocation = (EditText) findViewById(R.id.etEditJobLocation);
+                EditText etDescription = (EditText) findViewById(R.id.etEditJobDescription);
 
                 String newTitle = etTitle.getText().toString();
                 String newLoc = etLocation.getText().toString();

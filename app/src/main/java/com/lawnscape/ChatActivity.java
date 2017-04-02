@@ -13,7 +13,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -44,7 +43,7 @@ public class ChatActivity extends Activity {
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         allMessages = new ArrayList<ChatMessage>();
-        messagesWindow = (ListView) findViewById(R.id.lvMessageWindow);
+        messagesWindow = (ListView) findViewById(R.id.lvChatMessageView);
         messageAdapter = new ChatMessageAdapter(this,allMessages);
         messagesWindow.setAdapter(messageAdapter);
         /*
@@ -89,7 +88,7 @@ public class ChatActivity extends Activity {
             }
         });
         //puts a "send" button on the keyboard
-        final EditText messageText = (EditText) findViewById(R.id.etEnterMessage);
+        final EditText messageText = (EditText) findViewById(R.id.etChatMessage);
         messageText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -109,7 +108,7 @@ public class ChatActivity extends Activity {
         super.onStart();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final ChatMessage chatMessage = new ChatMessage();
-        EditText messageText = (EditText) findViewById(R.id.etEnterMessage);
+        EditText messageText = (EditText) findViewById(R.id.etChatMessage);
         DatabaseReference chatRef = database.getReference("Users").child(currentUser.getUid()).child("chatids").child(otherUserid);
 
         //set the message details below

@@ -8,6 +8,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.ActivityCompat;
@@ -15,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,20 +24,29 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.security.Provider;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class PostJobActivity extends Activity {
     //Firebase global init
-    private FirebaseAuth.AuthStateListener authListener;
-    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    //photo vars
+    private GridView gvUploadPhotos;
+    private ArrayList<Uri> uriList;
+    private PhotoAdapter photoAdapter;
+    private final int PICK_PHOTO_FROM_GALLERY = 5;
+    //Location Vars
     private Location myCurLoc;
-
-    private final int PERMISSION_ACCESS_FINE_LOCATION = 1;// no reason, just a 16 bit number
+    private final int PERMISSION_ACCESS_COARSE_LOCATION = 1;// no reason, just a 16 bit number
     private boolean LOCATION_SERVICES_ENABLED;
 
     @Override
@@ -47,25 +58,30 @@ public class PostJobActivity extends Activity {
                 != PackageManager.PERMISSION_GRANTED) {
             // If no access to location services, then ask for permission
             ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION },
-                    PERMISSION_ACCESS_FINE_LOCATION);
+                    PERMISSION_ACCESS_COARSE_LOCATION);
+        }else{
+            LOCATION_SERVICES_ENABLED = true;
         }
-
-
         //get firebase auth instance
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        //Photos part
+        gvUploadPhotos = (GridView) findViewById(R.id.gvPostJob);
+        uriList = new ArrayList<Uri>();
+        photoAdapter = new PhotoAdapter(PostJobActivity.this, uriList);
+        gvUploadPhotos.setAdapter(photoAdapter);
         //make sure user is logged in and has an account
-        authListener = new FirebaseAuth.AuthStateListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser == null) {
                     // user auth state is changed - user is null
                     // launch login activity
                     startActivity(new Intent(PostJobActivity.this, LoginActivity.class));
                     finish();
                 } else {
                     //user is logged in
-                    currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
                 }
             }
         };
@@ -73,18 +89,19 @@ public class PostJobActivity extends Activity {
     @Override
     public void onStart() {
         super.onStart();
-        auth.addAuthStateListener(authListener);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (authListener != null) {
-            auth.removeAuthStateListener(authListener);
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 /**************** END LIFECYCLE METHODS ******************/
     public void postJob(View v) {
+        v.setEnabled(false);
         if (LOCATION_SERVICES_ENABLED) {
             // Acquire a reference to the system Location Manager
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -121,6 +138,12 @@ public class PostJobActivity extends Activity {
 
                 // Add a job, newJobRef will now hold the jobid value(a string)
                 DatabaseReference newJobRef = myJobsRef.push();
+                //upload the first photo
+                if(!uriList.isEmpty()){
+                    StorageReference pathReference = storage.getReference().child("jobphotos").child(newJobRef.getKey());
+                    pathReference.putFile(uriList.get(0));
+                }
+
                 if (newDesc.equals("")) {
                     newDesc = "No description";
                 }
@@ -130,14 +153,13 @@ public class PostJobActivity extends Activity {
                 //Here the job is actually added
                 newJobRef.setValue(newJob);
                 myUserJobRef.setValue(newJobRef.getKey());
-                Intent showLocOnMap = new Intent(this, MapJobsActivity.class);
-                startActivity(showLocOnMap);
                 finish();
             }
         } else {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSION_ACCESS_FINE_LOCATION);
+                    PERMISSION_ACCESS_COARSE_LOCATION);
         }
+        v.setEnabled(true);
     }
 /******************************* NECESSARY FOR ************************************/
 /************************** LOCATION GETTING METHOD *******************************/
@@ -146,7 +168,7 @@ public class PostJobActivity extends Activity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
     int[] grantResults){
         switch (requestCode) {
-            case PERMISSION_ACCESS_FINE_LOCATION:
+            case PERMISSION_ACCESS_COARSE_LOCATION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     LOCATION_SERVICES_ENABLED = true;
                 } else {
@@ -171,5 +193,19 @@ public class PostJobActivity extends Activity {
         public void onProviderEnabled(String provider) {}
         public void onProviderDisabled(String provider) { }
     };
+    public void pickImage(View v){
+        Intent photoGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
+        photoGalleryIntent.setType("image/*");
+        //photoGalleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivityForResult(photoGalleryIntent, PICK_PHOTO_FROM_GALLERY);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_PHOTO_FROM_GALLERY && resultCode == RESULT_OK) {
+            Uri targetURI = data.getData();
+            uriList.add(targetURI);
+            photoAdapter.notifyDataSetChanged();
+        }
+    }
 }

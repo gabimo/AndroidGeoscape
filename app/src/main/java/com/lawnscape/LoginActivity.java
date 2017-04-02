@@ -52,30 +52,6 @@ public class LoginActivity extends Activity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    /************** Switch to SIGN UP view ****************/
-    public void signup(View v){
-        //switch to sign up activity
-        setContentView(R.layout.activity_sign_up);
-    }
-    /******************* Menu Handling *******************/
-    //make the menu show up
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_login, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.loginMenu1:
-                setContentView(R.layout.activity_sign_up);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
     /*************** LOGIN ***************/
     public void login(final View v) {
         final EditText emailBox = (EditText) findViewById(R.id.etLoginEmail);
@@ -143,6 +119,12 @@ public class LoginActivity extends Activity {
                     });
         }
     }
+    /************** Switch to SIGN UP view ****************/
+    public void signup(View v){
+        //switch to sign up activity
+        setContentView(R.layout.activity_sign_up);
+    }
+    /************** Switch to LOG IN view ****************/
     public void backToLogin(View v){
         //switch to login view
         setContentView(R.layout.activity_login);

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/button8"
+        android:id="@+id/buttonEditJobSubmitChanges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/holo_green_light"
@@ -18,83 +19,93 @@
         app:roundedCorners="true"
         app:showOutline="false"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp"
-        android:layout_alignLeft="@+id/etEditPostJobTitle"
-        android:layout_alignStart="@+id/etEditPostJobTitle"
-        android:layout_alignRight="@+id/etEditPostJobTitle"
-        android:layout_alignEnd="@+id/etEditPostJobTitle" />
+        android:layout_alignLeft="@+id/etEditJobTitle"
+        android:layout_alignStart="@+id/etEditJobTitle"
+        android:layout_alignRight="@+id/etEditJobTitle"
+        android:layout_alignEnd="@+id/etEditJobTitle"
+        tools:layout_editor_absoluteY="252dp"
+        tools:layout_editor_absoluteX="114dp" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/tvEditJobTitleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/etEditPostJobTitle"
-        android:layout_alignLeft="@+id/etEditPostJobTitle"
-        android:layout_alignStart="@+id/etEditPostJobTitle"
+        android:layout_above="@+id/etEditJobTitle"
+        android:layout_alignLeft="@+id/etEditJobTitle"
+        android:layout_alignStart="@+id/etEditJobTitle"
         android:text="Title"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="77dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/etEditPostJobTitle"
+        android:id="@+id/etEditJobTitle"
         android:hint="Job Title"
-        android:layout_marginBottom="27dp"
-        android:layout_above="@+id/textView9"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/tvPostJobLocationLabel"
+        android:layout_centerHorizontal="true"
+        tools:layout_editor_absoluteY="70dp"
+        tools:layout_editor_absoluteX="114dp" />
 
     <EditText
-        android:id="@+id/etEditPostJobDescription"
+        android:id="@+id/etEditJobDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button8"
-        android:layout_alignEnd="@+id/button8"
-        android:layout_alignRight="@+id/button8"
-        android:layout_marginBottom="58dp"
+        android:layout_above="@+id/buttonEditJobSubmitChanges"
+        android:layout_alignEnd="@+id/buttonEditJobSubmitChanges"
+        android:layout_alignRight="@+id/buttonEditJobSubmitChanges"
         android:ems="10"
         android:hint="Provide a detailed description of the job"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        tools:layout_editor_absoluteY="178dp"
+        tools:layout_editor_absoluteX="114dp" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/tvPostJobDescriptionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/etEditPostJobDescription"
-        android:layout_alignLeft="@+id/etEditPostJobLocation"
-        android:layout_alignStart="@+id/etEditPostJobLocation"
-        android:layout_marginBottom="12dp"
+        android:layout_above="@+id/etEditJobDescription"
+        android:layout_alignLeft="@+id/etEditJobLocation"
+        android:layout_alignStart="@+id/etEditJobLocation"
         android:text="Description"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:layout_editor_absoluteY="178dp"
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/tvPostJobLocationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
         android:textSize="18sp"
-        android:layout_above="@+id/etEditPostJobLocation"
-        android:layout_alignLeft="@+id/etEditPostJobLocation"
-        android:layout_alignStart="@+id/etEditPostJobLocation" />
+        android:layout_above="@+id/etEditJobLocation"
+        android:layout_alignLeft="@+id/etEditJobLocation"
+        android:layout_alignStart="@+id/etEditJobLocation"
+        tools:layout_editor_absoluteY="133dp"
+        tools:layout_editor_absoluteX="16dp" />
 
     <EditText
-        android:id="@+id/etEditPostJobLocation"
+        android:id="@+id/etEditJobLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView19"
-        android:layout_alignLeft="@+id/etEditPostJobTitle"
-        android:layout_alignStart="@+id/etEditPostJobTitle"
-        android:layout_marginBottom="30dp"
+        android:layout_above="@+id/tvPostJobDescriptionLabel"
+        android:layout_alignLeft="@+id/etEditJobTitle"
+        android:layout_alignStart="@+id/etEditJobTitle"
         android:ems="10"
         android:hint="Address"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteY="126dp"
+        tools:layout_editor_absoluteX="114dp" />
 
     <TextView
-        android:id="@+id/textViewEditJobPost"
+        android:id="@+id/tvEditJobHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif-smallcaps"
         android:text="Edit Job Post"
         android:textColor="@android:color/holo_purple"
@@ -102,7 +113,7 @@
         android:textStyle="bold"
         android:typeface="normal"
         android:visibility="visible"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="16dp" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

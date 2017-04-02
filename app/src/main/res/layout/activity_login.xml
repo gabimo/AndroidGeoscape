@@ -19,11 +19,10 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/etLoginPassword"
-        app:layout_constraintRight_toRightOf="@+id/imageView"
+        app:layout_constraintRight_toRightOf="@+id/ivLoginLogo"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.494"
-        android:layout_marginBottom="8dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/ivLoginLogo"
+        android:layout_marginBottom="4dp" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
         android:layout_width="wrap_content"
@@ -37,17 +36,17 @@
         app:bootstrapBrand="primary"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/loginbutton"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
         app:layout_constraintRight_toRightOf="@+id/etLoginEmail"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="41dp"
+        android:layout_marginBottom="12dp"
         app:layout_constraintLeft_toLeftOf="@+id/etLoginEmail"
         app:layout_constraintHorizontal_bias="0.0" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/loginbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/buttonLogin"
+        android:layout_width="214dp"
+        android:layout_height="36dp"
         android:backgroundTint="@android:color/holo_green_light"
         android:onClick="login"
         android:text="Log In"
@@ -57,17 +56,11 @@
         app:buttonMode="regular"
         app:roundedCorners="true"
         app:showOutline="false"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="@+id/etLoginPassword"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="130dp"
-        app:layout_constraintLeft_toLeftOf="@+id/etLoginPassword"
-        app:layout_constraintHorizontal_bias="0.507" />
+        tools:layout_editor_absoluteY="265dp"
+        tools:layout_editor_absoluteX="87dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvLoginSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="signup"
@@ -78,25 +71,25 @@
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintLeft_toRightOf="@+id/textView11"
-        android:layout_marginLeft="8dp" />
+        android:layout_marginBottom="185dp"
+        app:layout_constraintLeft_toRightOf="@+id/tvLoginSignUpLabel"
+        android:layout_marginLeft="0dp" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tvLoginSignUpLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Don't have an account?"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoginSignUp"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.379" />
+        app:layout_constraintHorizontal_bias="0.354" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivLoginLogo"
         android:layout_width="331dp"
         android:layout_height="168dp"
         android:adjustViewBounds="true"
@@ -107,8 +100,8 @@
         app:layout_constraintBottom_toTopOf="@+id/etLoginEmail"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="23dp" />
+        android:layout_marginLeft="27dp"
+        android:layout_marginBottom="16dp" />
 
 
 </android.support.constraint.ConstraintLayout>
