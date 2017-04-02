@@ -2,8 +2,14 @@ package com.lawnscape;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,35 +21,56 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+
 public class ViewUserProfileActivity extends Activity {
     //userid the user wants to see
     private String userid;
     private FirebaseUser currentUser;
-
+    private ListView lvUserReviews;
+    private EditText etUserReview;
+    private ArrayList<String> reviewList;
+    private ArrayAdapter<String> reviewAdapter;
     private StorageReference mStorageRef;
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference userRef;
+    private TextView tvName;
+    private TextView tvLoc;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user_profile);
+        tvName = (TextView) findViewById(R.id.tvUserProfileName);
+        tvLoc = (TextView) findViewById(R.id.tvUserProfileLocation);
+        etUserReview = (EditText) findViewById(R.id.etUserProfileReview);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         /*********************** IMPORTANT ****************************/
         userid = getIntent().getExtras().get("UserID").toString();
-
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference userRef = database.getReference("Users").child(userid);
+        userRef = database.getReference("Users").child(userid);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                TextView tvName = (TextView) findViewById(R.id.tvUserProfileName);
-                TextView tvLoc = (TextView) findViewById(R.id.tvUserProfileLocation);
+
                 RatingBar rating = (RatingBar) findViewById(R.id.ratingBarUser);
                 tvName.setText(dataSnapshot.child("name").getValue().toString());
                 tvLoc.setText(dataSnapshot.child("location").getValue().toString());
+
+                if(dataSnapshot.hasChild("reviews")) {
+                    lvUserReviews = (ListView) findViewById(R.id.lvUserProfileReviews);
+                    reviewList = new ArrayList<>();
+                    reviewAdapter = new ArrayAdapter<String>(ViewUserProfileActivity.this, android.R.layout.simple_list_item_1, reviewList);
+                    for(DataSnapshot review: dataSnapshot.child("reviews").getChildren()){
+                        reviewList.add(review.getValue().toString());
+                    }
+                    lvUserReviews.setAdapter(reviewAdapter);
+                    reviewAdapter.notifyDataSetChanged();
+                }
+
                 /*
                 * This is probably wrong, rating needs to be fixed
                  */
@@ -71,5 +98,10 @@ public class ViewUserProfileActivity extends Activity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+    public void reviewUser(View v){
+        userRef.child("reviews").addListenerForSingleValueEvent(
+                new ToggleAddIDVEListener(this, currentUser.getUid(), etUserReview.getText().toString()));
+        Toast.makeText(this, "Your review has been submitted, to edit submit a new review",Toast.LENGTH_SHORT).show();
     }
 }

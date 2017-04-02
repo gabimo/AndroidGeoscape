@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Simple class, specifically made for the job object
  *
  *  Interacts well with JobListVEListener
- *                  a class that implements the firebase interace ValueEventListener
+ *
  */
 
 public class JobListAdapter extends BaseAdapter {
