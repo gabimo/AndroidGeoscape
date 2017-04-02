@@ -7,17 +7,22 @@ For an example please see ViewMyPostsActivity
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +30,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class ViewSingleJobActivity extends Activity {
 
@@ -32,6 +40,8 @@ public class ViewSingleJobActivity extends Activity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseUser currentUser;
     private Job jobPost;
+    // Create a storage reference from our app
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,22 @@ public class ViewSingleJobActivity extends Activity {
         TextView tvLoc = (TextView) findViewById(R.id.tvSingleJobLocation);
         TextView tvDesc = (TextView) findViewById(R.id.tvSingleJobDescription);
         TextView tvDate = (TextView) findViewById(R.id.tvSingleJobDate);
+        final ImageView ivPhoto = (ImageView) findViewById(R.id.ivSingleJobPhoto);
+        //This finds the photo data by the job id from firebase storage, nothing is passed around
+        StorageReference pathReference = storage.getReference().child("jobphotos").child(jobPost.getPostid());
+        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                // Pass it to Picasso to download, show in ImageView and caching
+                Picasso.with(ViewSingleJobActivity.this).load(uri.toString()).into(ivPhoto);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
 
         tvTitle.setText(jobPost.getTitle());
         tvLoc.setText(jobPost.getLocation());

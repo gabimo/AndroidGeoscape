@@ -71,6 +71,7 @@ public class JobListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        //This finds the photo data by the job id from firebase storage, nothing is passed around
         StorageReference pathReference = storage.getReference().child("jobphotos").child(jobPostDetails.get(position).getPostid());
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override

@@ -148,8 +148,7 @@ public class ViewMyProfileActivity extends FragmentActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.profileMenu1:
-                //setContentView(R.layout.activity_profile_settings);
-                startActivity(new Intent(this, UploadPhotosActivity.class));
+                setContentView(R.layout.activity_profile_settings);
                 return true;
             case R.id.profileMenu2:
                 startActivity(new Intent(ViewMyProfileActivity.this, ViewActiveChatsActivity.class));
