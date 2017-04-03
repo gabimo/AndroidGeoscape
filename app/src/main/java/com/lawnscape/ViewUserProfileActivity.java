@@ -1,16 +1,21 @@
 package com.lawnscape;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -31,12 +37,13 @@ public class ViewUserProfileActivity extends Activity {
     private EditText etUserReview;
     private ArrayList<String> reviewList;
     private ArrayAdapter<String> reviewAdapter;
-    private StorageReference mStorageRef;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference userRef;
     private TextView tvName;
     private TextView tvLoc;
-
+    private ImageView ivProfilePhoto;
+    // Create a storage reference from our app
+    FirebaseStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +52,9 @@ public class ViewUserProfileActivity extends Activity {
         tvName = (TextView) findViewById(R.id.tvUserProfileName);
         tvLoc = (TextView) findViewById(R.id.tvUserProfileLocation);
         etUserReview = (EditText) findViewById(R.id.etUserProfileReview);
-
+        ivProfilePhoto = (ImageView) findViewById(R.id.ivUserProfileImage);
+        storage = FirebaseStorage.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         /*********************** IMPORTANT ****************************/
         userid = getIntent().getExtras().get("UserID").toString();
@@ -96,6 +103,22 @@ public class ViewUserProfileActivity extends Activity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        //profile photo
+        StorageReference pathReference = storage.getReference().child("userprofilephotos").child(userid);
+        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                // Pass it to Picasso to download, show in ImageView and caching
+                Picasso.with(ViewUserProfileActivity.this).load(uri.toString()).into(ivProfilePhoto);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                //Default no image
+                ivProfilePhoto.setImageDrawable(null);
             }
         });
     }
