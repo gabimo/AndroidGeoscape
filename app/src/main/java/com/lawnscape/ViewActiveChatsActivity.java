@@ -45,16 +45,14 @@ public class ViewActiveChatsActivity extends Activity {
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                final FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser == null) {
                     // user auth state is changed - user is not logged in
                     // launch login activity
-                    //startActivity(new Intent(ViewJobsListsActivity.this, LoginActivity.class));
-                    //finish();
-                    System.out.println("LOG IN ERROR ");
+                    startActivity(new Intent(ViewActiveChatsActivity.this, LoginActivity.class));
+                    finish();
                 } else {
                     //user is logged in
-                    currentUser = user;
                     DatabaseReference myChatsRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
                     //Gonna hold all the jobs, must init for adaptor
                     userList = new ArrayList<User>();
