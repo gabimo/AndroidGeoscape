@@ -67,7 +67,9 @@ public class PostJobActivity extends Activity {
             LOCATION_SERVICES_ENABLED = true;
         }
         setContentView(R.layout.activity_post_job);
-        mAuth = FirebaseAuth.getInstance();//Photos part
+        mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+        database = FirebaseDatabase.getInstance();
         ivPostJobPhoto = (ImageView) findViewById(R.id.ivPostJobButton);
         ivPostJobPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,11 +91,6 @@ public class PostJobActivity extends Activity {
                     // launch login activity
                     startActivity(new Intent(PostJobActivity.this, LoginActivity.class));
                     finish();
-                } else {
-                    //user is logged in
-                    //get firebase auth instance
-                    storage = FirebaseStorage.getInstance();
-                    database = FirebaseDatabase.getInstance();
                 }
             }
         };
