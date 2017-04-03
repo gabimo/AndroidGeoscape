@@ -42,19 +42,20 @@
     <TextView
         android:id="@+id/tvPostLayoutDescription"
         android:layout_width="302dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tvPostLayoutTitle"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ivPostLayoutThumbnail"
         android:layout_toRightOf="@+id/ivPostLayoutThumbnail"
         android:text="DESCRIPTION"
         android:textSize="14sp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/ivPostLayoutThumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostLayoutLocation"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostLayoutLocation" />
 
     <TextView
         android:id="@+id/tvPostLayoutLocation"

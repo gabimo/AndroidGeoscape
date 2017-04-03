@@ -25,49 +25,39 @@ public class ViewMyPostsActivity extends Activity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
+    private FirebaseUser currentUser;
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    ArrayList<Job> myJobList;
-    JobListAdapter jobsAdaptor;
+    private ArrayList<Job> myJobList;
+    private JobListAdapter jobsAdaptor;
 
-    ListView myPostsList;
+    private ListView myPostsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_my_posts);
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
+
         //make sure user is logged in and has an account
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                final FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser == null) {
                     // user auth state is changed - user is not logged in
                     // launch login activity
                     startActivity(new Intent(ViewMyPostsActivity.this, LoginActivity.class));
                     finish();
                 }else{
                     //user is logged in
-                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    // two ways to do this, only use one
-                    DatabaseReference myUserRef = database.getReference("Users").child(user.getUid().toString()).child("jobs");
-                    // DatabaseReference myUserRef = database.getReference("Users/"+user.getUid().toString()+"/jobs");
-
-                    //Gonna hold all the jobs, must init for adaptor
+                    setContentView(R.layout.activity_view_my_posts);
                     myJobList = new ArrayList<Job>();
-                    //Put the jobs into the adaptor
-                    //Find the listview widget and set up a connection to our ArrayList
-                    // The adaptor handles pushing each object in the ArrayList to the listview
                     myPostsList = (ListView) findViewById(R.id.lvMyPostsList);
                     jobsAdaptor = new JobListAdapter(ViewMyPostsActivity.this,myJobList);
                     myPostsList.setAdapter(jobsAdaptor);
-
-                    // set this up to use after we find the personal job IDs
-                    // The reason this is declared is so it does not appear visually as a nested listener
-                    // Since this will actually be the place to handle output to the screen
-                    // Until i figure out why I cant write to the higher scoped arraylist myPostDetailList and jobList
+                    DatabaseReference myUserRef = database.getReference("Users").child(currentUser.getUid().toString()).child("jobs");
                     final ValueEventListener listenForJobPosts = new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -135,7 +125,7 @@ public class ViewMyPostsActivity extends Activity {
                                             DatabaseReference myJobRef = database.getReference("Jobs");
                                             myJobRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewMyPostsActivity.this,selectedJob.getPostid()));
                                             //remove the job from the users job list with a listener*
-                                            DatabaseReference myUserJobsRef = database.getReference("Users").child(user.getUid()).child("jobs");
+                                            DatabaseReference myUserJobsRef = database.getReference("Users").child(currentUser.getUid()).child("jobs");
                                             myUserJobsRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewMyPostsActivity.this, selectedJob.getPostid()));
                                             myJobList.remove(selectedJob);
                                             jobsAdaptor.notifyDataSetChanged();
