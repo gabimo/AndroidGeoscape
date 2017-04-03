@@ -66,6 +66,7 @@ public class PostJobActivity extends Activity {
         }else{
             LOCATION_SERVICES_ENABLED = true;
         }
+        mAuth = FirebaseAuth.getInstance();
         //make sure user is logged in and has an account
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -80,7 +81,6 @@ public class PostJobActivity extends Activity {
                     //user is logged in
                     setContentView(R.layout.activity_post_job);
                     //get firebase auth instance
-                    mAuth = FirebaseAuth.getInstance();
                     storage = FirebaseStorage.getInstance();
                     database = FirebaseDatabase.getInstance();
                     //Photos part
