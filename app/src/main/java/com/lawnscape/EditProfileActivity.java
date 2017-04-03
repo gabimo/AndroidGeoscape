@@ -69,6 +69,7 @@ public class EditProfileActivity extends Activity {
             StorageReference pathReference = storage.getReference().child("userprofilephotos").child(currentUser.getUid());
             pathReference.putFile(imageUri);
         }
+        startActivity(new Intent(this,ViewMyProfileActivity.class));
         finish();
     }
     public void backToProfile(View v){

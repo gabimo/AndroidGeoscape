@@ -1,8 +1,6 @@
 package com.lawnscape;
 
 import android.net.Uri;
-import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -79,7 +77,7 @@ public class ViewMyProfileActivity extends FragmentActivity {
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception exception) {
+                        public void onFailure(Exception exception) {
                             //Default no image
                             ivProfilePhoto.setImageDrawable(null);
                         }
@@ -121,6 +119,7 @@ public class ViewMyProfileActivity extends FragmentActivity {
     /************** End LifeCycle ****************/
     public void gotoProfileSettings(View v){
         startActivity(new Intent(this,EditProfileActivity.class));
+        finish();
     }
     public void gotoPostNewJob(View v){
         startActivity( new Intent( this, PostJobActivity.class));
@@ -139,6 +138,7 @@ public class ViewMyProfileActivity extends FragmentActivity {
         switch (item.getItemId()) {
             case R.id.profileMenuSettings:
                 startActivity(new Intent(this, EditProfileActivity.class));
+                finish();
                 return true;
             case R.id.profileMenuChats:
                 startActivity(new Intent(this, ViewActiveChatsActivity.class));

@@ -17,6 +17,7 @@ import android.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +42,8 @@ public class PostJobActivity extends Activity {
     private FirebaseStorage storage;
     private FirebaseDatabase database;
     //photo vars
-    private GridView gvUploadPhotos;
-    private ArrayList<Uri> uriList;
-    private PhotoAdapter photoAdapter;
+    private ImageView ivPostJobPhoto;
+    private Uri imageUri;
     private final int PICK_PHOTO_FROM_GALLERY = 5;
     //Location Vars
     private Location myCurLoc;
@@ -66,7 +66,19 @@ public class PostJobActivity extends Activity {
         }else{
             LOCATION_SERVICES_ENABLED = true;
         }
-        mAuth = FirebaseAuth.getInstance();
+        setContentView(R.layout.activity_post_job);
+        mAuth = FirebaseAuth.getInstance();//Photos part
+        ivPostJobPhoto = (ImageView) findViewById(R.id.ivPostJobButton);
+        ivPostJobPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent photoGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                photoGalleryIntent.setType("image/*");
+                //photoGalleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(photoGalleryIntent, PICK_PHOTO_FROM_GALLERY);
+            }
+        });
         //make sure user is logged in and has an account
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -79,15 +91,9 @@ public class PostJobActivity extends Activity {
                     finish();
                 } else {
                     //user is logged in
-                    setContentView(R.layout.activity_post_job);
                     //get firebase auth instance
                     storage = FirebaseStorage.getInstance();
                     database = FirebaseDatabase.getInstance();
-                    //Photos part
-                    gvUploadPhotos = (GridView) findViewById(R.id.gvPostJob);
-                    uriList = new ArrayList<Uri>();
-                    photoAdapter = new PhotoAdapter(PostJobActivity.this, uriList);
-                    gvUploadPhotos.setAdapter(photoAdapter);
                 }
             }
         };
@@ -140,9 +146,10 @@ public class PostJobActivity extends Activity {
                 // Add a job, newJobRef will now hold the jobid value(a string)
                 DatabaseReference newJobRef = myJobsRef.push();
                 //upload the first photo if there are any
-                if(!uriList.isEmpty()){
+
+                if(ivPostJobPhoto.getDrawable() != null){
                     StorageReference pathReference = storage.getReference().child("jobphotos").child(newJobRef.getKey());
-                    pathReference.putFile(uriList.get(0));
+                    pathReference.putFile(imageUri);
                 }
                 if (newDesc.equals("")) {
                     newDesc = "No description";
@@ -193,22 +200,13 @@ public class PostJobActivity extends Activity {
         public void onProviderEnabled(String provider) {}
         public void onProviderDisabled(String provider) { }
     };
-    public void pickImage(View v){
-        Intent photoGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
-        photoGalleryIntent.setType("image/*");
-        //photoGalleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(photoGalleryIntent, PICK_PHOTO_FROM_GALLERY);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_PHOTO_FROM_GALLERY && resultCode == RESULT_OK) {
             Uri targetURI = data.getData();
-            if(!uriList.isEmpty()){
-                uriList.clear();
-            }
-            uriList.add(targetURI);
-            photoAdapter.notifyDataSetChanged();
+            ivPostJobPhoto.setImageURI(targetURI);
+            imageUri = targetURI;
         }
     }
 }
