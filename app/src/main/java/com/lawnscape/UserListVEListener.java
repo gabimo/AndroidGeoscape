@@ -14,11 +14,11 @@ import java.util.ArrayList;
 
 public class UserListVEListener implements ValueEventListener {
 
-    ArrayList<User> usersList;
+    private ArrayList<User> usersList;
     //Leave this alone to get all jobs
-    ArrayList<String> usersToGet;
-    UserListAdapter userAdapter;
-    Context thisContext;
+    private ArrayList<String> usersToGet;
+    private UserListAdapter userAdapter;
+    private Context thisContext;
 
     public UserListVEListener(Context aCntxt, ArrayList<User> listofusers, ArrayList<String> desiredUsers, UserListAdapter userAdapt){
         usersList = listofusers;

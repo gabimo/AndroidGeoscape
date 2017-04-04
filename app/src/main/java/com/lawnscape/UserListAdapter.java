@@ -25,9 +25,9 @@ import java.util.ArrayList;
 public class UserListAdapter extends BaseAdapter {
     private ArrayList<User> usersList;
     private LayoutInflater layoutInflater;
-    Context ctx;
+    private Context ctx;
     // Create a storage reference from our app
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     public UserListAdapter(Context aContext, ArrayList<User> listData) {
         this.usersList = listData;

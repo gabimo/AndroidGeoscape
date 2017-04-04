@@ -19,10 +19,10 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class ToggleAddIDVEListener implements ValueEventListener {
-    String id;
-    String key;
-    Context currentActivity;
-    boolean willRemove;
+    private String id;
+    private String key;
+    private Context currentActivity;
+    private boolean willRemove;
 
     public ToggleAddIDVEListener(Context activityContext, String desiredID){
         id = desiredID;

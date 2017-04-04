@@ -13,8 +13,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="23dp"
-        android:text="TextView"
-        android:textAlignment="viewEnd"
         app:layout_constraintLeft_toRightOf="@+id/ivUserListProfilePhoto"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="8dp"
@@ -24,12 +22,10 @@
         android:layout_marginTop="8dp" />
 
     <TextView
-        android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:id="@+id/tvUserListItemLocation"
-        android:textAlignment="viewStart"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/holo_green_light"
         android:onClick="createAccount"
-        android:text="Create Account"
+        android:text="@string/create_account"
         android:visibility="visible"
         app:bootstrapBrand="primary"
         app:bootstrapSize="lg"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="E-mail Address"
+        android:hint="@string/e_mail_address"
         android:inputType="textEmailAddress"
         android:layout_alignBaseline="@+id/tvSignUpEmailLabel"
         android:layout_alignBottom="@+id/tvSignUpEmailLabel"
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="WELCOME!"
+        android:text="@string/welcome"
         android:textColor="@android:color/holo_purple"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -70,7 +70,7 @@
         android:id="@+id/tvSignUpEmailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="E-mail:"
+        android:text="@string/e_mail"
         android:textSize="18sp"
         android:layout_marginTop="14dp"
         android:layout_below="@+id/tvSignUpHeader"
@@ -85,7 +85,7 @@
         android:layout_alignBottom="@+id/etSignUpPassword"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Password:"
+        android:text="@string/password"
         android:textSize="18sp" />
 
     <TextView
@@ -96,7 +96,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:onClick="backToLogin"
-        android:text="Back to Login"
+        android:text="@string/back_to_login"
         android:textColor="@android:color/holo_green_light"
         android:visibility="visible" />
 </RelativeLayout>

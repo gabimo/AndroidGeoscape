@@ -26,10 +26,10 @@ public class ChatActivity extends Activity {
     private String otherUserid;
     private FirebaseAuth auth;
 
-    ArrayList<ChatMessage> allMessages;
-    ChatMessageAdapter messageAdapter;
+    private ArrayList<ChatMessage> allMessages;
+    private ChatMessageAdapter messageAdapter;
 
-    ListView messagesWindow;
+    private ListView messagesWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

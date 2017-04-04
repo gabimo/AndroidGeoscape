@@ -26,14 +26,13 @@ public class ViewActiveChatsActivity extends Activity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    ArrayList<User> userList;
-    ArrayList<String> useridList;
-    UserListAdapter userAdapter;
+    private ArrayList<User> userList;
+    private ArrayList<String> useridList;
+    private UserListAdapter userAdapter;
 
-    ListView userListView;
-
+    private ListView userListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

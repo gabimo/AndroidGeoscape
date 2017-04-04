@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 
 public class ChatMessageListVEListener implements ValueEventListener {
-    Context thisContext;
-    ChatMessageAdapter messageAdapter;
-    ArrayList<ChatMessage> messageList;
+    private Context thisContext;
+    private ChatMessageAdapter messageAdapter;
+    private ArrayList<ChatMessage> messageList;
 
     public ChatMessageListVEListener(Context aContext, ChatMessageAdapter adapter, ArrayList<ChatMessage> messages){
         thisContext = aContext;

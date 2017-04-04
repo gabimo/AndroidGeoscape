@@ -19,12 +19,12 @@ import java.util.ArrayList;
 
 public class SearchTextWatcher implements TextWatcher {
 
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    ArrayList<Job> searchResults;
-    ArrayList<String> resultIDs;
-    EditText searchBar;
-    JobListAdapter jobsAdapter;
-    Context context;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private ArrayList<Job> searchResults;
+    private ArrayList<String> resultIDs;
+    private EditText searchBar;
+    private JobListAdapter jobsAdapter;
+    private Context context;
 
     SearchTextWatcher(Context ctxt, EditText etSearch, ArrayList<Job> results, JobListAdapter jAdapt){
         context = ctxt;

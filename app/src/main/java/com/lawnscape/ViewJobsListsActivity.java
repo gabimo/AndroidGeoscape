@@ -29,18 +29,18 @@ public class ViewJobsListsActivity extends Activity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    ArrayList<Job> allPostDetailsList;
-    ArrayList<String> jobsToFetch;
-    JobListAdapter jobsAdapter;
-    DatabaseReference myListRef;
+    private ArrayList<Job> allPostDetailsList;
+    private ArrayList<String> jobsToFetch;
+    private JobListAdapter jobsAdapter;
+    private DatabaseReference myListRef;
 
-    ListView allPostsList;
+    private ListView allPostsList;
 
-    TextView savedJobsButton;
-    TextView allJobsButton;
-    TextView activeJobsButton;
+    private TextView savedJobsButton;
+    private TextView allJobsButton;
+    private TextView activeJobsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +160,6 @@ public class ViewJobsListsActivity extends Activity {
     public void viewActiveJobs(View v){ viewSomeJobs(v, "activejobs"); }
     public void viewSomeJobs(View v, String jobSet){
         jobsToFetch = new ArrayList<String>();
-
         myListRef = database.getReference("Users").child(currentUser.getUid().toString()).child(jobSet).getRef();
         myListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -180,7 +179,6 @@ public class ViewJobsListsActivity extends Activity {
     }
 /********************* Switch to map view ********************/
     public void showMapOfJobs(View v){
-
         Intent MapJobsViewIntent = new Intent(this, MapJobsActivity.class);
         if(jobsToFetch != null) {
             MapJobsViewIntent.putStringArrayListExtra("JobsList", jobsToFetch);

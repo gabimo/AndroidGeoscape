@@ -20,15 +20,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ViewJobRequestsActivity extends Activity {
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
     private Job selectedJob;
 
-    ArrayList<User> userList;
-    ArrayList<String> usersToDisplay;
-    UserListAdapter reuesterAdapter;
-    ListView allRequestersList;
+    private ArrayList<User> userList;
+    private ArrayList<String> usersToDisplay;
+    private UserListAdapter reuesterAdapter;
+    private ListView allRequestersList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

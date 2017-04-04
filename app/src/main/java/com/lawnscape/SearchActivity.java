@@ -21,14 +21,14 @@ public class SearchActivity extends Activity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    ArrayList<Job> searchResults;
-    JobListAdapter jobsAdapter;
+    private ArrayList<Job> searchResults;
+    private JobListAdapter jobsAdapter;
 
-    EditText searchBar;
+    private EditText searchBar;
+    private ListView searchResultsView;
 
-    ListView searchResultsView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -127,7 +127,7 @@ public class ViewUserProfileActivity extends Activity {
     public void reviewUser(View v){
         userRef.child("reviews").addListenerForSingleValueEvent(
                 new ToggleAddIDVEListener(this, currentUser.getUid(), etUserReview.getText().toString()));
-        Toast.makeText(this, "Your review has been submitted, to edit submit a new review",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Your review has been submitted, to edit just submit a new review",Toast.LENGTH_SHORT).show();
     }
 
     public void rateUser (View v){
