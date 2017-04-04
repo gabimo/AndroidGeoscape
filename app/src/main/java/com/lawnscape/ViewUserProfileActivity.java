@@ -85,10 +85,6 @@ public class ViewUserProfileActivity extends Activity {
                     float totalRating = (float)0.0;
                     for(DataSnapshot userRating: dataSnapshot.child("ratings").getChildren()){
                         totalRating += Float.valueOf(userRating.getValue().toString());
-                        if (userRating.getKey().equals(currentUser.getUid().toString())){
-                            //make ratings a one time thing
-                            //rating.setIsIndicator(true);
-                        }
                     }
                     totalRating = totalRating/dataSnapshot.child("ratings").getChildrenCount();
                     rating.setRating(totalRating);

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 /**
@@ -16,10 +18,11 @@ import java.util.ArrayList;
 public class ChatMessageAdapter extends BaseAdapter {
     private ArrayList<ChatMessage> messages;
     private LayoutInflater layoutInflater;
-
-    public ChatMessageAdapter(Context aContext, ArrayList<ChatMessage> messageData) {
+    private String currentUserID;
+    public ChatMessageAdapter(Context aContext, ArrayList<ChatMessage> messageData, String curUserID) {
         this.messages = messageData;
         layoutInflater = LayoutInflater.from(aContext);
+        currentUserID = curUserID;
     }
 
     @Override
@@ -48,10 +51,13 @@ public class ChatMessageAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        holder.tvTime.setText(messages.get(position).getDate());
-
-        holder.tvMessage.setText(messages.get(position).getTextMsg());
+        if(currentUserID.equals(messages.get(position).getSentByUid())) {
+            holder.tvTime.setText(messages.get(position).getDate());
+            holder.tvMessage.setText(messages.get(position).getTextMsg());
+        }else {
+            holder.tvTime.setText(messages.get(position).getTextMsg());
+            holder.tvMessage.setText(messages.get(position).getDate());
+        }
 
         return convertView;
     }

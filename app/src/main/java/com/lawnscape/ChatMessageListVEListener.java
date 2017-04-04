@@ -32,9 +32,11 @@ public class ChatMessageListVEListener implements ValueEventListener {
             if(chatNode.hasChild("date")&&chatNode.hasChild("textMsg")) {
                 String date = chatNode.child("date").getValue().toString();
                 String msg = chatNode.child("textMsg").getValue().toString();
+                String sentID = chatNode.child("sentByUid").getValue().toString();
                 ChatMessage newMsg = new ChatMessage();
                 newMsg.setTextMsg(msg);
                 newMsg.setDate(date);
+                newMsg.setSentByUid(sentID);
                 messageList.add(newMsg);
                 messageAdapter.notifyDataSetChanged();
             }

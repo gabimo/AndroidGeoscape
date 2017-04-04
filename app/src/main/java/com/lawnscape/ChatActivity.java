@@ -44,7 +44,7 @@ public class ChatActivity extends Activity {
         currentUser = auth.getCurrentUser();
         allMessages = new ArrayList<ChatMessage>();
         messagesWindow = (ListView) findViewById(R.id.lvChatMessageView);
-        messageAdapter = new ChatMessageAdapter(this,allMessages);
+        messageAdapter = new ChatMessageAdapter(this,allMessages, currentUser.getUid());
         messagesWindow.setAdapter(messageAdapter);
         /*
         If there is no chat ID shared by the two users then this listener will make one
