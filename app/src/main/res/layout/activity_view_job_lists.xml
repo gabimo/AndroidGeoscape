@@ -67,7 +67,7 @@
             android:id="@+id/buttonRequestedJobs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="viewRequestedJobsJobs"
+            android:onClick="viewRequestedJobs"
             android:text="Requests"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
