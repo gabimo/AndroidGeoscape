@@ -2,14 +2,11 @@ package com.lawnscape;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,8 +14,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.util.ArrayList;
 
 public class EditProfileActivity extends Activity {
 
@@ -42,7 +37,6 @@ public class EditProfileActivity extends Activity {
         ivProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent photoGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
                 photoGalleryIntent.setType("image/*");
                 //photoGalleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);

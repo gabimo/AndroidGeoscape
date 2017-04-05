@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,7 +28,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import static com.lawnscape.R.id.ratingBarUser;
 
 public class ViewUserProfileActivity extends Activity {
     //userid the user wants to see
@@ -39,14 +37,14 @@ public class ViewUserProfileActivity extends Activity {
     private EditText etUserReview;
     private ArrayList<String> reviewList;
     private ArrayAdapter<String> reviewAdapter;
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private  FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference userRef;
     private TextView tvName;
     private TextView tvLoc;
     private ImageView ivProfilePhoto;
     private RatingBar rating;
     // Create a storage reference from our app
-    FirebaseStorage storage;
+    private FirebaseStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class ViewUserProfileActivity extends Activity {
         tvLoc = (TextView) findViewById(R.id.tvUserProfileLocation);
         etUserReview = (EditText) findViewById(R.id.etUserProfileReview);
         ivProfilePhoto = (ImageView) findViewById(R.id.ivUserProfileImage);
-        rating = (RatingBar) findViewById(ratingBarUser);
+        rating = (RatingBar) findViewById(R.id.ratingBarUser);
         storage = FirebaseStorage.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -70,11 +68,11 @@ public class ViewUserProfileActivity extends Activity {
                 tvName.setText(dataSnapshot.child("name").getValue().toString());
                 tvLoc.setText(dataSnapshot.child("location").getValue().toString());
 
-                if(dataSnapshot.hasChild("reviews")) {
+                if (dataSnapshot.hasChild("reviews")) {
                     lvUserReviews = (ListView) findViewById(R.id.lvUserProfileReviews);
                     reviewList = new ArrayList<>();
                     reviewAdapter = new ArrayAdapter<String>(ViewUserProfileActivity.this, android.R.layout.simple_list_item_1, reviewList);
-                    for(DataSnapshot review: dataSnapshot.child("reviews").getChildren()){
+                    for (DataSnapshot review : dataSnapshot.child("reviews").getChildren()) {
                         reviewList.add(review.getValue().toString());
                     }
 
@@ -82,15 +80,15 @@ public class ViewUserProfileActivity extends Activity {
                     reviewAdapter.notifyDataSetChanged();
                 }
 
-                /*
-                * This is probably wrong, rating needs to be fixed
-                 */
-                if(dataSnapshot.hasChild("ratings")) {
-                    float totalRating = (float)0.0;
-                    for(DataSnapshot userRating: dataSnapshot.child("ratings").getChildren()){
+            /*
+            * This is probably wrong, rating needs to be fixed
+             */
+                if (dataSnapshot.hasChild("ratings")) {
+                    float totalRating = (float) 0.0;
+                    for (DataSnapshot userRating : dataSnapshot.child("ratings").getChildren()) {
                         totalRating += Float.valueOf(userRating.getValue().toString());
                     }
-                    totalRating = totalRating/dataSnapshot.child("ratings").getChildrenCount();
+                    totalRating = totalRating / dataSnapshot.child("ratings").getChildrenCount();
                     rating.setRating(totalRating);
                     rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                         @Override
@@ -103,6 +101,7 @@ public class ViewUserProfileActivity extends Activity {
 
 
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -124,18 +123,17 @@ public class ViewUserProfileActivity extends Activity {
             }
         });
     }
-    public void reviewUser(View v){
+
+    public void reviewUser(View v) {
         userRef.child("reviews").addListenerForSingleValueEvent(
                 new ToggleAddIDVEListener(this, currentUser.getUid(), etUserReview.getText().toString()));
-        Toast.makeText(this, "Your review has been submitted, to edit just submit a new review",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Your review has been submitted, to edit submit a new review", Toast.LENGTH_SHORT).show();
     }
 
-    public void rateUser (View v){
+    public void rateUser(View v) {
         userRef.child("ratings").addListenerForSingleValueEvent(
-                new ToggleAddIDVEListener(this, currentUser.getUid(),  String.valueOf(rating.getRating())));
-        Toast.makeText(this, "Your rating has been submitted",Toast.LENGTH_SHORT).show();
+                new ToggleAddIDVEListener(this, currentUser.getUid(), String.valueOf(rating.getRating())));
+        Toast.makeText(this, "Your rating has been submitted", Toast.LENGTH_SHORT).show();
 
     }
-
-
 }

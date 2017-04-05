@@ -3,11 +3,7 @@ package com.lawnscape;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,21 +12,26 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends Activity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase database;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser != null) {
                     // User is signed in
                     Toast.makeText(LoginActivity.this, "Logged in",
                             Toast.LENGTH_SHORT).show();
@@ -90,33 +91,47 @@ public class LoginActivity extends Activity {
     public void createAccount(final View v) {
         final EditText emailBox = (EditText) findViewById(R.id.etSignUpEmail);
         final EditText passBox = (EditText) findViewById(R.id.etSignUpEmail);
-        String email = emailBox.getText().toString();
-        String password = passBox.getText().toString();
-        if (!email.equals("") && !password.equals("")) {
-            v.setEnabled(false);
-            emailBox.setEnabled(false);
-            passBox.setEnabled(false);
+        // grab the widgets as objects
+        final EditText etName = (EditText) findViewById(R.id.etSignUpName);
+        final EditText etLocation = (EditText) findViewById(R.id.etSignUpLocation);
+        final String newName = etName.getText().toString();
+        final String newLoc = etLocation.getText().toString();
+        if(!newName.equals("")&&!newLoc.equals("")){
+            String email = emailBox.getText().toString();
+            String password = passBox.getText().toString();
+            if (!email.equals("") && !password.equals("")) {
+                v.setEnabled(false);
+                emailBox.setEnabled(false);
+                passBox.setEnabled(false);
 
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(Task<AuthResult> task) {
-                            // Log.d("EVENT", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Could Not Create Account",
-                                        Toast.LENGTH_SHORT).show();
-                                v.setEnabled(true);
-                                emailBox.setEnabled(true);
-                                passBox.setEnabled(true);
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(Task<AuthResult> task) {
+                                // Log.d("EVENT", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "Could Not Create Account",
+                                            Toast.LENGTH_SHORT).show();
+                                    v.setEnabled(true);
+                                    emailBox.setEnabled(true);
+                                    passBox.setEnabled(true);
 
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Account Created Successfully",
-                                        Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(LoginActivity.this, ViewMyProfileActivity.class));
-                                finish();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Account Created Successfully",
+                                            Toast.LENGTH_SHORT).show();
+
+                                    // Set name of user and location
+                                    DatabaseReference usersRef = database.getReference("Users").child(currentUser.getUid().toString());
+                                    if (!newName.isEmpty() && !newLoc.isEmpty()) {
+                                        DatabaseReference newUserRef = usersRef;
+                                        newUserRef.setValue(new User(newName, newLoc));
+                                    }
+                                    startActivity(new Intent(LoginActivity.this, ViewMyProfileActivity.class));
+                                    finish();
+                                }
                             }
-                        }
-                    });
+                        });
+                }
         }
     }
     /************** Switch to SIGN UP view ****************/
