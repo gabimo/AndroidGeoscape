@@ -20,8 +20,6 @@ public class Job implements Parcelable {
     private String description;
     private String userid;
     private String postid;
-    private Map<String,String> activeworkers;
-    private Map<String,String> requesters;
     private String date;
     private String latitude, longitude;
 
@@ -34,17 +32,6 @@ public class Job implements Parcelable {
         latitude = lat;
         longitude = lng;
     }
-
-    /*public Job(String postDate, String t, String l, String d, String u, String lat, String lng) {
-        date = postDate;
-        title = t;
-        location = l;
-        description = d;
-        userid = u;
-        postid = "";
-        latitude = lat;
-        longitude = lng;
-    }*/
     public Job(String postDate, String t, String l, String d, String u, String p, String lat, String lng) {
         date = postDate;
         title = t;
@@ -60,10 +47,6 @@ public class Job implements Parcelable {
     public String getLongitude(){return longitude;}
     public String getPostid(){ return postid; }
 
-    public Map<String,String> getActiveworkers(){return activeworkers;}
-    public Map<String,String> getRequesters(){return requesters;}
-
-    public void setActiveworker(String key, String userid){activeworkers.put(key,userid); }
 
     public String getDescription() {
         return description;
@@ -92,7 +75,8 @@ public class Job implements Parcelable {
 
 
 /***************** PARCEL PORTION *****************/
-//Assumes the job has a post id assigned
+//The only reason these things are here is so a Job object
+//Can be passed as an Intent Extra, google it
     public Job(Parcel in){
         String[] data= new String[8];
 

@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -19,23 +20,26 @@ import java.util.ArrayList;
 
 public class SearchTextWatcher implements TextWatcher {
 
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference jobsRef = database.getReference("Jobs");
+    private DatabaseReference database;
+    private Query searchRef;
     private ArrayList<Job> searchResults;
     private ArrayList<String> resultIDs;
-    private EditText searchBar;
     private JobListAdapter jobsAdapter;
     private Context context;
     private String keyword;
-    private ValueEventListener searchVeListener;
+    private ValueEventListener searchVEListener;
+    private int startIndex, endIndex;
 
     SearchTextWatcher(Context ctxt, EditText etSearch, ArrayList<Job> results, JobListAdapter jAdapt){
+
+        database = FirebaseDatabase.getInstance().getReference();
+        searchRef = database.child("Jobs").orderByKey();
         context = ctxt;
         searchResults = results;
-        searchBar = etSearch;
         jobsAdapter = jAdapt;
         resultIDs = new ArrayList<>();
-        searchVeListener = new ValueEventListener() {
+
+        searchVEListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot job : dataSnapshot.getChildren()) {
@@ -47,22 +51,25 @@ public class SearchTextWatcher implements TextWatcher {
                         resultIDs.add(job.getKey());
                     }
                 }
-                jobsRef.addListenerForSingleValueEvent(
+                searchRef.addListenerForSingleValueEvent(
                         new JobListVEListener(context, searchResults, jobsAdapter, resultIDs));
+                searchRef.removeEventListener(searchVEListener);
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+                searchRef.removeEventListener(searchVEListener);
+            }
         };
     }
     @Override
-    public void beforeTextChanged( CharSequence s, int start, int count, int after) {}
+    public void beforeTextChanged( CharSequence s, int start, int count, int after) {
+    }
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {}
     @Override
     public void afterTextChanged(Editable s) {
-        resultIDs.clear();
         keyword = s.toString();
-        jobsRef.addListenerForSingleValueEvent(searchVeListener);
-        jobsRef.removeEventListener(searchVeListener);
+        resultIDs.clear();
+        searchRef.addListenerForSingleValueEvent(searchVEListener);
     }
 }

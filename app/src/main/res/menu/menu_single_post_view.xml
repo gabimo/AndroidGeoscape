@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/viewSinglePostMenuEditPost"
+        android:title="Post Job"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/edit_item_icon">
+    </item>
+    <item android:id="@+id/viewSinglePostMenuDelete"
+        android:title="Post Job"
+        android:orderInCategory="200"
+        app:showAsAction="always"
+        android:icon="@drawable/delete_icon">
+    </item>
     <item android:id="@+id/viewSinglePostMenuMyProfile"
         android:title="My Profile">
     </item>

@@ -32,7 +32,7 @@ public class User implements Parcelable{
     public String getUserid() { return userid;}
 
     /***************** PARCEL PORTION *****************/
-//Assumes the job has a post id assigned
+//The below methods from the interface are needed to pass a User object as an Intent Extra
     public User(Parcel in){
         String[] data= new String[3];
 

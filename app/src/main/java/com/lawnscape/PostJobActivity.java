@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,7 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PostJobActivity extends Activity {
+public class PostJobActivity extends AppCompatActivity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;

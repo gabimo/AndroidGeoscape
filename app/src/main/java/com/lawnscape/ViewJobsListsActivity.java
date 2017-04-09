@@ -3,6 +3,7 @@ package com.lawnscape;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ViewJobsListsActivity extends Activity {
+public class ViewJobsListsActivity extends AppCompatActivity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -34,7 +35,6 @@ public class ViewJobsListsActivity extends Activity {
     private DatabaseReference myListRef;
 
     private ListView allPostsList;
-
     private TextView savedJobsButton;
     private TextView allJobsButton;
     private TextView activeJobsButton;
@@ -103,6 +103,10 @@ public class ViewJobsListsActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.viewPostsMenuPostJob:
+                startActivity(new Intent(this, PostJobActivity.class));
+                finish();
+                return true;
             case R.id.viewPostsMenuMyProfile:
                 startActivity( new Intent( ViewJobsListsActivity.this, ViewMyProfileActivity.class));
                 finish();

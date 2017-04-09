@@ -3,6 +3,7 @@ package com.lawnscape;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ViewJobRequestsActivity extends Activity {
+public class ViewJobRequestsActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
@@ -66,7 +67,7 @@ public class ViewJobRequestsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                User selectedUser = (User) reuesterAdapter.getItem(position);
+                User selectedUser = reuesterAdapter.getItem(position);
                 Intent chatIntent = new Intent(ViewJobRequestsActivity.this, ChatActivity.class);
                 chatIntent.putExtra("otherid", selectedUser.getUserid());
                 startActivity(chatIntent);
@@ -84,7 +85,7 @@ public class ViewJobRequestsActivity extends Activity {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
 
-                        final User selectedUser = (User) reuesterAdapter.getItem(position);
+                        final User selectedUser = reuesterAdapter.getItem(position);
                         switch (item.getItemId()){
                             case R.id.longclickAssignJob:
                                 //remove the job from the list of all jobs with a listener
@@ -93,7 +94,7 @@ public class ViewJobRequestsActivity extends Activity {
                                 DatabaseReference userRef = database.getReference("Users").child(selectedUser.getUserid());
                                 userRef.child("activejobs").addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewJobRequestsActivity.this,selectedJob.getPostid()));
                                 //Also delete the request
-                                //return true;
+                                return true;
                             case R.id.longclickDeleteChat:
                                 //remove the job from the list of all jobs with a listener
                                 jobRef = database.getReference("Jobs").child(selectedJob.getPostid()).child("requesters");

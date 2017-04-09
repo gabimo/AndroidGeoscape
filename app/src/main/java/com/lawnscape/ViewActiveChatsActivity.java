@@ -3,6 +3,7 @@ package com.lawnscape;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ViewActiveChatsActivity extends Activity {
+public class ViewActiveChatsActivity extends AppCompatActivity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -95,61 +96,61 @@ public class ViewActiveChatsActivity extends Activity {
                         }
                     });
                     // Hold down on a user in the chat list to get a popup
-                    userListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                        @Override
-                        public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
-                                                long id) {
-                            //Creating the instance of PopupMenu
-                            PopupMenu popup = new PopupMenu(ViewActiveChatsActivity.this, view);
-                            popup.getMenuInflater().inflate(R.menu.popup_user_menu, popup.getMenu());
-                            //registering popup with OnMenuItemClickListener
-                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                public boolean onMenuItemClick(MenuItem item) {
-
-                                    final User selectedUser = (User) userAdapter.getItem(position);
-                                    switch (item.getItemId()){
-                                        case R.id.longclickDeleteChat:
-                                            final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                            //remove the chat from the list of all chats for both users with a listener
-                                            DatabaseReference myChatidRef = database.getReference("Users").child(currentUser.getUid().toString()).child("chatids");
-                                            //doesnt delete the actual chat log ;)
-                                            myChatidRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    dataSnapshot.child(selectedUser.getUserid()).getRef().removeValue();
-                                                }
-                                                @Override
-                                                public void onCancelled(DatabaseError databaseError) {  }
-                                            });
-                                            myChatidRef = database.getReference("Users").child(selectedUser.getUserid()).child("chatids");
-                                            myChatidRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    dataSnapshot.child(currentUser.getUid()).getRef().removeValue();
-                                                }
-                                                @Override
-                                                public void onCancelled(DatabaseError databaseError) {  }
-                                            });
-                                            userList.remove(selectedUser);
-                                            userAdapter.notifyDataSetChanged();
-                                            return true;
-                                        case R.id.longclickViewProfile:
-                                            Intent viewProfileIntent = new Intent(ViewActiveChatsActivity.this, ViewUserProfileActivity.class);
-                                            viewProfileIntent.putExtra("UserID", selectedUser.getUserid());
-                                            startActivity(viewProfileIntent);
-                                            return true;
-                                    }
-                                    return true;
-                                }
-                            });
-                            popup.show();//showing popup menu
-                            return true;
-                        }
-                    });
+                    userListView.setOnItemLongClickListener(longClickListener);
                 }
             }
         };
     }
+    private AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
+                                       long id) {
+            //Creating the instance of PopupMenu
+            PopupMenu popup = new PopupMenu(ViewActiveChatsActivity.this, view);
+            popup.getMenuInflater().inflate(R.menu.popup_user_menu, popup.getMenu());
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(MenuItem item) {
+                    final User selectedUser = (User) userAdapter.getItem(position);
+                    switch (item.getItemId()){
+                        case R.id.longclickDeleteChat:
+                            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            //remove the chat from the list of all chats for both users with a listener
+                            DatabaseReference myChatidRef = database.getReference("Users").child(currentUser.getUid().toString()).child("chatids");
+                            //doesnt delete the actual chat log ;)
+                            myChatidRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    dataSnapshot.child(selectedUser.getUserid()).getRef().removeValue();
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {  }
+                            });
+                            myChatidRef = database.getReference("Users").child(selectedUser.getUserid()).child("chatids");
+                            myChatidRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    dataSnapshot.child(currentUser.getUid()).getRef().removeValue();
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {  }
+                            });
+                            userList.remove(selectedUser);
+                            userAdapter.notifyDataSetChanged();
+                            return true;
+                        case R.id.longclickViewProfile:
+                            Intent viewProfileIntent = new Intent(ViewActiveChatsActivity.this, ViewUserProfileActivity.class);
+                            viewProfileIntent.putExtra("UserID", selectedUser.getUserid());
+                            startActivity(viewProfileIntent);
+                            return true;
+                    }
+                    return true;
+                }
+            });
+            popup.show();//showing popup menu
+            return true;
+        }
+    };
 
     @Override
     public void onStart() {
@@ -216,4 +217,5 @@ public class ViewActiveChatsActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }

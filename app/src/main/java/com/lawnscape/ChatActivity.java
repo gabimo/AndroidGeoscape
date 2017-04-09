@@ -2,6 +2,7 @@ package com.lawnscape;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -21,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ChatActivity extends Activity {
+public class ChatActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private String otherUserid;
     private FirebaseAuth auth;

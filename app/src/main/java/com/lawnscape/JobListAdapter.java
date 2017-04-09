@@ -2,7 +2,6 @@ package com.lawnscape;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -56,6 +54,8 @@ public class JobListAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
+        //This makes ListView the same as RecycleView because it reduces calls
+        //to findViewById and allows us to keep the views fresh and clean
         final ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.layout_job_post, null);
@@ -69,30 +69,25 @@ public class JobListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        //This finds the photo data by the job id from firebase storage, nothing is passed around
+        //The ImageView is usually dirty, this makes the UI better
+        holder.ivJobPic.setImageDrawable(null);
+        //This finds the photo data by the job id from firebase storage
         StorageReference pathReference = storage.getReference().child("jobphotos").child(jobPostDetails.get(position).getPostid());
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                // Pass it to Picasso to download, show in ImageView and caching
+                // Pass it to Picasso to download, show in ImageView and Picasso handles caching
                 Picasso.with(ctx).load(uri.toString()).into(holder.ivJobPic);
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                //Default no image
-                holder.ivJobPic.setImageDrawable(null);
-            }
         });
-
+        //Set the rest of the view
         holder.tvTitle.setText(jobPostDetails.get(position).getTitle());
         holder.tvDescription.setText(jobPostDetails.get(position).getDescription());
         holder.tvLocation.setText(jobPostDetails.get(position).getLocation());
         holder.tvDate.setText(jobPostDetails.get(position).getDate());
         return convertView;
     }
-
+    //Represents all the widgets in a layout resouce file
     static class ViewHolder {
         ImageView ivJobPic;
         TextView tvTitle;

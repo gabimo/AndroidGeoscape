@@ -1,13 +1,17 @@
 package com.lawnscape;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends AppCompatActivity {
     private ArrayList<Job> searchResults;
     private JobListAdapter jobsAdapter;
 
@@ -30,8 +34,21 @@ public class SearchActivity extends Activity {
         // but you MUST call jobsAdaptor.notifyDataSetChanged(); to update the listview
         searchResultsView.setAdapter(jobsAdapter);
         searchTextWatcher = new SearchTextWatcher(this, searchBar,searchResults,jobsAdapter);
-        searchBar.addTextChangedListener(searchTextWatcher);
+        //This handles clicks on individual job items from the list
+        // and bring you to a job specific page with details
+        searchResultsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Job selectedJob = (Job) jobsAdapter.getItem(position);
+                Intent singleJobViewIntent = new Intent(SearchActivity.this, ViewSingleJobActivity.class);
+                singleJobViewIntent.putExtra("Job",selectedJob);
+                startActivity(singleJobViewIntent);
+
+            }
+        });
     }
+
     @Override
     protected void onStop(){
         super.onStop();

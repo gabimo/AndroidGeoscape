@@ -44,6 +44,7 @@ dependencies {
     compile 'com.beardedhen:androidbootstrap:2.3.1'
     compile 'com.github.d-max:spots-dialog:0.7@aar'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:appcompat-v7:24.0.0'
 }
 
 // at bottom for some reason its weird

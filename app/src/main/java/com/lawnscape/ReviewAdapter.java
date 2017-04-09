@@ -40,22 +40,21 @@ public class ReviewAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ChatMessageAdapter.ViewHolder holder;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.layout_chat_message, null);
-            holder = new ChatMessageAdapter.ViewHolder();
-
+            holder = new ViewHolder();
+            holder.tvReview = (TextView) convertView.findViewById(R.id.tvMessageLeft);
             convertView.setTag(holder);
         } else {
-            holder = (ChatMessageAdapter.ViewHolder) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
-
+        holder.tvReview.setText(reviews.get(position));
 
         return convertView;
     }
 
     static class ViewHolder {
-        TextView tvTime;
-        TextView tvMessage;
+        TextView tvReview;
     }
 }

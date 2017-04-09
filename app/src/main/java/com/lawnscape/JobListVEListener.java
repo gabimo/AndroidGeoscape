@@ -60,9 +60,7 @@ public class JobListVEListener implements ValueEventListener {
                 String lng = (String) jobNode.child("longitude").getValue();
                 String userid = (String) jobNode.child("userid").getValue();
                 String postid = (String) jobNode.getKey().toString();
-
                 allPostDetailsList.add(new Job(date, title, location, description, userid, postid, lat, lng));
-                //Tell the listview adaptor to update the listview based on the ArrayList updates
             }
         }else{
             for (String jobid : jobsToGet) {
@@ -75,11 +73,10 @@ public class JobListVEListener implements ValueEventListener {
                 String lng = (String) jobNode.child("longitude").getValue();
                 String userid = (String) jobNode.child("userid").getValue();
                 String postid = (String) jobNode.getKey().toString();
-
                 allPostDetailsList.add(new Job(date, title, location, description, userid, postid, lat, lng));
-                //Tell the listview adaptor to update the listview based on the ArrayList updates
             }
         }
+        //Tell the listview adaptor to update the listview based on the ArrayList updates
         jobsAdaptor.notifyDataSetChanged();
     }
     @Override

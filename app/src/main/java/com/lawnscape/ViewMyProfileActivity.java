@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 //Profile Activity
-public class ViewMyProfileActivity extends FragmentActivity {
+public class ViewMyProfileActivity extends AppCompatActivity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
@@ -56,6 +57,7 @@ public class ViewMyProfileActivity extends FragmentActivity {
                     finish();
                 }else{
                     //user is logged in
+                    storage = FirebaseStorage.getInstance();
                     database = FirebaseDatabase.getInstance ();
                     tvEmail = (TextView) findViewById(R.id.tvMyProfileUserEmail);
                     tvUserID = (TextView) findViewById(R.id.tvMyProfileUserID);
@@ -64,26 +66,17 @@ public class ViewMyProfileActivity extends FragmentActivity {
                     ivProfilePhoto = (ImageView) findViewById(R.id.ivMyProfileImage);
                     tvEmail.setText(currentUser.getEmail().toString());
                     tvUserID.setText(currentUser.getUid().toString());
-
-                    storage = FirebaseStorage.getInstance();
-                    //load profile photo
-                    StorageReference pathReference = storage.getReference().child("userprofilephotos").child(currentUser.getUid());
-                    pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    ivProfilePhoto.setImageDrawable(null);
+                    //This finds the photo data by the job id from firebase storage, nothing is passed around
+                    StorageReference jobPhotoRef = storage.getReference().child("userprofilephotos").child(currentUser.getUid());
+                    jobPhotoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
                             // Got the download URL for 'users/me/profile.png'
                             // Pass it to Picasso to download, show in ImageView and caching
-                            Picasso.with(ViewMyProfileActivity.this).load(uri).into(ivProfilePhoto);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(Exception exception) {
-                            //Default no image
-                            ivProfilePhoto.setImageDrawable(null);
+                            Picasso.with(ViewMyProfileActivity.this).load(uri.toString()).into(ivProfilePhoto);
                         }
                     });
-
-
                     database.getReference("Users").child(currentUser.getUid())
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -138,7 +131,6 @@ public class ViewMyProfileActivity extends FragmentActivity {
         switch (item.getItemId()) {
             case R.id.profileMenuSettings:
                 startActivity(new Intent(this, EditProfileActivity.class));
-                finish();
                 return true;
             case R.id.profileMenuChats:
                 startActivity(new Intent(this, ViewActiveChatsActivity.class));

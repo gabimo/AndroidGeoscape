@@ -9,7 +9,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,8 +32,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class ViewSingleJobActivity extends Activity {
+public class ViewSingleJobActivity extends AppCompatActivity {
 
+    // Create a storage reference from our app
+    private FirebaseStorage storage;
+    private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser currentUser;
@@ -49,14 +51,23 @@ public class ViewSingleJobActivity extends Activity {
     private BootstrapButton requestButton;
     private Button deleteButton;
     private Button editButton;
-    // Create a storage reference from our app
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_single_job);
+        deleteButton = (Button) findViewById(R.id.buttonDeletePost);
+        requestButton = (BootstrapButton) findViewById(R.id.buttonRequestJob);
+        saveButton = (BootstrapButton) findViewById(R.id.buttonSaveJob);
+        editButton = (Button) findViewById(R.id.buttonEditPostDetails);
+        chatWithPostersButton = (BootstrapButton) findViewById(R.id.buttonChatWithPoster);
+        tvTitle = (TextView) findViewById(R.id.tvSingleJobTitle);
+        tvLoc = (TextView) findViewById(R.id.tvSingleJobLocation);
+        tvDesc = (TextView) findViewById(R.id.tvSingleJobDescription);
+        tvDate = (TextView) findViewById(R.id.tvSingleJobDate);
+        ivPhoto = (ImageView) findViewById(R.id.ivSingleJobPhoto);
+
         //get firebase auth instance
         mAuth = FirebaseAuth.getInstance();
         //make sure user is logged in and has an account
@@ -69,21 +80,17 @@ public class ViewSingleJobActivity extends Activity {
                     // launch login activity
                     startActivity(new Intent(ViewSingleJobActivity.this, LoginActivity.class));
                     finish();
-                } else {
-                    //user is logged in
-                    deleteButton = (Button) findViewById(R.id.buttonDeletePost);
-                    requestButton = (BootstrapButton) findViewById(R.id.buttonRequestJob);
-                    saveButton = (BootstrapButton) findViewById(R.id.buttonSaveJob);
-                    editButton = (Button) findViewById(R.id.buttonEditPostDetails);
-                    chatWithPostersButton = (BootstrapButton) findViewById(R.id.buttonChatWithPoster);
-
-                    tvTitle = (TextView) findViewById(R.id.tvSingleJobTitle);
-                    tvLoc = (TextView) findViewById(R.id.tvSingleJobLocation);
-                    tvDesc = (TextView) findViewById(R.id.tvSingleJobDescription);
-                    tvDate = (TextView) findViewById(R.id.tvSingleJobDate);
-                    ivPhoto = (ImageView) findViewById(R.id.ivSingleJobPhoto);
+                }else{
+                    storage = FirebaseStorage.getInstance();
+                    database = FirebaseDatabase.getInstance();
                     Intent jobIntent = getIntent();
                     jobPost = jobIntent.getParcelableExtra("Job");
+
+                    tvTitle.setText(jobPost.getTitle());
+                    tvLoc.setText(jobPost.getLocation());
+                    tvDesc.setText(jobPost.getDescription());
+                    tvDate.setText(jobPost.getDate());
+
                     //This finds the photo data by the job id from firebase storage, nothing is passed around
                     StorageReference jobPhotoRef = storage.getReference().child("jobphotos").child(jobPost.getPostid());
                     jobPhotoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -93,34 +100,23 @@ public class ViewSingleJobActivity extends Activity {
                             // Pass it to Picasso to download, show in ImageView and caching
                             Picasso.with(ViewSingleJobActivity.this).load(uri.toString()).into(ivPhoto);
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle any errors
-                        }
                     });
-
-                    tvTitle.setText(jobPost.getTitle());
-                    tvLoc.setText(jobPost.getLocation());
-                    tvDesc.setText(jobPost.getDescription());
-                    tvDate.setText(jobPost.getDate());
                     if(jobPost.getUserid().toString().equals(currentUser.getUid().toString())){
-                        //hide
+                        //hide buttons used by workers
                         requestButton.setVisibility(View.INVISIBLE);
                         saveButton.setVisibility(View.INVISIBLE);
                         chatWithPostersButton.setVisibility(View.INVISIBLE);
                     }else{
-                        //hide
+                        //hide buttons used by job poster
                         deleteButton.setVisibility(View.INVISIBLE);
                         editButton.setVisibility(View.INVISIBLE);
+
                     }
                     DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference("Admins");
                     adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if(dataSnapshot.hasChild(currentUser.getUid().toString())){
-                                Button deleteButton = (Button) findViewById(R.id.buttonDeletePost);
-                                Button editButton = (Button) findViewById(R.id.buttonEditPostDetails);
                                 deleteButton.setText("Admin Delete");
                                 editButton.setText("Admin Edit");
                                 deleteButton.setVisibility(View.VISIBLE);
@@ -130,7 +126,6 @@ public class ViewSingleJobActivity extends Activity {
                         @Override
                         public void onCancelled(DatabaseError databaseError) { }
                     });
-
                 }
             }
         };
@@ -159,12 +154,29 @@ public class ViewSingleJobActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_single_post_view, menu);
+        /*IMPORTANT
+        I don't know why this works. It depends on the order of the lifecycle methods
+        it seems that onCreateOptionsMenu which creates the action bar items
+        is called after onStart, in order to have a non-null currentUser object
+         */
+        if(!currentUser.getUid().equals(jobPost.getUserid())) {
+            MenuItem editPostMenuItem = menu.findItem(R.id.viewSinglePostMenuEditPost);
+            MenuItem deletePostMenuItem = menu.findItem(R.id.viewSinglePostMenuDelete);
+            editPostMenuItem.setVisible(false);
+            deletePostMenuItem.setVisible(false);
+        }
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.viewSinglePostMenuEditPost:
+                editJob(null);
+                return true;
+            case R.id.viewSinglePostMenuDelete:
+                deletePost(null);
+                return true;
             case R.id.viewSinglePostMenuMyProfile:
                 startActivity( new Intent( ViewSingleJobActivity.this, ViewMyProfileActivity.class));
                 finish();
@@ -211,24 +223,20 @@ public class ViewSingleJobActivity extends Activity {
     }
 
     public void saveJob(View v){
-        //Dont save your own jobs
-        if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
-            DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs");
-            mySavedJobsRef.addListenerForSingleValueEvent(
-                    new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
-        }
+        DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs");
+        mySavedJobsRef.addListenerForSingleValueEvent(
+                new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
+
     }
     public void requestJob(View v){
-        //Dont let a user request their own job
-        if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
-            DatabaseReference ref = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
-            ref.addListenerForSingleValueEvent(
-                    new ToggleAddIDVEListener(ViewSingleJobActivity.this,currentUser.getUid().toString()));
-            ref = database.getReference("Users").child(currentUser.getUid()).child("requestedjobs");
-            ref.addListenerForSingleValueEvent(
-                    new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
-        }
+        DatabaseReference ref = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
+        ref.addListenerForSingleValueEvent(
+                new ToggleAddIDVEListener(ViewSingleJobActivity.this,currentUser.getUid().toString()));
+        ref = database.getReference("Users").child(currentUser.getUid()).child("requestedjobs");
+        ref.addListenerForSingleValueEvent(
+                new ToggleAddIDVEListener(ViewSingleJobActivity.this,jobPost.getPostid()));
     }
+
     public void openChat(View v){
         Intent chatIntent = new Intent(ViewSingleJobActivity.this,ChatActivity.class);
         chatIntent.putExtra("otherid",jobPost.getUserid());
@@ -256,12 +264,15 @@ public class ViewSingleJobActivity extends Activity {
             String newLoc = etLocation.getText().toString();
             String newDesc = etDescription.getText().toString();
             // changes are made
-            if(newDesc.equals("")){
-                newDesc = "No description";
+            if (newDesc.equals("")) {
+                dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this, "No description", newDesc));
             }
-            dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this,"title", newTitle));
-            dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this,"location", newLoc));
-            dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this,"description", newDesc));
+            if (!newTitle.equals("")) {
+                dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this, "title", newTitle));
+            }
+            if (!newLoc.equals("")) {
+                dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this, "location", newLoc));
+            }
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {}

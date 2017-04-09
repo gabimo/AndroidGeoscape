@@ -50,6 +50,7 @@ public class UserListAdapter extends BaseAdapter {
         return position;
     }
 
+    //Displays the view
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         if (convertView == null) {
@@ -62,6 +63,8 @@ public class UserListAdapter extends BaseAdapter {
         } else {
             holder = (UserListAdapter.ViewHolder) convertView.getTag();
         }
+        //The ImageView is usually dirty, this makes the UI better
+        holder.ivPic.setImageDrawable(null);
         StorageReference pathReference = storage.getReference().child("userprofilephotos").child(usersList.get(position).getUserid());
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -69,12 +72,6 @@ public class UserListAdapter extends BaseAdapter {
                 // Got the download URL for 'users/me/profile.png'
                 // Pass it to Picasso to download, show in ImageView and caching
                 Picasso.with(ctx).load(uri.toString()).into(holder.ivPic);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                //Default no image
-                holder.ivPic.setImageDrawable(null);
             }
         });
 
