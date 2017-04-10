@@ -8,10 +8,16 @@
         android:icon="@drawable/add_job_plus_icon">
     </item>
     <item android:id="@+id/viewPostsMenuMyProfile"
-        android:title="My Profile">
+        android:title="My Profile"
+        android:orderInCategory="300"
+        app:showAsAction="always"
+        android:icon="@drawable/profile_icon">
     </item>
     <item android:id="@+id/viewPostsMenuAllChats"
-        android:title="My Chats">
+        android:title="My Chats"
+        android:orderInCategory="200"
+        app:showAsAction="always"
+        android:icon="@drawable/chat_icon">
     </item>
     <item android:id="@+id/viewPostsMenuMyJobs"
         android:title="My Job Posts">

@@ -158,12 +158,12 @@ public class ViewMyPostsActivity extends AppCompatActivity {
                 startActivity(new Intent(ViewMyPostsActivity.this, PostJobActivity.class));
                 finish();
                 return true;
-            case R.id.viewPostsMenuMyProfile:
-                startActivity( new Intent( this, ViewMyProfileActivity.class));
-                finish();
-                return true;
             case R.id.viewPostsMenuAllChats:
                 startActivity(new Intent(this, ViewActiveChatsActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenuMyProfile:
+                startActivity( new Intent( this, ViewMyProfileActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:
@@ -176,7 +176,7 @@ public class ViewMyPostsActivity extends AppCompatActivity {
                 startActivity(allJobsViewIntent);
                 finish();
                 return true;
-            case R.id.profileMenuSearch:
+            case R.id.viewPostsMenuSearch:
                 startActivity(new Intent(this, SearchActivity.class));
                 return true;
             case R.id.viewPostsMenuJobsMap:

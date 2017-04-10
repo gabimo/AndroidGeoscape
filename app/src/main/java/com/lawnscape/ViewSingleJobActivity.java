@@ -32,6 +32,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class ViewSingleJobActivity extends AppCompatActivity {
 
     // Create a storage reference from our app
@@ -51,7 +53,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
     private BootstrapButton requestButton;
     private Button deleteButton;
     private Button editButton;
-    private Menu menu;
+    private Boolean isFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,26 +153,56 @@ public class ViewSingleJobActivity extends AppCompatActivity {
     /******************* Menu Handling *******************/
     //make the menu show up
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu( Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_single_post_view, menu);
-        /*IMPORTANT
-        I don't know why this works. It depends on the order of the lifecycle methods
-        it seems that onCreateOptionsMenu which creates the action bar items
-        is called after onStart, in order to have a non-null currentUser object
-         */
+
+        final MenuItem favoritePostMenuItem = menu.findItem(R.id.viewSinglePostMenuFavorite);
+        //Depends on lifecycle activities so currentUser objct isnt null
         if(!currentUser.getUid().equals(jobPost.getUserid())) {
             MenuItem editPostMenuItem = menu.findItem(R.id.viewSinglePostMenuEditPost);
             MenuItem deletePostMenuItem = menu.findItem(R.id.viewSinglePostMenuDelete);
             editPostMenuItem.setVisible(false);
             deletePostMenuItem.setVisible(false);
+
+            DatabaseReference postFavoritedRef;
+            postFavoritedRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs").getRef();
+            postFavoritedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    //Find each job made saved by the user
+                    if(dataSnapshot.hasChild(jobPost.getPostid())){
+                        favoritePostMenuItem.setIcon(R.drawable.unfavorite_icon);
+                        isFavorite = true;
+                    }else{
+                        isFavorite = false;
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {/* idk what we would do*/ }
+            });
+        }else{
+            //Current user's own post
+            favoritePostMenuItem.setVisible(false);
         }
+        //Creates a back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.viewSinglePostMenuFavorite:
+                if(isFavorite) {
+                    item.setIcon(R.drawable.favorite_icon);
+                    saveJob(null);
+                }else{
+                    item.setIcon(R.drawable.unfavorite_icon);
+                    saveJob(null);
+                }
+                isFavorite = !isFavorite;
+                return true;
             case R.id.viewSinglePostMenuEditPost:
                 editJob(null);
                 return true;
@@ -196,13 +228,11 @@ public class ViewSingleJobActivity extends AppCompatActivity {
             case R.id.viewSinglePostMenuSearch:
                 startActivity(new Intent(ViewSingleJobActivity.this, SearchActivity.class));
                 return true;
-            case R.id.viewSinglePostMenuBackToJobsList:
-                finish();
-                return true;
             case R.id.viewSinglePostMenuSignOut:
                 mAuth.signOut();
                 return true;
             default:
+                finish();
                 return super.onOptionsItemSelected(item);
         }
     }

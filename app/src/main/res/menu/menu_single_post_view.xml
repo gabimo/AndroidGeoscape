@@ -13,20 +13,26 @@
         app:showAsAction="always"
         android:icon="@drawable/delete_icon">
     </item>
+    <item android:id="@+id/viewSinglePostMenuFavorite"
+        android:title="Save This Post"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/favorite_icon">
+    </item>
     <item android:id="@+id/viewSinglePostMenuMyProfile"
         android:title="My Profile">
     </item>
     <item android:id="@+id/viewSinglePostMenuChat"
-        android:title="Chat">
+        android:title="Chat"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/new_chat_icon">
     </item>
     <item android:id="@+id/viewSinglePostMenuMyJobs"
         android:title="My Job Posts">
     </item>
     <item android:id="@+id/viewSinglePostMenuSearch"
         android:title="Search Jobs">
-    </item>
-    <item android:id="@+id/viewSinglePostMenuBackToJobsList"
-        android:title="Back to Jobs">
     </item>
     <item android:id="@+id/viewSinglePostMenuSignOut"
         android:title="Sign Out" >

@@ -160,7 +160,7 @@ public class ViewJobsListsActivity extends AppCompatActivity {
     }
     public void viewActiveJobs(View v){ viewSomeJobs(v, "activejobs"); }
     public void viewSomeJobs(View v, String jobSet){
-        jobsToFetch = new ArrayList<String>();
+        jobsToFetch = new ArrayList<>();
         myListRef = database.getReference("Users").child(currentUser.getUid().toString()).child(jobSet).getRef();
         myListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
