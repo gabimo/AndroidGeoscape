@@ -211,7 +211,6 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                 return true;
             case R.id.viewSinglePostMenuMyProfile:
                 startActivity( new Intent( ViewSingleJobActivity.this, ViewMyProfileActivity.class));
-                finish();
                 return true;
             case R.id.viewSinglePostMenuChat:
                 if(!currentUser.getUid().toString().equals(jobPost.getUserid())) {
@@ -223,7 +222,6 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                 return true;
             case R.id.viewSinglePostMenuMyJobs:
                 startActivity(new Intent(ViewSingleJobActivity.this, ViewMyPostsActivity.class));
-                finish();
                 return true;
             case R.id.viewSinglePostMenuSearch:
                 startActivity(new Intent(ViewSingleJobActivity.this, SearchActivity.class));

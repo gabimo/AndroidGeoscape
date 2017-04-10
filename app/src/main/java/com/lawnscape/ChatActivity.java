@@ -157,7 +157,6 @@ public class ChatActivity extends AppCompatActivity {
                 return true;
             case R.id.chatMenuMyProfile:
                 startActivity(new Intent(this, ViewMyProfileActivity.class));
-                finish();
                 return true;
             case R.id.chatMenuMyJobPosts:
                 startActivity(new Intent(this, ViewMyPostsActivity.class));

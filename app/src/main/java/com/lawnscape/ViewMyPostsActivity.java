@@ -164,7 +164,6 @@ public class ViewMyPostsActivity extends AppCompatActivity {
                 return true;
             case R.id.viewPostsMenuMyProfile:
                 startActivity( new Intent( this, ViewMyProfileActivity.class));
-                finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:
                 startActivity(new Intent(this, ViewMyPostsActivity.class));
