@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/chatMenuDeleteChat"
+        android:title="Delete Chat"
+        android:orderInCategory="200"
+        app:showAsAction="always"
+        android:icon="@drawable/delete_icon">
+    </item>
+    <item android:id="@+id/chatMenuViewUserProfile"
+        android:title="Poster Profile"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/user_profile_icon">
+    </item>
+    <item android:id="@+id/chatMenuMyProfile"
+        android:title="My Profile">
+    </item>
+    <item android:id="@+id/chatMenuMyJobPosts"
+        android:title="My Job Posts">
+    </item>
+    <item android:id="@+id/chatMenuSearch"
+        android:title="Search Jobs">
+    </item>
+    <item android:id="@+id/chatMenuSignOut"
+        android:title="Sign Out" >
+    </item>
+</menu>

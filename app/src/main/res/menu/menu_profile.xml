@@ -3,21 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/profileMenuSettings"
         android:title="Settings"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         app:showAsAction="always"
         android:icon="@drawable/edit_profile_icon">
     </item>
     <item android:id="@+id/profileMenuChats"
-        android:title="My Chats" >
-    </item>
-    <item android:id="@+id/profileMenuSearch"
-        android:title="Search Jobs">
+        android:title="My Chats"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/chat_icon">
     </item>
     <item android:id="@+id/profileMenuMyJobs"
         android:title="My Job Posts" >
     </item>
     <item android:id="@+id/profileMenuAllJobs"
         android:title="View All Jobs" >
+    </item>
+    <item android:id="@+id/profileMenuSearch"
+        android:title="Search Jobs">
     </item>
     <item android:id="@+id/profileMenuAllJobsMap"
         android:title="Map of All Jobs" >

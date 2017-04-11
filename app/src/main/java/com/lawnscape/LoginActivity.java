@@ -36,7 +36,9 @@ public class LoginActivity extends AppCompatActivity {
                     // User is signed in
                     Toast.makeText(LoginActivity.this, "Logged in",
                             Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, ViewMyProfileActivity.class));
+                    Intent loginIntent = new Intent(LoginActivity.this, ViewJobsListsActivity.class);
+                    loginIntent.putExtra("View", "all");
+                    startActivity(loginIntent);
                     finish();
                 }
             }

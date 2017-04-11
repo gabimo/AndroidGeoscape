@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lawnscape"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.1">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -10,7 +10,6 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -20,35 +19,29 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Splash">
+        <activity android:name=".ViewMyProfileActivity"
+            android:label="My Profile">
+        </activity>
+        <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ViewMyProfileActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".LoginActivity" />
         <activity
             android:name=".PostJobActivity"
-            android:label="@string/title_activity_post_job"
+            android:label="Post a New Job"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ViewMyPostsActivity"
-            android:label="@string/title_activity_view_my_posts" />
+            android:label="My Posts" />
         <activity android:name=".ViewSingleJobActivity" />
         <activity android:name=".ViewJobsListsActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".ViewActiveChatsActivity" />
         <activity
             android:name=".ViewUserProfileActivity"
-            android:label="@string/title_activity_view_user_profile"
+            android:label="User Profile"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ViewJobRequestsActivity" />
         <!--

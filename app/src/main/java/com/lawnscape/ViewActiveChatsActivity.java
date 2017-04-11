@@ -176,6 +176,9 @@ public class ViewActiveChatsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_view_posts, menu);
+        //WHile on the chat list activity replace the chat list icon with a link to view jobs
+        menu.findItem(R.id.viewPostsMenuAllChats).setIcon(R.drawable.view_list_icon);
+        menu.findItem(R.id.viewPostsMenuPostJob).setVisible(false);
         return true;
     }
 
@@ -185,10 +188,11 @@ public class ViewActiveChatsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.viewPostsMenuMyProfile:
                 startActivity(new Intent(this, ViewMyProfileActivity.class));
-                finish();
                 return true;
             case R.id.viewPostsMenuAllChats:
-                startActivity(new Intent(this, ViewActiveChatsActivity.class));
+                Intent viewJobList = new Intent(this, ViewJobsListsActivity.class);
+                viewJobList.putExtra("View", "all");
+                startActivity(viewJobList);
                 finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:

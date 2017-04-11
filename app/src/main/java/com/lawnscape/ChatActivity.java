@@ -1,14 +1,18 @@
 package com.lawnscape;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ThrowOnExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -25,7 +30,7 @@ import java.util.Date;
 public class ChatActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private String otherUserid;
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
 
     private ArrayList<ChatMessage> allMessages;
     private ChatMessageAdapter messageAdapter;
@@ -41,8 +46,8 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        auth = FirebaseAuth.getInstance();
-        currentUser = auth.getCurrentUser();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
         allMessages = new ArrayList<ChatMessage>();
         messagesWindow = (ListView) findViewById(R.id.lvChatMessageView);
         messageAdapter = new ChatMessageAdapter(this,allMessages, currentUser.getUid());
@@ -131,5 +136,41 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {  }
         });
+    }
+    /********************* MENU STUFF ACTION BAR ********************/
+    @Override
+    public boolean onCreateOptionsMenu( Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_chat, menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.chatMenuDeleteChat:
+                Toast.makeText(this, "Must implement", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.chatMenuViewUserProfile:
+                Toast.makeText(this, "Need to Implement", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.chatMenuMyProfile:
+                startActivity(new Intent(this, ViewMyProfileActivity.class));
+                return true;
+            case R.id.chatMenuMyJobPosts:
+                startActivity(new Intent(this, ViewMyPostsActivity.class));
+                finish();
+                return true;
+            case R.id.chatMenuSearch:
+                startActivity(new Intent(this, SearchActivity.class));
+                return true;
+            case R.id.chatMenuSignOut:
+                mAuth.signOut();
+                finish();
+            default:
+                finish();
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

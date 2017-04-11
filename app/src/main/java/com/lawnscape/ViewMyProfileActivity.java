@@ -123,6 +123,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_profile, menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
     }
     @Override
@@ -154,6 +155,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 mAuth.signOut();
                 return true;
             default:
+                finish();
                 return super.onOptionsItemSelected(item);
         }
     }
