@@ -11,7 +11,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.lawnscape.ViewSingleJobActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
     <ImageView
         android:id="@+id/ivSingleJobPhoto"
@@ -19,94 +21,69 @@
         android:layout_height="125dp"
         android:layout_weight="0.18"
         app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_000"
-        android:layout_marginLeft="19dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="3dp" />
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/tvSingleJobTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        app:layout_constraintLeft_toRightOf="@+id/ivSingleJobPhoto"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintTop_toTopOf="@+id/ivSingleJobPhoto"
+        app:layout_constraintLeft_toRightOf="@+id/ivSingleJobPhoto" />
 
     <TextView
         android:id="@+id/tvSingleJobLocationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvSingleJobLocation"
-        android:text="@string/location"
-        android:textSize="20sp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/ivSingleJobPhoto"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvSingleJobDescription"
-        android:layout_marginLeft="19dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_marginTop="8dp"
+        android:text="@string/Location_colon"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/ivSingleJobPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/ivSingleJobPhoto" />
+
     <TextView
+        android:id="@+id/tvSingleJobLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvSingleJobLocation"
-        android:textSize="20sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="124dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="16sp"
+        android:layout_marginStart="4dp"
         app:layout_constraintLeft_toRightOf="@+id/tvSingleJobLocationLabel"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvSingleJobDateLabel" />
+        app:layout_constraintTop_toTopOf="@+id/tvSingleJobLocationLabel"
+        android:layout_marginLeft="4dp" />
 
 
     <TextView
         android:id="@+id/tvSingleJobDescription"
         android:layout_width="296dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="2dp"
         android:textSize="20sp"
-        app:layout_constraintHorizontal_bias="0.728"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSingleJobLocation" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvSingleJobLocationLabel" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/buttonDeletePost"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="requestJob"
+        app:bootstrapBrand="regular"
+        android:visibility="gone"
+        app:bootstrapSize="lg"
+        app:bootstrapText="@string/delete_this_post"
+        app:roundedCorners="true"
+        app:showOutline="false"
+        app:layout_constraintRight_toRightOf="@+id/buttonEditPostDetails"
+        app:layout_constraintLeft_toLeftOf="@+id/buttonEditPostDetails"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEditPostDetails" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/buttonRequestJob"
-        android:layout_width="265dp"
-        android:layout_height="38dp"
-        android:onClick="requestJob"
-        app:bootstrapBrand="regular"
-        app:bootstrapSize="lg"
-        app:bootstrapText="@string/request_job"
-        app:roundedCorners="true"
-        app:showOutline="false"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSaveJob"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
-
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/buttonSaveJob"
         android:layout_width="265dp"
         android:layout_height="38dp"
         android:elevation="0dp"
@@ -114,84 +91,44 @@
         android:textAlignment="center"
         app:bootstrapBrand="info"
         app:bootstrapSize="lg"
-        app:bootstrapText="@string/save_job"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonChatWithPoster"
+        app:bootstrapText="@string/request_job"
         app:roundedCorners="true"
         app:showOutline="false"
-        app:layout_constraintHorizontal_bias="0.504"
-        android:layout_marginTop="15dp" />
-
-    <Button
-        android:id="@+id/buttonEditPostDetails"
-        android:layout_width="265dp"
-        android:layout_height="48dp"
-        android:onClick="editJob"
-        android:text="@string/edit_post_details"
-        android:visibility="visible"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="9dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRequestJob"
-        app:layout_constraintHorizontal_bias="0.504"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
-
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        android:layout_width="265dp"
-        android:layout_height="38dp"
-        android:id="@+id/buttonChatWithPoster"
-        android:onClick="openChat"
-        app:bootstrapText="@string/chat_with_poster"
-        app:bootstrapSize="lg"
-        app:bootstrapBrand="success"
-        app:roundedCorners="true"
-        app:showOutline="false"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvSingleJobDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/gvSingleJob" />
 
-
-    <Button
-        android:id="@+id/buttonDeletePost"
-        android:layout_width="265dp"
-        android:layout_height="48dp"
-        android:onClick="deletePost"
-        android:text="@string/delete_this_post"
-        android:visibility="visible"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="9dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttonEditPostDetails"
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/buttonEditPostDetails"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="openChat"
+        app:bootstrapBrand="success"
+        android:visibility="gone"
+        app:bootstrapSize="lg"
+        app:bootstrapText="@string/edit_post_details"
+        app:roundedCorners="true"
+        app:showOutline="false"
+        tools:text="@string/edit_post_details"
+        app:layout_constraintRight_toRightOf="@+id/buttonRequestJob"
+        app:layout_constraintLeft_toLeftOf="@+id/buttonRequestJob"
         app:layout_constraintHorizontal_bias="0.504"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonRequestJob" />
+
 
     <TextView
         android:id="@+id/tvSingleJobDate"
         android:layout_width="77dp"
         android:layout_height="24dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/tvSingleJobTitle"
         app:layout_constraintLeft_toRightOf="@+id/tvSingleJobDateLabel"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.237"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvSingleJobLocation"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSingleJobTitle" />
 
     <TextView
         android:id="@+id/tvSingleJobDateLabel"
@@ -199,9 +136,15 @@
         android:layout_height="wrap_content"
         android:text="@string/date"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/tvSingleJobTitle"
-        app:layout_constraintLeft_toRightOf="@+id/ivSingleJobPhoto"
-        android:layout_marginLeft="18dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/tvSingleJobTitle"
+        app:layout_constraintTop_toTopOf="@+id/tvSingleJobDate" />
+
+    <GridView
+        android:layout_width="310dp"
+        android:layout_height="173dp"
+        android:id="@+id/gvSingleJob"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvSingleJobDescription"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 </android.support.constraint.ConstraintLayout>

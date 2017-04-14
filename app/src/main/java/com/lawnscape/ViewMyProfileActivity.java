@@ -1,8 +1,7 @@
 package com.lawnscape;
 
-import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -132,6 +130,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.profileMenuSettings:
                 startActivity(new Intent(this, EditProfileActivity.class));
+                finish();
                 return true;
             case R.id.profileMenuChats:
                 startActivity(new Intent(this, ViewActiveChatsActivity.class));

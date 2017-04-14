@@ -16,6 +16,7 @@ import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class PostJobActivity extends AppCompatActivity {
@@ -37,7 +39,6 @@ public class PostJobActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     //photo vars
     private ImageView ivPostJobPhoto;
-    private Uri imageUri;
     private final int PICK_PHOTO_FROM_GALLERY = 5;
     //Location Vars
     private Location myCurLoc;
@@ -47,6 +48,9 @@ public class PostJobActivity extends AppCompatActivity {
     private EditText etTitle;
     private EditText etLocation;
     private EditText etDescription;
+    private GridView gvUploadPhotos;
+    private ArrayList<Uri> localUriList;
+    private PhotoAdapter photoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +69,13 @@ public class PostJobActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
         ivPostJobPhoto = (ImageView) findViewById(R.id.ivPostJobButton);
+        gvUploadPhotos = (GridView) findViewById(R.id.gvPhotoUploads);
+        localUriList = new ArrayList<>();
+        photoAdapter = new PhotoAdapter(this, localUriList);
+        gvUploadPhotos.setAdapter(photoAdapter);
         ivPostJobPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent photoGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
                 photoGalleryIntent.setType("image/*");
                 //photoGalleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -114,9 +121,8 @@ public class PostJobActivity extends AppCompatActivity {
                 String provider = locationManager.getBestProvider(new Criteria(), true);
                 //This makes the location sensors turn on I think
                 locationManager.requestLocationUpdates(provider, (long) 0, (float) 0, locationListener);
-                //Set the curLoc, our listener also does this but who cares
+                //Set the curLoc, our listener also does this but I'm not sure how it works yet
                 myCurLoc = locationManager.getLastKnownLocation(provider);
-                //clean up
                 locationManager.removeUpdates(locationListener);
             } catch (SecurityException e) {
                 e.printStackTrace();
@@ -136,12 +142,6 @@ public class PostJobActivity extends AppCompatActivity {
                 DatabaseReference myUserJobRef = database.getReference("Users").child(currentUser.getUid().toString()).child("jobs").push();
                 // Add a job, newJobRef will now hold the jobid value(a string)
                 DatabaseReference newJobRef = myJobsRef.push();
-                //upload the first photo if there are any
-
-                if(ivPostJobPhoto.getDrawable() != null){
-                    StorageReference pathReference = storage.getReference().child("jobphotos").child(newJobRef.getKey());
-                    pathReference.putFile(imageUri);
-                }
                 if (newDesc.equals("")) {
                     newDesc = "No description";
                 }
@@ -151,6 +151,22 @@ public class PostJobActivity extends AppCompatActivity {
                 //Here the job is actually added
                 newJobRef.setValue(newJob);
                 myUserJobRef.setValue(newJobRef.getKey());
+
+                //upload the photos if there are any
+                if(!localUriList.isEmpty()){
+                    StorageReference pathReference = storage.getReference().child("jobphotos").child(newJobRef.getKey());
+                    DatabaseReference newJobPhotosRef = newJobRef.child("photoids");
+                    DatabaseReference tempRef;
+                    pathReference.child("mainphoto").putFile(localUriList.get(0));
+                    newJobPhotosRef.child("mainphoto").setValue(true);
+                    localUriList.remove(0);
+                    //these are the extra photos if there are any
+                    for(Uri pic: localUriList){
+                        tempRef = newJobPhotosRef.push();
+                        tempRef.setValue(true);
+                        pathReference.child("otherphotos").child(tempRef.getKey()).putFile(pic);
+                    }
+                }
                 finish();
             }
         } else {
@@ -196,8 +212,8 @@ public class PostJobActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_PHOTO_FROM_GALLERY && resultCode == RESULT_OK) {
             Uri targetURI = data.getData();
-            ivPostJobPhoto.setImageURI(targetURI);
-            imageUri = targetURI;
+            localUriList.add(targetURI);
+            photoAdapter.notifyDataSetChanged();
         }
     }
 }

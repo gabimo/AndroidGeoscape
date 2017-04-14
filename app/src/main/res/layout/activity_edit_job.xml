@@ -23,12 +23,10 @@
         android:layout_alignStart="@+id/etEditJobTitle"
         android:layout_alignRight="@+id/etEditJobTitle"
         android:layout_alignEnd="@+id/etEditJobTitle"
-        android:layout_marginTop="18dp"
-        app:layout_constraintTop_toBottomOf="@+id/etEditJobDescription"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@+id/gvEditPost"
+        android:layout_marginLeft="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:id="@+id/tvEditJobTitleLabel"
@@ -45,7 +43,9 @@
         app:layout_constraintTop_toBottomOf="@+id/tvEditJobHeader"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="1.0" />
+        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="42dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -58,8 +58,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
         app:layout_constraintTop_toBottomOf="@+id/tvEditJobHeader"
-        android:layout_marginRight="55dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@+id/etEditJobLocation" />
 
     <EditText
         android:id="@+id/etEditJobDescription"
@@ -73,10 +72,7 @@
         android:inputType="textMultiLine"
         android:layout_marginTop="11dp"
         app:layout_constraintTop_toBottomOf="@+id/etEditJobLocation"
-        android:layout_marginRight="55dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tvPostJobDescriptionLabel"
-        android:layout_marginLeft="8dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/gvEditPost" />
 
     <TextView
         android:id="@+id/tvPostJobDescriptionLabel"
@@ -90,7 +86,8 @@
         android:layout_marginTop="27dp"
         app:layout_constraintTop_toBottomOf="@+id/tvPostJobLocationLabel"
         android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="16dp" />
 
     <TextView
         android:id="@+id/tvPostJobLocationLabel"
@@ -107,7 +104,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="34dp"
         app:layout_constraintTop_toBottomOf="@+id/tvEditJobTitleLabel"
-        app:layout_constraintHorizontal_bias="0.275" />
+        app:layout_constraintHorizontal_bias="0.275"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="7dp" />
 
     <EditText
         android:id="@+id/etEditJobLocation"
@@ -121,8 +120,7 @@
         android:inputType="textPersonName"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/etEditJobTitle"
-        android:layout_marginRight="55dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@+id/etEditJobDescription" />
 
     <TextView
         android:id="@+id/tvEditJobHeader"
@@ -140,6 +138,25 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginRight="89dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="89dp" />
+
+    <GridView
+        android:layout_width="215dp"
+        android:layout_height="170dp"
+        tools:layout_editor_absoluteX="114dp"
+        android:id="@+id/gvEditPost"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="@+id/imageButton2" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/add_job_plus_icon"
+        tools:layout_editor_absoluteY="557dp"
+        app:layout_constraintRight_toLeftOf="@+id/gvEditPost"
+        android:layout_marginRight="137dp"
+        android:layout_marginEnd="26dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,5 @@
 package com.lawnscape;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +53,7 @@ public class ViewJobsListsActivity extends AppCompatActivity {
         savedJobsButton = (TextView) findViewById(R.id.buttonViewSavedJobs);
         activeJobsButton = (TextView) findViewById(R.id.buttonViewActiveJobsList);
         //Gonna hold all the jobs, must init for adaptor
-        allPostDetailsList = new ArrayList<Job>();
+        allPostDetailsList = new ArrayList<>();
         //Put the jobs into the adaptor
         //Find the listview widget and set up a connection to our ArrayList
         allPostsList = (ListView) findViewById(R.id.lvJobs);
@@ -62,8 +61,7 @@ public class ViewJobsListsActivity extends AppCompatActivity {
         // The adaptor handles pushing each object in the ArrayList to the listview
         // but you MUST call jobsAdaptor.notifyDataSetChanged(); to update the listview
         allPostsList.setAdapter(jobsAdapter);
-        String intentData = getIntent().getExtras().get("View").toString();
-        switch (intentData){
+        switch (getIntent().getExtras().get("View").toString()){
             case "saved":
                 viewSomeJobs(savedJobsButton, "savedjobs");
                 break;
@@ -81,7 +79,7 @@ public class ViewJobsListsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                Job selectedJob = (Job) jobsAdapter.getItem(position);
+                Job selectedJob = jobsAdapter.getItem(position);
                 Intent singleJobViewIntent = new Intent(ViewJobsListsActivity.this, ViewSingleJobActivity.class);
                 singleJobViewIntent.putExtra("Job",selectedJob);
                 startActivity(singleJobViewIntent);

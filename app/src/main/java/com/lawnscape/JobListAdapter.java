@@ -72,7 +72,7 @@ public class JobListAdapter extends BaseAdapter {
         //The ImageView is usually dirty, this makes the UI better
         holder.ivJobPic.setImageDrawable(null);
         //This finds the photo data by the job id from firebase storage
-        StorageReference pathReference = storage.getReference().child("jobphotos").child(jobPostDetails.get(position).getPostid());
+        StorageReference pathReference = storage.getReference().child("jobphotos").child(jobPostDetails.get(position).getPostid()).child("mainphoto");
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

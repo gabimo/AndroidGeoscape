@@ -19,12 +19,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewMyProfileActivity"
-            android:label="My Profile">
-        </activity>
-        <activity android:name=".LoginActivity" >
+        <activity
+            android:name=".ViewMyProfileActivity"
+            android:label="My Profile"></activity>
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -60,7 +61,8 @@
             android:name=".MapJobsActivity"
             android:label="@string/title_activity_map_jobs" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".EditJobActivity"></activity>
     </application>
 
 </manifest>

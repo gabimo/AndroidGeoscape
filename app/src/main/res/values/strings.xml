@@ -23,6 +23,7 @@
     <string name="provide_a_detailed_description_of_the_job">Provide a detailed description of the job</string>
     <string name="description">Description</string>
     <string name="location">Location</string>
+    <string name="Location_colon">Location:</string>
     <string name="address">Address</string>
     <string name="edit_job_post">Edit Job Post</string>
     <string name="name">Name</string>
