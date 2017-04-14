@@ -59,4 +59,5 @@
     <string name="delete_this_post">Delete This Post</string>
     <string name="date">Date:</string>
     <string name="geoscape">GeoScape</string>
+    <string name="main_job_photo">Main Job Photo</string>
 </resources>

@@ -71,7 +71,49 @@ public class ViewSingleJobActivity extends AppCompatActivity {
         otherPhotoList = new ArrayList<>();
         photoAdapter = new PhotoAdapter(this, otherPhotoList);
         gvOtherPhotos.setAdapter(photoAdapter);
+        storage = FirebaseStorage.getInstance();
+        database = FirebaseDatabase.getInstance();
+        Intent jobIntent = getIntent();
+        jobPost = jobIntent.getParcelableExtra("Job");
+        tvTitle.setText(jobPost.getTitle());
+        tvLoc.setText(jobPost.getLocation());
+        tvDesc.setText(jobPost.getDescription());
+        tvDate.setText(jobPost.getDate());
+        //This finds the photo data by the job id from firebase storage, nothing is passed around
+        final StorageReference jobPhotoRef = storage.getReference().child("jobphotos").child(jobPost.getPostid());
+        DatabaseReference otherPhotoStorageRef = database.getReference("Jobs").child(jobPost.getPostid()).child("photoids");
+        jobPhotoRef.child("mainphoto").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Pass it to Picasso to download, show in ImageView and caching
+                Picasso.with(ViewSingleJobActivity.this).load(uri.toString()).into(ivPhoto);
+            }
+        });
+        //get the list of extra photos
+        //DatabaseReference otherPhotosRef = database.getReference("Jobs").child(jobPost.getPostid());
+        otherPhotoStorageRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot node : dataSnapshot.getChildren()) {
+                    if (!node.getKey().equals("mainphoto")) {
+                        jobPhotoRef.child("otherphotos").child(node.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                // Got the download URL for 'users/me/profile.png'
+                                // Pass it to Picasso to download, show in ImageView and caching
+                                otherPhotoList.add(uri);
+                                photoAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         //get firebase auth instance
         mAuth = FirebaseAuth.getInstance();
         //make sure user is logged in and has an account
@@ -85,71 +127,29 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                     startActivity(new Intent(ViewSingleJobActivity.this, LoginActivity.class));
                     finish();
                 } else {
-                    storage = FirebaseStorage.getInstance();
-                    database = FirebaseDatabase.getInstance();
-                    Intent jobIntent = getIntent();
-                    jobPost = jobIntent.getParcelableExtra("Job");
 
-                    tvTitle.setText(jobPost.getTitle());
-                    tvLoc.setText(jobPost.getLocation());
-                    tvDesc.setText(jobPost.getDescription());
-                    tvDate.setText(jobPost.getDate());
 
-                    //This finds the photo data by the job id from firebase storage, nothing is passed around
-                    final StorageReference jobPhotoRef = storage.getReference().child("jobphotos").child(jobPost.getPostid());
-                    DatabaseReference otherPhotoStorageRef = database.getReference("Jobs").child(jobPost.getPostid()).child("photoids");
-                    jobPhotoRef.child("mainphoto").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            // Pass it to Picasso to download, show in ImageView and caching
-                            Picasso.with(ViewSingleJobActivity.this).load(uri.toString()).into(ivPhoto);
-                        }
-                    });
-                    //get the list of extra photos
-                    //DatabaseReference otherPhotosRef = database.getReference("Jobs").child(jobPost.getPostid());
-                    otherPhotoStorageRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    if ((currentUser.getUid().equals(jobPost.getUserid()))) {
+                        requestButton.setVisibility(View.GONE);
+                    }
+                    DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference("Admins");
+                    adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot node: dataSnapshot.getChildren()) {
-                                if (!node.getKey().equals("mainphoto")) {
-                                    jobPhotoRef.child(node.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            // Got the download URL for 'users/me/profile.png'
-                                            // Pass it to Picasso to download, show in ImageView and caching
-                                            otherPhotoList.add(uri);
-                                            photoAdapter.notifyDataSetChanged();
-                                        }
-                                    });
-                                }
+                            if (dataSnapshot.hasChild(currentUser.getUid().toString())) {
+                                deleteButton.setText("Admin Delete");
+                                editButton.setText("Admin Edit");
+                                deleteButton.setVisibility(View.VISIBLE);
+                                editButton.setVisibility(View.VISIBLE);
                             }
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-
                         }
                     });
                 }
-                if ((currentUser.getUid().equals(jobPost.getUserid()))) {
-                    requestButton.setVisibility(View.GONE);
-                }
-                DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference("Admins");
-                adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild(currentUser.getUid().toString())) {
-                            deleteButton.setText("Admin Delete");
-                            editButton.setText("Admin Edit");
-                            deleteButton.setVisibility(View.VISIBLE);
-                            editButton.setVisibility(View.VISIBLE);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
             }
         };
     }

@@ -25,7 +25,8 @@
         android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/main_job_photo"/>
 
     <TextView
         android:id="@+id/tvSingleJobTitle"
@@ -33,7 +34,9 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="@+id/ivSingleJobPhoto"
-        app:layout_constraintLeft_toRightOf="@+id/ivSingleJobPhoto" />
+        app:layout_constraintLeft_toRightOf="@+id/ivSingleJobPhoto"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp" />
 
     <TextView
         android:id="@+id/tvSingleJobLocationLabel"
@@ -86,7 +89,6 @@
         android:id="@+id/buttonRequestJob"
         android:layout_width="265dp"
         android:layout_height="38dp"
-        android:elevation="0dp"
         android:onClick="saveJob"
         android:textAlignment="center"
         app:bootstrapBrand="info"
