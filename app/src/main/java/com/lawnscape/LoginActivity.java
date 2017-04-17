@@ -26,16 +26,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
+                //Find current user User ID string
                 currentUser = firebaseAuth.getCurrentUser();
                 if (currentUser != null) {
-                    // User is signed in
+                    // User is signed in, so they dont need to login again
                     Toast.makeText(LoginActivity.this, "Logged in",
                             Toast.LENGTH_SHORT).show();
                     Intent loginIntent = new Intent(LoginActivity.this, ViewJobsListsActivity.class);
+                    //necessary for telling the listActivity which jobs to view
                     loginIntent.putExtra("View", "all");
                     startActivity(loginIntent);
                     finish();
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        //This 'activates' the mAuthListener object that was made in onCreate()
         mAuth.addAuthStateListener(mAuthListener);
     }
     @Override
@@ -57,25 +59,24 @@ public class LoginActivity extends AppCompatActivity {
     }
     /*************** LOGIN ***************/
     public void login(final View v) {
+        // Find the widgets and grab the user input
         final EditText emailBox = (EditText) findViewById(R.id.etLoginEmail);
         final EditText passBox = (EditText) findViewById(R.id.etLoginPassword);
-        String email = emailBox.getText().toString();
-        String password = passBox.getText().toString();
+        final String email = emailBox.getText().toString();
+        final String password = passBox.getText().toString();
+        //Check the user input
         if (!email.equals("") && !password.equals("")) {
+            //This lets the user know that the app is trying to log them in
             v.setEnabled(false);
             emailBox.setEnabled(false);
             passBox.setEnabled(false);
-
+            //Starts a connection with Firebase Authentication to see if a valid user has logged in
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(Task<AuthResult> task) {
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
-                                //  Log.w(TAG, "signInWithEmail", task.getException());
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                Toast.makeText(LoginActivity.this, "Incorrect Username or Password",
                                         Toast.LENGTH_SHORT).show();
                                 v.setEnabled(true);
                                 emailBox.setEnabled(true);
@@ -87,17 +88,20 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     });
+        }else{
+            Toast.makeText(LoginActivity.this, "Incorrect Username or Password",
+                    Toast.LENGTH_SHORT).show();
         }
     }
     /*********** SIGN UP ***********/
     public void createAccount(final View v) {
         final EditText emailBox = (EditText) findViewById(R.id.etSignUpEmail);
         final EditText passBox = (EditText) findViewById(R.id.etSignUpEmail);
-        // grab the widgets as objects
         final EditText etName = (EditText) findViewById(R.id.etSignUpName);
         final EditText etLocation = (EditText) findViewById(R.id.etSignUpLocation);
         final String newName = etName.getText().toString();
         final String newLoc = etLocation.getText().toString();
+
         if(!newName.equals("")&&!newLoc.equals("")){
             String email = emailBox.getText().toString();
             String password = passBox.getText().toString();
@@ -112,17 +116,16 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(Task<AuthResult> task) {
                                 // Log.d("EVENT", "createUserWithEmail:onComplete:" + task.isSuccessful());
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this, "Could Not Create Account",
+                                    Toast.makeText(LoginActivity.this, "Could Not Create Account, Please Try Again With Valid Password And Email",
                                             Toast.LENGTH_SHORT).show();
                                     v.setEnabled(true);
                                     emailBox.setEnabled(true);
                                     passBox.setEnabled(true);
-
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Account Created Successfully",
+                                    Toast.makeText(LoginActivity.this, "Account Created Successfully, Please Wait",
                                             Toast.LENGTH_SHORT).show();
-
                                     // Set name of user and location
+                                    database = FirebaseDatabase.getInstance();
                                     DatabaseReference usersRef = database.getReference("Users").child(currentUser.getUid().toString());
                                     if (!newName.isEmpty() && !newLoc.isEmpty()) {
                                         DatabaseReference newUserRef = usersRef;
@@ -138,12 +141,12 @@ public class LoginActivity extends AppCompatActivity {
     }
     /************** Switch to SIGN UP view ****************/
     public void signup(View v){
-        //switch to sign up activity
+        //switch the user's screen to the sign up view
         setContentView(R.layout.activity_sign_up);
     }
     /************** Switch to LOG IN view ****************/
     public void backToLogin(View v){
-        //switch to login view
+        //switch the user's screen to the login view
         setContentView(R.layout.activity_login);
     }
 

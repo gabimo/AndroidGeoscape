@@ -9,7 +9,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.app.AlertDialog;
@@ -68,7 +67,7 @@ public class PostJobActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
-        ivPostJobPhoto = (ImageView) findViewById(R.id.ivPostJobButton);
+        ivPostJobPhoto = (ImageView) findViewById(R.id.ivPostJobUploadPhoto);
         gvUploadPhotos = (GridView) findViewById(R.id.gvPhotoUploads);
         localUriList = new ArrayList<>();
         photoAdapter = new PhotoAdapter(this, localUriList);

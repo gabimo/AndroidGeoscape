@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 import com.squareup.picasso.Picasso;
 
 //Profile Activity
@@ -27,60 +28,70 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
+
     private FirebaseUser currentUser;
+
     private FirebaseStorage storage;
+
     private TextView tvEmail;
     private TextView tvUserID;
     private TextView tvLocation;
     private TextView tvName;
+
     private ImageView ivProfilePhoto;
 
     private FirebaseDatabase database;
-    /************** Begin LifeCycle Functions ****************/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_my_profile);
         //get firebase auth instance
         mAuth = FirebaseAuth.getInstance();
-        //make sure user is logged in and has an account
+        //This mAuthListener will be called every time that the activity runs onStart()
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
+                /*
+                The following code will be ran when onStart runs in the Android Lifecycle
+                 */
+                //This finds the current phone's login info, if any
                 currentUser = firebaseAuth.getCurrentUser();
+                //currentUser will be null if the user has not logged in(or logged out)
                 if (currentUser == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
+                    // User needs to sign in
                     startActivity(new Intent(ViewMyProfileActivity.this, LoginActivity.class));
                     finish();
                 }else{
                     //user is logged in
                     storage = FirebaseStorage.getInstance();
                     database = FirebaseDatabase.getInstance ();
+
                     tvEmail = (TextView) findViewById(R.id.tvMyProfileUserEmail);
                     tvUserID = (TextView) findViewById(R.id.tvMyProfileUserID);
                     tvLocation = (TextView) findViewById(R.id.tvMyProfileLocation);
                     tvName = (TextView) findViewById(R.id.tvMyProfileName);
                     ivProfilePhoto = (ImageView) findViewById(R.id.ivMyProfileImage);
+
                     tvEmail.setText(currentUser.getEmail().toString());
                     tvUserID.setText(currentUser.getUid().toString());
                     ivProfilePhoto.setImageDrawable(null);
-                    //This finds the photo data by the job id from firebase storage, nothing is passed around
+
+                    //This finds and displays the photo data by the user id from firebase storage
                     StorageReference jobPhotoRef = storage.getReference().child("userprofilephotos").child(currentUser.getUid());
                     jobPhotoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            // Got the download URL for 'users/me/profile.png'
                             // Pass it to Picasso to download, show in ImageView and caching
                             Picasso.with(ViewMyProfileActivity.this).load(uri.toString()).into(ivProfilePhoto);
                         }
                     });
+
+                    //This finds and displays the users name and location
                     database.getReference("Users").child(currentUser.getUid())
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            // This method is called once with the initial value and again
-                            // whenever data at this location is updated.
                             if(dataSnapshot.hasChild("name")) {
                                 tvName.setText(dataSnapshot.child("name").getValue().toString());
                             }
@@ -98,6 +109,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        //This invokes the Firebase.AuthStateListener Object mAuthListener and the code block inside it
         mAuth.addAuthStateListener(mAuthListener);
     }
     @Override
@@ -107,18 +119,10 @@ public class ViewMyProfileActivity extends AppCompatActivity {
              mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    /************** End LifeCycle ****************/
-    public void gotoProfileSettings(View v){
-        startActivity(new Intent(this,EditProfileActivity.class));
-        finish();
-    }
-    public void gotoPostNewJob(View v){
-        startActivity( new Intent( this, PostJobActivity.class));
-    }
-    /******************* Menu Handling *******************/
-    //make the menu show up
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //This stuff just draws the menu buttons
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_profile, menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -126,10 +130,10 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
+        // Handle item selection of the
         switch (item.getItemId()) {
             case R.id.profileMenuSettings:
-                startActivity(new Intent(this, EditProfileActivity.class));
+                startActivity(new Intent(this,EditProfileActivity.class));
                 finish();
                 return true;
             case R.id.profileMenuChats:
@@ -152,11 +156,18 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 return true;
             case R.id.profileMenuSignOut:
                 mAuth.signOut();
+                finish();
                 return true;
             default:
                 finish();
                 return super.onOptionsItemSelected(item);
         }
+    }
+    /*
+    Not necessary, these are just placeholding button actions on the profile activity
+     */
+    public void gotoPostNewJob(View v){
+        startActivity( new Intent( this, PostJobActivity.class));
     }
     public void searchJobsButton(View v){
         startActivity(new Intent(this, SearchActivity.class));

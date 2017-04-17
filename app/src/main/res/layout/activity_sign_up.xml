@@ -27,13 +27,16 @@
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/etSignUpPassword"
         android:layout_alignStart="@+id/etSignUpPassword"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvSignUpLoginButton" />
+        app:layout_constraintBottom_toTopOf="@+id/tvSignUpLoginButton"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/etSignUpLocation"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/etSignUpEmail"
@@ -49,7 +52,8 @@
         android:layout_marginRight="24dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignUpHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSignUpHeader"
+        android:layout_marginEnd="24dp" />
 
     <EditText
         android:id="@+id/etSignUpPassword"
@@ -64,7 +68,8 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSignUpEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/etSignUpEmail"
+        android:layout_marginEnd="25dp" />
 
     <EditText
         android:id="@+id/etSignUpName"
@@ -79,7 +84,8 @@
         android:hint="Name"
         android:inputType="textPersonName"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSignUpPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etSignUpPassword"
+        android:layout_marginEnd="26dp" />
 
     <EditText
         android:id="@+id/etSignUpLocation"
@@ -88,16 +94,14 @@
         android:layout_alignLeft="@+id/etSignUpEmail"
         android:layout_alignStart="@+id/etSignUpEmail"
         android:layout_below="@+id/etSignUpEmail"
-        android:layout_marginRight="26dp"
+        android:layout_marginRight="42dp"
         android:ems="10"
         android:hint="Location"
         android:inputType="textCapSentences"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@+id/etSignUpName"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
-        app:layout_constraintVertical_bias="0.062" />
+        android:layout_marginEnd="26dp" />
 
     <TextView
         android:id="@+id/tvSignUpHeader"
@@ -113,12 +117,11 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="-57dp"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.502" />
+        app:layout_constraintHorizontal_bias="0.502"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <TextView
         android:id="@+id/tvSignUpEmailLabel"
@@ -134,7 +137,9 @@
         app:layout_constraintRight_toLeftOf="@+id/etSignUpEmail"
         android:layout_marginRight="7dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="7dp" />
 
     <TextView
         android:id="@+id/tvSignUpPasswordLabel"
@@ -152,7 +157,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         android:layout_marginTop="29dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignUpEmailLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSignUpEmailLabel"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp" />
 
     <TextView
         android:id="@+id/tvSignUpNameLabel"
@@ -170,7 +177,9 @@
         app:layout_constraintHorizontal_bias="0.769"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/etSignUpName"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignUpPasswordLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSignUpPasswordLabel"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/tvSignUpLocatinLabel"
@@ -182,16 +191,20 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="49dp"
         android:text="@string/location"
         android:textSize="18sp"
         app:layout_constraintHorizontal_bias="0.837"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/etSignUpLocation"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignUpNameLabel"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="42dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toTopOf="@+id/tvSignUpNameLabel" />
 
     <TextView
         android:id="@+id/tvSignUpLoginButton"
@@ -203,10 +216,10 @@
         android:visibility="visible"
         android:layout_below="@+id/buttonSignUp"
         android:layout_centerHorizontal="true"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="167dp" />
+        android:layout_marginBottom="160dp"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 </android.support.constraint.ConstraintLayout>

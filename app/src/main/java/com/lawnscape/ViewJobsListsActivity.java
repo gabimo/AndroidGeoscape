@@ -23,8 +23,8 @@ import java.util.ArrayList;
 
 public class ViewJobsListsActivity extends AppCompatActivity {
     //Firebase global init
-    private FirebaseAuth.AuthStateListener authListener;
-    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -42,26 +42,32 @@ public class ViewJobsListsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_job_lists);
-        jobsToFetch = null;
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser == null) {
+                    // launch login activity if user has no account
+                    startActivity(new Intent(ViewJobsListsActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
 
-        //get firebase auth instance
-        auth = FirebaseAuth.getInstance();
-        //make sure user is logged in and has an account
 
-        currentUser = auth.getCurrentUser();
         allJobsButton = (TextView) findViewById(R.id.buttonViewAllJobs);
         savedJobsButton = (TextView) findViewById(R.id.buttonViewSavedJobs);
         activeJobsButton = (TextView) findViewById(R.id.buttonViewActiveJobsList);
-        //Gonna hold all the jobs, must init for adaptor
+        //These objects are respnsible for displaying posts
         allPostDetailsList = new ArrayList<>();
-        //Put the jobs into the adaptor
-        //Find the listview widget and set up a connection to our ArrayList
         allPostsList = (ListView) findViewById(R.id.lvJobs);
         jobsAdapter = new JobListAdapter(ViewJobsListsActivity.this, allPostDetailsList);
         // The adaptor handles pushing each object in the ArrayList to the listview
-        // but you MUST call jobsAdaptor.notifyDataSetChanged(); to update the listview
+        // but you must call jobsAdaptor.notifyDataSetChanged(); to update the listview
         allPostsList.setAdapter(jobsAdapter);
-        switch (getIntent().getExtras().get("View").toString()){
+        String intentData = getIntent().getExtras().get("View").toString();
+        switch (intentData){
             case "saved":
                 viewSomeJobs(savedJobsButton, "savedjobs");
                 break;
@@ -71,19 +77,17 @@ public class ViewJobsListsActivity extends AppCompatActivity {
             case "all":
             default:
                 viewAllJobs(allJobsButton);
-                break;
         }
-        //This handles clicks on individual job items from the list
-        // and bring you to a job specific page with details
+        //Clicking a list item will bring you to a page for that item
         allPostsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
                 Job selectedJob = jobsAdapter.getItem(position);
                 Intent singleJobViewIntent = new Intent(ViewJobsListsActivity.this, ViewSingleJobActivity.class);
+                //The Job class implements 'Parcelable' in order to be passed as an intent extra
                 singleJobViewIntent.putExtra("Job",selectedJob);
                 startActivity(singleJobViewIntent);
-
             }
         });
     }
@@ -93,13 +97,14 @@ public class ViewJobsListsActivity extends AppCompatActivity {
     //make the menu show up
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //Creates the top action icons and the top menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_view_posts, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
+        // Handles item selection from the action bar and menu
         switch (item.getItemId()) {
             case R.id.viewPostsMenuPostJob:
                 startActivity(new Intent(this, PostJobActivity.class));
@@ -119,7 +124,7 @@ public class ViewJobsListsActivity extends AppCompatActivity {
             case R.id.viewPostsMenuAllJobs:
                 if(getIntent().getExtras().get("View").toString().equals("saved")) {
                     getIntent().removeExtra("View");
-                    getIntent().putExtra("View", "all");
+                    //getIntent().putExtra("View", "all");
                 }
                 recreate();
                 return true;
@@ -132,7 +137,9 @@ public class ViewJobsListsActivity extends AppCompatActivity {
                 startActivity(MapAllJobsViewIntent);
                 return true;
             case R.id.viewPostsMenuSignOut:
-                auth.signOut();
+                mAuth.signOut();
+                startActivity(new Intent(ViewJobsListsActivity.this, LoginActivity.class));
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

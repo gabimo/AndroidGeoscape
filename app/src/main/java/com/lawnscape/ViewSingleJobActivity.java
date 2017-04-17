@@ -206,9 +206,11 @@ public class ViewSingleJobActivity extends AppCompatActivity {
             });
         } else {
             //Current user's own post
-            favoritePostMenuItem.setVisible(false);
             MenuItem chatPostMenuItem = menu.findItem(R.id.viewSinglePostMenuChat);
+            MenuItem reportPostMenuItem = menu.findItem(R.id.viewSinglePostMenuReport);
             chatPostMenuItem.setVisible(false);
+            reportPostMenuItem.setVisible(false);
+            favoritePostMenuItem.setVisible(false);
         }
         //Creates a back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -236,6 +238,9 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                 return true;
             case R.id.viewSinglePostMenuDelete:
                 deletePost(null);
+                return true;
+            case R.id.viewSinglePostMenuReport:
+                reportPost();
                 return true;
             case R.id.viewSinglePostMenuMyProfile:
                 startActivity(new Intent(ViewSingleJobActivity.this, ViewMyProfileActivity.class));
@@ -267,6 +272,14 @@ public class ViewSingleJobActivity extends AppCompatActivity {
         startActivity(new Intent(ViewSingleJobActivity.this, PostJobActivity.class));
         finish();
     }
+    public void reportPost(){
+        DatabaseReference ref = database.getReference("Jobs").child(jobPost.getPostid()).child("reporters");
+        ref.addListenerForSingleValueEvent(
+                new ToggleAddIDVEListener(ViewSingleJobActivity.this, currentUser.getUid(),"true",false));
+        ref = database.getReference("ReportedJobs");
+        ref.addListenerForSingleValueEvent(
+                new ToggleAddIDVEListener(ViewSingleJobActivity.this, currentUser.getUid(),jobPost.getPostid(),false));
+    }
 
     public void deletePost(View v) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -283,7 +296,6 @@ public class ViewSingleJobActivity extends AppCompatActivity {
         DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs");
         mySavedJobsRef.addListenerForSingleValueEvent(
                 new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid()));
-
     }
 
     public void requestJob(View v) {

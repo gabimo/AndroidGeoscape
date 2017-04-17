@@ -14,20 +14,22 @@
     tools:layout_editor_absoluteX="0dp">
 
     <ImageView
-        android:id="@+id/ivPostJobButton"
-        android:layout_width="87dp"
-        android:layout_height="27dp"
+        android:id="@+id/ivPostJobUploadPhoto"
+        android:layout_width="77dp"
+        android:layout_height="32dp"
         android:layout_alignLeft="@+id/buttonEditProfileBackToProfile"
         android:layout_alignStart="@+id/buttonEditProfileBackToProfile"
         android:layout_below="@+id/etEditProfileLocation"
         android:adjustViewBounds="true"
-        android:background="@android:drawable/ic_menu_gallery"
+        android:src="@drawable/add_image_icon"
         android:cropToPadding="true"
         android:scaleType="fitCenter"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="@+id/gvPhotoUploads"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/gvPhotoUploads" />
+        app:layout_constraintBottom_toTopOf="@+id/gvPhotoUploads"
+        tools:layout_editor_absoluteY="268dp"
+        android:layout_marginLeft="0dp" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/buttonPostJobSubmit"
@@ -89,7 +91,7 @@
         android:layout_below="@+id/etPostJobLocation"
         android:layout_alignLeft="@+id/etPostJobLocation"
         android:layout_alignStart="@+id/etPostJobLocation"
-        app:layout_constraintLeft_toRightOf="@+id/ivPostJobButton"
+        app:layout_constraintLeft_toRightOf="@+id/ivPostJobUploadPhoto"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="55dp"
@@ -130,10 +132,10 @@
         android:layout_alignTop="@+id/etPostJobDescription"
         android:layout_alignLeft="@+id/tvPostJobLocationLabel"
         android:layout_alignStart="@+id/tvPostJobLocationLabel"
-        app:layout_constraintRight_toRightOf="@+id/ivPostJobButton"
+        app:layout_constraintRight_toRightOf="@+id/ivPostJobUploadPhoto"
         app:layout_constraintTop_toTopOf="@+id/etPostJobDescription"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/ivPostJobButton" />
+        app:layout_constraintBottom_toTopOf="@+id/ivPostJobUploadPhoto" />
 
     <TextView
         android:id="@+id/tvPostJobHeader"

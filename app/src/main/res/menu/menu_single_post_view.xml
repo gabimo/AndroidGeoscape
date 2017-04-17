@@ -19,6 +19,9 @@
         app:showAsAction="always"
         android:icon="@drawable/favorite_icon">
     </item>
+    <item android:id="@+id/viewSinglePostMenuReport"
+        android:title="Report this post">
+    </item>
     <item android:id="@+id/viewSinglePostMenuMyProfile"
         android:title="My Profile">
     </item>
