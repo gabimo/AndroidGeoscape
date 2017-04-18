@@ -116,8 +116,9 @@ public class EditJobActivity extends AppCompatActivity {
                 String newDesc = etDescription.getText().toString();
                 // changes are made
                 if (newDesc.equals("")) {
-                    dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(EditJobActivity.this, "No description", newDesc));
+                    newDesc = "No description";
                 }
+                dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(EditJobActivity.this, "description", newDesc));
                 if (!newTitle.equals("")) {
                     dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(EditJobActivity.this, "title", newTitle));
                 }

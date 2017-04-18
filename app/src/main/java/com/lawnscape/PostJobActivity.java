@@ -166,6 +166,7 @@ public class PostJobActivity extends AppCompatActivity {
                         pathReference.child("otherphotos").child(tempRef.getKey()).putFile(pic);
                     }
                 }
+                startActivity(new Intent(this,ViewMyPostsActivity.class));
                 finish();
             }
         } else {

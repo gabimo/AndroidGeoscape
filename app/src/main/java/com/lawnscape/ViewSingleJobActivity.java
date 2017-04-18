@@ -285,9 +285,27 @@ public class ViewSingleJobActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         //remove the job from the list of all jobs with a listener
         DatabaseReference myJobRef = database.getReference("Jobs");
-        myJobRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid()));
         //remove the job from the users job list with a listener*
         DatabaseReference myUserJobsRef = database.getReference("Users").child(jobPost.getUserid()).child("jobs");
+        final StorageReference jobPhotoStorageRef = storage.getReference().child("jobphotos").child(jobPost.getPostid());
+        DatabaseReference jobPhotoDatabaseRef = database.getReference("Jobs").child(jobPost.getPostid()).child("photoids");
+        jobPhotoDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                jobPhotoStorageRef.child("mainphoto").delete();
+                for (DataSnapshot node : dataSnapshot.getChildren()) {
+                    if (!node.getKey().equals("mainphoto")) {
+                        jobPhotoStorageRef.child("otherphotos").child(node.getKey()).delete();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        myJobRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid()));
         myUserJobsRef.addListenerForSingleValueEvent(new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid()));
         finish();
     }

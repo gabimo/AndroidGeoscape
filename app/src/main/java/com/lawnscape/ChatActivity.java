@@ -72,6 +72,10 @@ public class ChatActivity extends AppCompatActivity {
                     DatabaseReference allChatsRef = database.getReference("Chats");
                     DatabaseReference newChatid = allChatsRef.push();
                     String newChatID = newChatid.getKey().toString();
+                    newChatid.child("Members").addListenerForSingleValueEvent(
+                            new ToggleAddIDVEListener(ChatActivity.this,currentUser.getUid().toString(),"true",false));
+                    newChatid.child("Members").addListenerForSingleValueEvent(
+                            new ToggleAddIDVEListener(ChatActivity.this,otherUserid.toString(),"true",false));
                     DatabaseReference addChatIDRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
                     addChatIDRef.addListenerForSingleValueEvent(
                             new ToggleAddIDVEListener(ChatActivity.this,otherUserid,newChatID));
