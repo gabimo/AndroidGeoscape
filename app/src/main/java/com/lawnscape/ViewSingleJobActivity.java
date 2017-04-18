@@ -235,6 +235,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                 Intent editJobIntent = new Intent(this,EditJobActivity.class);
                 editJobIntent.putExtra("Job",jobPost);
                 startActivity(editJobIntent);
+                finish();
                 return true;
             case R.id.viewSinglePostMenuDelete:
                 deletePost(null);

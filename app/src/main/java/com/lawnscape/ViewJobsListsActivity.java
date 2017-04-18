@@ -92,6 +92,20 @@ public class ViewJobsListsActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        //This invokes the Firebase.AuthStateListener Object mAuthListener and the code block inside it
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
     /************** End LifeCycle ****************/
     /******************* Menu Handling *******************/
     //make the menu show up

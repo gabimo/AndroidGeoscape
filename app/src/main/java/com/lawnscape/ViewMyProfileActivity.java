@@ -159,7 +159,6 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 finish();
                 return true;
             default:
-                finish();
                 return super.onOptionsItemSelected(item);
         }
     }
@@ -171,6 +170,10 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     }
     public void searchJobsButton(View v){
         startActivity(new Intent(this, SearchActivity.class));
+    }
+    public void gotoProfileSettings(View v){
+        startActivity(new Intent(this,EditProfileActivity.class));
+        finish();
     }
     public void listAllJobsButton(View v){
         Intent allJobsViewIntent = new Intent(this, ViewJobsListsActivity.class);

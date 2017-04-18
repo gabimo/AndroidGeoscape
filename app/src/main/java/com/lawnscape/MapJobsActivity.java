@@ -83,6 +83,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
                     }
                 });
             }
+            loadingBar.dismiss();
         }else {
             jobsList = new ArrayList<Job>();
             jobsRef.addListenerForSingleValueEvent(new ValueEventListener() {

@@ -131,5 +131,6 @@ public class EditJobActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+        finish();
     }
 }
