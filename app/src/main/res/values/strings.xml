@@ -60,4 +60,19 @@
     <string name="date">Date:</string>
     <string name="geoscape">GeoScape</string>
     <string name="main_job_photo">Main Job Photo</string>
+
+    <string name="category_prompt">Choose a category</string>
+
+    <string-array name="category_arrays">
+        <item>Repairs</item>
+        <item>Tutoring</item>
+        <item>Cleaning Service</item>
+        <item>Babysitting</item>
+        <item>Heating and A/C</item>
+        <item>Plumbing</item>
+        <item>Roofing</item>
+        <item>Landscaping</item>
+        <item>Windows</item>
+    </string-array>
+
 </resources>

@@ -61,16 +61,16 @@
         android:layout_alignBottom="@+id/tvPostLayoutTitle"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_marginEnd="7dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginStart="8dp"
         android:textColor="#343434"
         android:textSize="10sp"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostLayoutTitle"
-        android:layout_marginRight="7dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/ivPostLayoutThumbnail"
-        android:layout_marginLeft="8dp"
         app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="7dp" />
+        app:layout_constraintLeft_toRightOf="@+id/ivPostLayoutThumbnail"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostLayoutTitle" />
 
     <ImageView
         android:id="@+id/ivPostLayoutThumbnail"

@@ -63,12 +63,13 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
                         String title = (String) dataSnapshot.child("title").getValue();
                         String location = (String) dataSnapshot.child("location").getValue();
                         String description = (String) dataSnapshot.child("description").getValue();
+                        String category = (String) dataSnapshot.child("category").getValue();
                         String date = (String) dataSnapshot.child("date").getValue();
                         String lat = (String) dataSnapshot.child("latitude").getValue();
                         String lng = (String) dataSnapshot.child("longitude").getValue();
                         String userid = (String) dataSnapshot.child("userid").getValue();
                         String postid = dataSnapshot.getKey().toString();
-                        Job newJob = new Job(date, title, location, description, userid, postid, lat, lng);
+                        Job newJob = new Job(date, title, location, description, category, userid, postid, lat, lng);
                         //jobsList.add(newJob);
                         LatLng loc = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
                         // add a point on the map
@@ -92,12 +93,13 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
                         String title = (String) jobNode.child("title").getValue();
                         String location = (String) jobNode.child("location").getValue();
                         String description = (String) jobNode.child("description").getValue();
+                        String category = (String) jobNode.child("category").getValue();
                         String date = (String) jobNode.child("date").getValue();
                         String lat = (String) jobNode.child("latitude").getValue();
                         String lng = (String) jobNode.child("longitude").getValue();
                         String userid = (String) jobNode.child("userid").getValue();
                         String postid = (String) jobNode.getKey().toString();
-                        Job newJob = new Job(date, title, location, description, userid, postid, lat, lng);
+                        Job newJob = new Job(date, title, location, description,category, userid, postid, lat, lng);
                         jobsList.add(newJob);
                         LatLng loc = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
                         // add a point on the map

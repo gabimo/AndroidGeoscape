@@ -18,24 +18,27 @@ public class Job implements Parcelable {
     private String title;
     private String location;
     private String description;
+    private String category;
     private String userid;
     private String postid;
     private String date;
     private String latitude, longitude;
 
-    public Job(String postDate, String t, String l, String u, String lat, String lng) {
+    public Job(String postDate, String c, String t, String l, String u, String lat, String lng) {
         date = postDate;
         title = t;
         location = l;
+        category = c;
         userid = u;
         postid = "";
         latitude = lat;
         longitude = lng;
     }
-    public Job(String postDate, String t, String l, String d, String u, String p, String lat, String lng) {
+    public Job(String postDate, String c, String t, String l, String d, String u, String p, String lat, String lng) {
         date = postDate;
         title = t;
         location = l;
+        category = c;
         description = d;
         userid = u;
         postid = p;
@@ -73,12 +76,15 @@ public class Job implements Parcelable {
     public String getDate() { return date;}
     public void setDate(String newDate){date = newDate;}
 
+    public String getCategory() {return category; }
+    public void setCategory(String c) { category = c; }
+
 
 /***************** PARCEL PORTION *****************/
 //The only reason these things are here is so a Job object
 //Can be passed as an Intent Extra, google it
     public Job(Parcel in){
-        String[] data= new String[8];
+        String[] data= new String[9];
 
         in.readStringArray(data);
         this.title= data[0];
@@ -89,6 +95,7 @@ public class Job implements Parcelable {
         this.date= data[5];
         this.latitude = data[6];
         this.longitude= data[7];
+        this.category= data[8];
     }
     @Override
     public int describeContents() {
@@ -101,6 +108,7 @@ public class Job implements Parcelable {
                 this.title,
                 this.location,
                 this.description,
+                this.category,
                 this.userid,
                 this.postid,
                 this.date,
