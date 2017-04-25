@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +48,7 @@ public class PostJobActivity extends AppCompatActivity {
     private EditText etTitle;
     private EditText etLocation;
     private EditText etDescription;
+    private Spinner spinnerCategory;
     private GridView gvUploadPhotos;
     private ArrayList<Uri> localUriList;
     private PhotoAdapter photoAdapter;
@@ -69,6 +71,7 @@ public class PostJobActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         ivPostJobPhoto = (ImageView) findViewById(R.id.ivPostJobUploadPhoto);
         gvUploadPhotos = (GridView) findViewById(R.id.gvPhotoUploads);
+        spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         localUriList = new ArrayList<>();
         photoAdapter = new PhotoAdapter(this, localUriList);
         gvUploadPhotos.setAdapter(photoAdapter);
@@ -130,10 +133,12 @@ public class PostJobActivity extends AppCompatActivity {
                 etTitle = (EditText) findViewById(R.id.etPostJobTitle);
                 etLocation = (EditText) findViewById(R.id.etPostJobLocation);
                 etDescription = (EditText) findViewById(R.id.etPostJobDescription);
+                spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
                 String newTitle = etTitle.getText().toString();
                 String newLoc = etLocation.getText().toString();
                 String newDesc = etDescription.getText().toString();
                 String userID = currentUser.getUid().toString();
+                String newCategory = spinnerCategory.getSelectedItem().toString();
                 String lat = String.valueOf(myCurLoc.getLatitude());
                 String lng = String.valueOf(myCurLoc.getLongitude());
                 //Add the job to a list of jobs for the user
@@ -146,7 +151,7 @@ public class PostJobActivity extends AppCompatActivity {
                 }
                 //Records current date and time
                 SimpleDateFormat sdf = new SimpleDateFormat("MM-dd mm:ss");
-                Job newJob = new Job(sdf.format(new Date()), newTitle, newLoc, newDesc, userID, newJobRef.getKey(), lat, lng);
+                Job newJob = new Job(sdf.format(new Date()), newTitle, newLoc, newCategory, newDesc, userID, newJobRef.getKey(), lat, lng);
                 //Here the job is actually added
                 newJobRef.setValue(newJob);
                 myUserJobRef.setValue(newJobRef.getKey());

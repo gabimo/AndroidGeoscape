@@ -65,6 +65,7 @@ public class JobListAdapter extends BaseAdapter {
             holder.tvDescription = (TextView) convertView.findViewById(R.id.tvPostLayoutDescription);
             holder.tvLocation = (TextView) convertView.findViewById(R.id.tvPostLayoutLocation);
             holder.tvDate = (TextView) convertView.findViewById(R.id.tvPostLayoutDate);
+            holder.tvCategory = (TextView) convertView.findViewById(R.id.tvPostLayoutCategory);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -85,6 +86,7 @@ public class JobListAdapter extends BaseAdapter {
         holder.tvDescription.setText(jobPostDetails.get(position).getDescription());
         holder.tvLocation.setText(jobPostDetails.get(position).getLocation());
         holder.tvDate.setText(jobPostDetails.get(position).getDate());
+        holder.tvCategory.setText(jobPostDetails.get(position).getCategory());
         return convertView;
     }
     //Represents all the widgets in a layout resouce file
@@ -94,5 +96,6 @@ public class JobListAdapter extends BaseAdapter {
         TextView tvDescription;
         TextView tvLocation;
         TextView tvDate;
+        TextView tvCategory;
     }
 }
