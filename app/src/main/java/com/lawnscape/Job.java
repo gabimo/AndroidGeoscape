@@ -24,7 +24,7 @@ public class Job implements Parcelable {
     private String date;
     private String latitude, longitude;
 
-    public Job(String postDate, String c, String t, String l, String u, String lat, String lng) {
+    public Job(String postDate, String t, String l, String c, String u, String lat, String lng) {
         date = postDate;
         title = t;
         location = l;
@@ -34,7 +34,7 @@ public class Job implements Parcelable {
         latitude = lat;
         longitude = lng;
     }
-    public Job(String postDate, String c, String t, String l, String d, String u, String p, String lat, String lng) {
+    public Job(String postDate,String t, String l, String c, String d, String u, String p, String lat, String lng) {
         date = postDate;
         title = t;
         location = l;
@@ -62,6 +62,7 @@ public class Job implements Parcelable {
     public void setTitle(String t){
         title = t;
     }
+
     public String getUserid() {
         return userid;
     }
@@ -89,13 +90,14 @@ public class Job implements Parcelable {
         in.readStringArray(data);
         this.title= data[0];
         this.location= data[1];
-        this.description= data[2];
-        this.userid= data[3];
-        this.postid= data[4];
-        this.date= data[5];
-        this.latitude = data[6];
-        this.longitude= data[7];
-        this.category= data[8];
+        this.category= data[2];
+        this.description= data[3];
+        this.userid= data[4];
+        this.postid= data[5];
+        this.date= data[6];
+        this.latitude = data[7];
+        this.longitude= data[8];
+
     }
     @Override
     public int describeContents() {
@@ -107,8 +109,8 @@ public class Job implements Parcelable {
         dest.writeStringArray(new String[]{
                 this.title,
                 this.location,
-                this.description,
                 this.category,
+                this.description,
                 this.userid,
                 this.postid,
                 this.date,

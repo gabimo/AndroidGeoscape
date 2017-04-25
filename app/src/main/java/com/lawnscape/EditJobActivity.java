@@ -33,6 +33,7 @@ public class EditJobActivity extends AppCompatActivity {
     private EditText etTitle;
     private EditText etLocation;
     private EditText etDesc;
+    private Spinner  spCategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +57,11 @@ public class EditJobActivity extends AppCompatActivity {
                     etTitle = (EditText) findViewById(R.id.etEditJobTitle);
                     etLocation = (EditText) findViewById(R.id.etEditJobLocation);
                     etDesc = (EditText) findViewById(R.id.etEditJobDescription);
+                    spCategory = (Spinner) findViewById(R.id.spEditCategories);
                     etTitle.setText(jobPost.getTitle());
                     etLocation.setText(jobPost.getLocation());
                     etDesc.setText(jobPost.getDescription());
+                    //spCategory.getSelectedItem().toString();
 
                     //This finds the photo data by the job id from firebase storage, nothing is passed around
                     StorageReference jobPhotoRef = storage.getReference().child("jobphotos").child(jobPost.getPostid()).child("mainphoto ");
@@ -112,9 +115,11 @@ public class EditJobActivity extends AppCompatActivity {
                 TextView etTitle = (TextView) findViewById(R.id.etEditJobTitle);
                 TextView etLocation = (TextView) findViewById(R.id.etEditJobLocation);
                 TextView etDescription = (TextView) findViewById(R.id.etEditJobDescription);
+                Spinner spCategory = (Spinner) findViewById(R.id.spEditCategories);
                 String newTitle = etTitle.getText().toString();
                 String newLoc = etLocation.getText().toString();
                 String newDesc = etDescription.getText().toString();
+                String newCaty = spCategory.getSelectedItem().toString();
                 // changes are made
                 if (newDesc.equals("")) {
                     newDesc = "No description";
@@ -125,6 +130,9 @@ public class EditJobActivity extends AppCompatActivity {
                 }
                 if (!newLoc.equals("")) {
                     dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(EditJobActivity.this, "location", newLoc));
+                }
+                if (!newLoc.equals("")) {
+                    dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(EditJobActivity.this, "category", newCaty));
                 }
             }
 

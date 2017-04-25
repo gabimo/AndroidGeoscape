@@ -58,9 +58,9 @@
         android:layout_below="@+id/tvPostJobHeader"
         android:layout_alignLeft="@+id/tvPostJobLocationLabel"
         android:layout_alignStart="@+id/tvPostJobLocationLabel"
-        android:layout_marginLeft="35dp"
+        android:layout_marginLeft="37dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/tvPostJobLocationLabel" />
 
     <EditText
@@ -164,20 +164,20 @@
         android:layout_height="wrap_content"
         android:text="Category"
         android:textSize="18sp"
-        android:layout_marginLeft="19dp"
+        android:layout_marginLeft="30dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="22dp"
+        android:layout_marginBottom="11dp"
         app:layout_constraintBottom_toTopOf="@+id/ivPostJobUploadPhoto" />
 
     <Spinner
         android:id="@+id/spinnerCategory"
         android:layout_width="134dp"
         android:layout_height="58dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/gvPhotoUploads"
         android:entries="@array/category_arrays"
         android:prompt="@string/category_prompt"
-        android:layout_marginRight="97dp"
+        android:layout_marginRight="102dp"
         app:layout_constraintRight_toRightOf="parent" />
 
     <GridView
