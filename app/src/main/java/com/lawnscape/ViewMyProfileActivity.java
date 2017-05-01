@@ -165,26 +165,4 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     /*
     Not necessary, these are just placeholding button actions on the profile activity
      */
-    public void gotoPostNewJob(View v){
-        startActivity( new Intent( this, PostJobActivity.class));
-    }
-    public void searchJobsButton(View v){
-        startActivity(new Intent(this, SearchActivity.class));
-    }
-    public void gotoProfileSettings(View v){
-        startActivity(new Intent(this,EditProfileActivity.class));
-        finish();
-    }
-    public void listAllJobsButton(View v){
-        Intent allJobsViewIntent = new Intent(this, ViewJobsListsActivity.class);
-        allJobsViewIntent.putExtra("View", "all");
-        startActivity(allJobsViewIntent);
-    }
-    public void mapJobsButton(View v){
-        Intent MapAllJobsViewIntent = new Intent(this, MapJobsActivity.class);
-        startActivity(MapAllJobsViewIntent);
-    }
-    public void myPostsButton(View v){
-        startActivity(new Intent(this, ViewMyPostsActivity.class));
-    }
 }
