@@ -122,7 +122,6 @@ public class EditProfileActivity extends AppCompatActivity {
         startActivity(new Intent(this, ViewMyProfileActivity.class));
         finish();
     }
-
     public void backToProfile(View v) {
         finish();
     }

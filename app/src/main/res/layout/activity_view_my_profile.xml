@@ -15,32 +15,37 @@
         android:id="@+id/tvMyProfileEmailLabel"
         android:layout_width="100dp"
         android:layout_height="19dp"
+        android:layout_marginTop="340dp"
         android:text="@string/email"
-        app:layout_constraintRight_toRightOf="@+id/tvMyProfileUserIDLabel"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileUserIDLabel"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="340dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintRight_toLeftOf="@+id/tvMyProfileUserEmail"
+        android:layout_marginRight="8dp" />
 
     <TextView
         android:id="@+id/tvMyProfileUserIDLabel"
         android:layout_width="100dp"
         android:layout_height="19dp"
+        android:layout_marginTop="305dp"
         android:text="@string/user_id"
-        tools:layout_editor_absoluteX="65dp"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="305dp" />
+        tools:layout_editor_absoluteX="65dp" />
 
     <TextView
         android:id="@+id/tvMyProfileNameLabel"
         android:layout_width="100dp"
         android:layout_height="19dp"
+        android:layout_marginTop="375dp"
         android:text="@string/your_name_colon"
-        app:layout_constraintRight_toRightOf="@+id/tvMyProfileEmailLabel"
-        app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileEmailLabel"
+        android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileEmailLabel"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="375dp" />
+        app:layout_constraintRight_toLeftOf="@+id/tvMyProfileName"
+        android:layout_marginRight="8dp" />
 
     <TextView
         android:id="@+id/tvMyProfileName"
@@ -55,12 +60,14 @@
         android:id="@+id/tvMyProfileLocationLabel"
         android:layout_width="100dp"
         android:layout_height="19dp"
+        android:layout_marginTop="410dp"
         android:text="@string/your_location"
-        app:layout_constraintRight_toRightOf="@+id/tvMyProfileNameLabel"
-        app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileNameLabel"
+        android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileNameLabel"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="410dp" />
+        app:layout_constraintRight_toLeftOf="@+id/tvMyProfileLocation"
+        android:layout_marginRight="8dp" />
 
     <TextView
         android:id="@+id/tvMyProfileLocation"
@@ -94,13 +101,14 @@
         android:id="@+id/ivMyProfileImage"
         android:layout_width="161dp"
         android:layout_height="167dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="63dp"
+        android:background="@android:drawable/ic_menu_gallery"
+        android:contentDescription="Profile Picture"
+        app:layout_constraintBottom_toTopOf="@+id/tvMyProfileUserIDLabel"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@android:drawable/ic_menu_gallery"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvMyProfileUserIDLabel"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
