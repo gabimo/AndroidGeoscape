@@ -96,13 +96,13 @@ public class LoginActivity extends AppCompatActivity {
     /*********** SIGN UP ***********/
     public void createAccount(final View v) {
         final EditText emailBox = (EditText) findViewById(R.id.etSignUpEmail);
-        final EditText passBox = (EditText) findViewById(R.id.etSignUpEmail);
+        final EditText passBox = (EditText) findViewById(R.id.etSignUpPassword);
         final EditText etName = (EditText) findViewById(R.id.etSignUpName);
         final EditText etLocation = (EditText) findViewById(R.id.etSignUpLocation);
         final String newName = etName.getText().toString();
         final String newLoc = etLocation.getText().toString();
 
-        if(!newName.equals("")&&!newLoc.equals("")){
+        if(!(newName.equals("")||newLoc.equals(""))){
             String email = emailBox.getText().toString();
             String password = passBox.getText().toString();
             if (!email.equals("") && !password.equals("")) {
