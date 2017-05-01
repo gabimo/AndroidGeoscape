@@ -11,204 +11,115 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lawnscape.ViewMyProfileActivity">
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/buttonPostNewJob"
-        android:layout_width="295dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="43dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:backgroundTint="@android:color/holo_green_light"
-        android:onClick="gotoPostNewJob"
-        android:text="@string/post_new_job"
-        android:visibility="visible"
-        app:bootstrapBrand="primary"
-        app:bootstrapSize="lg"
-        app:buttonMode="regular"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:roundedCorners="true"
-        app:showOutline="false" />
-
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/buttonEditProfile"
-        android:layout_width="143dp"
-        android:layout_height="33dp"
-        android:backgroundTint="@android:color/holo_green_light"
-        android:onClick="gotoProfileSettings"
-        android:text="@string/edit_profile"
-        android:visibility="visible"
-        app:bootstrapBrand="primary"
-        app:bootstrapSize="lg"
-        app:buttonMode="regular"
-        app:roundedCorners="true"
-        app:showOutline="false"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvMyProfileLocationLabel"
-        app:layout_constraintLeft_toRightOf="@+id/ivMyProfileImage"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
-
     <TextView
-        android:layout_width="79dp"
-        android:layout_height="19dp"
         android:id="@+id/tvMyProfileEmailLabel"
+        android:layout_width="100dp"
+        android:layout_height="19dp"
         android:text="@string/email"
-        app:layout_constraintTop_toBottomOf="@+id/tvMyProfileUserIDLabel"
-        app:layout_constraintLeft_toRightOf="@+id/ivMyProfileImage"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="0dp" />
-
-    <TextView
-        android:text="@string/user_id"
-        android:layout_width="79dp"
-        android:layout_height="19dp"
-        android:id="@+id/tvMyProfileUserIDLabel"
+        app:layout_constraintRight_toRightOf="@+id/tvMyProfileNameLabel"
+        app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileNameLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/ivMyProfileImage"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="-12dp" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.691" />
 
     <TextView
-        android:text="@string/your_name_colon"
-        android:layout_width="79dp"
+        android:id="@+id/tvMyProfileUserIDLabel"
+        android:layout_width="100dp"
         android:layout_height="19dp"
+        android:text="@string/user_id"
+        app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileEmailLabel"
+        app:layout_constraintRight_toRightOf="@+id/tvMyProfileEmailLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.554" />
+
+    <TextView
         android:id="@+id/tvMyProfileNameLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tvMyProfileEmailLabel"
-        app:layout_constraintLeft_toRightOf="@+id/ivMyProfileImage"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="11dp" />
+        android:layout_width="100dp"
+        android:layout_height="19dp"
+        android:text="@string/your_name_colon"
+        app:layout_constraintRight_toRightOf="@+id/tvMyProfileLocationLabel"
+        app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileLocationLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.621" />
 
     <TextView
         android:id="@+id/tvMyProfileName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvMyProfileUserEmail"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tvMyProfileNameLabel"
-        app:layout_constraintHorizontal_bias="0.099"
-        android:layout_marginTop="14dp" />
+        android:layout_height="19dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMyProfileNameLabel"
+        app:layout_constraintRight_toRightOf="@+id/tvMyProfileUserEmail"
+        app:layout_constraintTop_toTopOf="@+id/tvMyProfileNameLabel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileUserEmail" />
 
     <TextView
         android:id="@+id/tvMyProfileLocationLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="19dp"
         android:text="@string/your_location"
-        app:layout_constraintLeft_toRightOf="@+id/ivMyProfileImage"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="9dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvMyProfileNameLabel" />
+        tools:layout_editor_absoluteX="42dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.766" />
 
     <TextView
         android:id="@+id/tvMyProfileLocation"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvMyProfileName"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tvMyProfileLocationLabel"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonEditProfile" />
+        android:layout_height="19dp"
+        tools:layout_editor_absoluteX="206dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMyProfileLocationLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvMyProfileLocationLabel"
+        app:layout_constraintVertical_bias="0.774" />
 
     <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/tvMyProfileUserID"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMyProfileUserIDLabel"
+        app:layout_constraintRight_toRightOf="@+id/tvMyProfileName"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="-1dp"
-        android:layout_marginRight="23dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tvMyProfileUserIDLabel"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileName"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/tvMyProfileUserEmail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvMyProfileUserID"
-        android:layout_marginRight="24dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tvMyProfileEmailLabel"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        android:layout_height="19dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMyProfileEmailLabel"
+        app:layout_constraintRight_toRightOf="@+id/tvMyProfileLocation"
+        app:layout_constraintTop_toTopOf="@+id/tvMyProfileEmailLabel"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintVertical_bias="0.701"
+        app:layout_constraintLeft_toLeftOf="@+id/tvMyProfileLocation" />
 
     <ImageView
         android:id="@+id/ivMyProfileImage"
-        android:layout_width="123dp"
-        android:layout_height="139dp"
+        android:layout_width="165dp"
+        android:layout_height="152dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="7dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonProfileListOfJobs"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteY="13dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@android:drawable/ic_menu_gallery"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.136"
+        app:layout_constraintHorizontal_bias="0.502" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        app:layout_constraintGuide_begin="20dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="20dp" />
 
-    <Button
-        android:id="@+id/buttonProfileJobsMap"
-        android:layout_width="295dp"
-        android:layout_height="46dp"
-        android:onClick="mapJobsButton"
-        android:text="@string/see_jobs_on_google_maps"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonProfileSearchJobs"
-        android:layout_marginRight="24dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <Button
-        android:id="@+id/buttonProfileMyPosts"
-        android:layout_width="295dp"
-        android:layout_height="46dp"
-        android:onClick="myPostsButton"
-        android:text="@string/view_my_posts"
-        android:layout_marginBottom="13dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonProfileJobsMap"
-        android:layout_marginRight="24dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <Button
-        android:id="@+id/buttonProfileSearchJobs"
-        android:layout_width="295dp"
-        android:layout_height="46dp"
-        android:onClick="searchJobsButton"
-        android:text="@string/search_jobs"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPostNewJob"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.4" />
-
-    <Button
-        android:id="@+id/buttonProfileListOfJobs"
-        android:layout_width="295dp"
-        android:layout_height="46dp"
-        android:onClick="listAllJobsButton"
-        android:text="@string/list_of_all_jobs"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttonEditProfile"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonProfileMyPosts"
-        app:layout_constraintVertical_bias="0.892"
-        android:layout_marginRight="24dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.438" />
 </android.support.constraint.ConstraintLayout>

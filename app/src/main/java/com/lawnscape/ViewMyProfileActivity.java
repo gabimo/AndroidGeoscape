@@ -165,7 +165,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     /*
     Not necessary, these are just placeholding button actions on the profile activity
      */
-    public void gotoPostNewJob(View v){
+    /**public void gotoPostNewJob(View v){
         startActivity( new Intent( this, PostJobActivity.class));
     }
     public void searchJobsButton(View v){
@@ -186,5 +186,5 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     }
     public void myPostsButton(View v){
         startActivity(new Intent(this, ViewMyPostsActivity.class));
-    }
+    }**/
 }
