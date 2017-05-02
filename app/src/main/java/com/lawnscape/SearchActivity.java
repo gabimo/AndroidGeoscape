@@ -3,7 +3,10 @@ package com.lawnscape;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -47,6 +50,7 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -58,5 +62,31 @@ public class SearchActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         searchBar.addTextChangedListener(searchTextWatcher);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                upIntent.putExtra("View", "all");
+                if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    TaskStackBuilder builder = TaskStackBuilder.create(this);
+                    builder.addNextIntentWithParentStack(upIntent);
+                    builder.startActivities();
+                } else {
+                    if (upIntent != null) {
+                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        this.startActivity(upIntent);
+                        this.finish();
+                    } else {
+                        upIntent = new Intent( this, ViewJobsListsActivity.class);
+                        upIntent.putExtra("View", "all");
+                        startActivity(upIntent);
+                    }
+                }
+                return true;
+        }
+        return false;
     }
 }

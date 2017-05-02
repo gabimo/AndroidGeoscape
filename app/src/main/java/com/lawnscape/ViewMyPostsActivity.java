@@ -2,6 +2,8 @@ package com.lawnscape;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -124,6 +126,7 @@ public class ViewMyPostsActivity extends AppCompatActivity {
                 return true;
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -151,45 +154,27 @@ public class ViewMyPostsActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
-            case R.id.viewPostsMenuPostJob:
-                startActivity(new Intent(ViewMyPostsActivity.this, PostJobActivity.class));
-                finish();
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                upIntent.putExtra("View", "all");
+                if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    TaskStackBuilder builder = TaskStackBuilder.create(this);
+                    builder.addNextIntentWithParentStack(upIntent);
+                    builder.startActivities();
+                } else {
+                    if (upIntent != null) {
+                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        this.startActivity(upIntent);
+                        this.finish();
+                    } else {
+                        upIntent = new Intent( this, ViewJobsListsActivity.class);
+                        upIntent.putExtra("View", "all");
+                        startActivity(upIntent);
+                    }
+                }
                 return true;
-            case R.id.viewPostsMenuAllChats:
-                startActivity(new Intent(this, ViewActiveChatsActivity.class));
-                finish();
-                return true;
-            case R.id.viewPostsMenuMyProfile:
-                startActivity( new Intent( this, ViewMyProfileActivity.class));
-                return true;
-            case R.id.viewPostsMenuMyJobs:
-                startActivity(new Intent(this, ViewMyPostsActivity.class));
-                finish();
-                return true;
-            case R.id.viewPostsMenuAllJobs:
-                Intent allJobsViewIntent = new Intent(this, ViewJobsListsActivity.class);
-                allJobsViewIntent.putExtra("View", "all");
-                startActivity(allJobsViewIntent);
-                finish();
-                return true;
-            case R.id.viewPostsMenuSearch:
-                startActivity(new Intent(this, SearchActivity.class));
-                return true;
-            case R.id.viewPostsMenuJobsMap:
-                Intent MapAllJobsViewIntent = new Intent(this, ViewJobsListsActivity.class);
-                MapAllJobsViewIntent.putExtra("View", "saved");
-                startActivity(MapAllJobsViewIntent);
-                finish();
-                return true;
-            case R.id.viewPostsMenuSignOut:
-                auth.signOut();
-                finish();
-                return true;
-            default:
-                Toast.makeText(this,String.valueOf(item),Toast.LENGTH_SHORT).show();
-                return super.onOptionsItemSelected(item);
         }
+        return false;
     }
 }

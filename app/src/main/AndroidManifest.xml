@@ -31,10 +31,12 @@
         </activity>
         <activity
             android:name=".PostJobActivity"
+            android:parentActivityName=".ViewJobsListsActivity"
             android:label="Post a New Job"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ViewMyPostsActivity"
+            android:parentActivityName=".ViewJobsListsActivity"
             android:label="My Posts" />
         <activity android:name=".ViewSingleJobActivity" />
         <activity android:name=".ViewJobsListsActivity" />
@@ -60,7 +62,8 @@
         <activity
             android:name=".MapJobsActivity"
             android:label="@string/title_activity_map_jobs" />
-        <activity android:name=".SearchActivity" />
+        <activity android:name=".SearchActivity"
+            android:parentActivityName=".ViewJobsListsActivity"/>
         <activity android:name=".EditProfileActivity"
             android:parentActivityName=".ViewMyProfileActivity"/>
         <activity android:name=".EditJobActivity"></activity>
