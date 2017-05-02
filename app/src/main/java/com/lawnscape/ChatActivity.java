@@ -2,6 +2,8 @@ package com.lawnscape;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -147,30 +149,27 @@ public class ChatActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
-            case R.id.chatMenuDeleteChat:
-                Toast.makeText(this, "Must implement", Toast.LENGTH_SHORT).show();
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                upIntent.putExtra("View", "all");
+                if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    TaskStackBuilder builder = TaskStackBuilder.create(this);
+                    builder.addNextIntentWithParentStack(upIntent);
+                    builder.startActivities();
+                } else {
+                    if (upIntent != null) {
+                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        this.startActivity(upIntent);
+                        this.finish();
+                    } else {
+                        upIntent = new Intent( this, ViewJobsListsActivity.class);
+                        upIntent.putExtra("View", "all");
+                        startActivity(upIntent);
+                    }
+                }
                 return true;
-            case R.id.chatMenuViewUserProfile:
-                Toast.makeText(this, "Need to Implement", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.chatMenuMyProfile:
-                startActivity(new Intent(this, ViewMyProfileActivity.class));
-                return true;
-            case R.id.chatMenuMyJobPosts:
-                startActivity(new Intent(this, ViewMyPostsActivity.class));
-                finish();
-                return true;
-            case R.id.chatMenuSearch:
-                startActivity(new Intent(this, SearchActivity.class));
-                return true;
-            case R.id.chatMenuSignOut:
-                mAuth.signOut();
-                finish();
-            default:
-                finish();
-                return super.onOptionsItemSelected(item);
         }
+        return false;
     }
 }

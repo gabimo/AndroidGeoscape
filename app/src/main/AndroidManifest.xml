@@ -40,8 +40,10 @@
             android:label="My Posts" />
         <activity android:name=".ViewSingleJobActivity" />
         <activity android:name=".ViewJobsListsActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".ViewActiveChatsActivity" />
+        <activity android:name=".ChatActivity"
+            android:parentActivityName=".ViewJobsListsActivity"/>
+        <activity android:name=".ViewActiveChatsActivity"
+            android:parentActivityName=".ViewJobsListsActivity"/>
         <activity
             android:name=".ViewUserProfileActivity"
             android:label="User Profile"
