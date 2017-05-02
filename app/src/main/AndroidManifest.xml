@@ -61,7 +61,8 @@
             android:name=".MapJobsActivity"
             android:label="@string/title_activity_map_jobs" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".EditProfileActivity"
+            android:parentActivityName=".ViewMyProfileActivity"/>
         <activity android:name=".EditJobActivity"></activity>
     </application>
 
