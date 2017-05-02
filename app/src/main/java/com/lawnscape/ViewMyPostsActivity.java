@@ -168,13 +168,49 @@ public class ViewMyPostsActivity extends AppCompatActivity {
                         this.startActivity(upIntent);
                         this.finish();
                     } else {
-                        upIntent = new Intent( this, ViewJobsListsActivity.class);
+                        upIntent = new Intent(this, ViewJobsListsActivity.class);
                         upIntent.putExtra("View", "all");
                         startActivity(upIntent);
                     }
                 }
                 return true;
+            case R.id.viewPostsMenuPostJob:
+                startActivity(new Intent(ViewMyPostsActivity.this, PostJobActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenuAllChats:
+                startActivity(new Intent(this, ViewChatListActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenuMyProfile:
+                startActivity(new Intent(this, ViewMyProfileActivity.class));
+                return true;
+            case R.id.viewPostsMenuMyJobs:
+                startActivity(new Intent(this, ViewMyPostsActivity.class));
+                finish();
+                return true;
+            case R.id.viewPostsMenuAllJobs:
+                Intent allJobsViewIntent = new Intent(this, ViewJobsListsActivity.class);
+                allJobsViewIntent.putExtra("View", "all");
+                startActivity(allJobsViewIntent);
+                finish();
+                return true;
+            case R.id.viewPostsMenuSearch:
+                startActivity(new Intent(this, SearchActivity.class));
+                return true;
+            case R.id.viewPostsMenuJobsMap:
+                Intent MapAllJobsViewIntent = new Intent(this, ViewJobsListsActivity.class);
+                MapAllJobsViewIntent.putExtra("View", "saved");
+                startActivity(MapAllJobsViewIntent);
+                finish();
+                return true;
+            case R.id.viewPostsMenuSignOut:
+                auth.signOut();
+                finish();
+                return true;
+            default:
+                Toast.makeText(this, String.valueOf(item), Toast.LENGTH_SHORT).show();
+                return super.onOptionsItemSelected(item);
         }
-        return false;
     }
 }

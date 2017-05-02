@@ -1,6 +1,5 @@
 package com.lawnscape;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -24,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ViewActiveChatsActivity extends AppCompatActivity {
+public class ViewChatListActivity extends AppCompatActivity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -51,7 +50,7 @@ public class ViewActiveChatsActivity extends AppCompatActivity {
                 if (currentUser == null) {
                     // user auth state is changed - user is not logged in
                     // launch login activity
-                    startActivity(new Intent(ViewActiveChatsActivity.this, LoginActivity.class));
+                    startActivity(new Intent(ViewChatListActivity.this, LoginActivity.class));
                     finish();
                 } else {
                     //user is logged in
@@ -62,7 +61,7 @@ public class ViewActiveChatsActivity extends AppCompatActivity {
                     //Put the jobs into the adaptor
                     //Find the listview widget and set up a connection to our ArrayList
                     userListView = (ListView) findViewById(R.id.lvJobRequesters);
-                    userAdapter = new UserListAdapter(ViewActiveChatsActivity.this, userList);
+                    userAdapter = new UserListAdapter(ViewChatListActivity.this, userList);
                     userListView.setAdapter(userAdapter);
                     //Get the users the current user has chat messages with
                     myChatsRef.addValueEventListener(new ValueEventListener() {
@@ -75,7 +74,7 @@ public class ViewActiveChatsActivity extends AppCompatActivity {
                             }
                             //Causes the listview to update with a list of user objects using UserListAdapter
                             myUserRef.addValueEventListener(
-                                    new UserListVEListener(ViewActiveChatsActivity.this, userList, useridList, userAdapter));
+                                    new UserListVEListener(ViewChatListActivity.this, userList, useridList, userAdapter));
                         }
 
                         @Override
@@ -92,7 +91,7 @@ public class ViewActiveChatsActivity extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position,
                                                 long id) {
                             User selectedUser = (User) userAdapter.getItem(position);
-                            Intent chatIntent = new Intent(ViewActiveChatsActivity.this, ChatActivity.class);
+                            Intent chatIntent = new Intent(ViewChatListActivity.this, ChatActivity.class);
                             chatIntent.putExtra("otherid", selectedUser.getUserid());
                             startActivity(chatIntent);
                         }
@@ -109,7 +108,7 @@ public class ViewActiveChatsActivity extends AppCompatActivity {
         public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
                                        long id) {
             //Creating the instance of PopupMenu
-            PopupMenu popup = new PopupMenu(ViewActiveChatsActivity.this, view);
+            PopupMenu popup = new PopupMenu(ViewChatListActivity.this, view);
             popup.getMenuInflater().inflate(R.menu.popup_user_menu, popup.getMenu());
             //registering popup with OnMenuItemClickListener
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -142,7 +141,7 @@ public class ViewActiveChatsActivity extends AppCompatActivity {
                             userAdapter.notifyDataSetChanged();
                             return true;
                         case R.id.longclickViewProfile:
-                            Intent viewProfileIntent = new Intent(ViewActiveChatsActivity.this, ViewUserProfileActivity.class);
+                            Intent viewProfileIntent = new Intent(ViewChatListActivity.this, ViewUserProfileActivity.class);
                             viewProfileIntent.putExtra("UserID", selectedUser.getUserid());
                             startActivity(viewProfileIntent);
                             return true;
@@ -188,7 +187,7 @@ public class ViewActiveChatsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case android.R.id.home: 
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
                 upIntent.putExtra("View", "all");
                 if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
@@ -199,13 +198,13 @@ public class ViewActiveChatsActivity extends AppCompatActivity {
                     if (upIntent != null) {
                         upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         this.startActivity(upIntent);
-                        this.finish();
                     } else {
                         upIntent = new Intent( this, ViewJobsListsActivity.class);
                         upIntent.putExtra("View", "all");
                         startActivity(upIntent);
                     }
                 }
+                finish();
                 return true;
         }
         return false;
