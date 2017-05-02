@@ -35,6 +35,7 @@ public class EditProfileActivity extends AppCompatActivity {
     // grab the widgets as objects
     private EditText etName;
     private EditText etLocation;
+    private EditText etEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 } else {
                     etName = (EditText) findViewById(R.id.etEditProfileName);
                     etLocation = (EditText) findViewById(R.id.etEditProfileLocation);
+                    etEmail = (EditText)  findViewById(R.id.etEditProfileEmail);
+                    etEmail.setText(currentUser.getEmail());
                     storage = FirebaseStorage.getInstance();
                     database = FirebaseDatabase.getInstance();
                     usersRef = database.getReference("Users").child(currentUser.getUid().toString());
@@ -110,6 +113,7 @@ public class EditProfileActivity extends AppCompatActivity {
     public void updateUserInfo(View v) {
         String newName = etName.getText().toString();
         String newLoc = etLocation.getText().toString();
+        String newEmail = etEmail.getText().toString();
 
         // Set name of user and location
         if (!newName.isEmpty() && !newLoc.isEmpty()) {
@@ -118,6 +122,9 @@ public class EditProfileActivity extends AppCompatActivity {
         if (ivProfileImage.getDrawable() != null) {
             StorageReference pathReference = storage.getReference().child("userprofilephotos").child(currentUser.getUid());
             pathReference.putFile(imageUri);
+        }
+        if (!newEmail.equals("") || newEmail.contains("@") || !newEmail.equals(currentUser.getEmail())){
+            currentUser.updateEmail(newEmail);
         }
         startActivity(new Intent(this, ViewMyProfileActivity.class));
         finish();
