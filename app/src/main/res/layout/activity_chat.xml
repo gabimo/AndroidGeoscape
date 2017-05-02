@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_chat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lawnscape.ChatActivity">
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/buttonChatMessageSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/lvChatMessageView"
+        android:layout_width="86dp"
+        android:layout_height="39dp"
         android:backgroundTint="@android:color/holo_green_light"
         android:onClick="sendMessage"
         android:text="Send"
@@ -26,30 +19,43 @@
         app:bootstrapSize="lg"
         app:buttonMode="regular"
         app:roundedCorners="true"
-        app:showOutline="false" />
+        app:showOutline="false"
+        app:layout_constraintRight_toRightOf="@+id/lvChatMessageView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        tools:layout_editor_absoluteY="556dp"
+        tools:layout_editor_absoluteX="326dp"
+        android:layout_marginRight="-1dp" />
 
     <EditText
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="323dp"
+        android:layout_height="41dp"
         android:inputType="textCapSentences|textAutoCorrect"
         android:imeOptions="actionSend"
         android:text=""
         android:ems="10"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:id="@+id/etChatMessage"
-        android:layout_toStartOf="@+id/buttonChatMessageSend"
-        android:layout_toLeftOf="@+id/buttonChatMessageSend" />
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintTop_toTopOf="@+id/buttonChatMessageSend"
+        app:layout_constraintLeft_toLeftOf="@+id/lvChatMessageView"
+        android:layout_marginLeft="-21dp"
+        android:layout_marginTop="0dp"
+        tools:layout_editor_absoluteY="556dp" />
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/etChatMessage"
-        android:layout_centerHorizontal="true"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:id="@+id/lvChatMessageView"
         android:transcriptMode="alwaysScroll"
-        android:stackFromBottom="true"/>
+        android:stackFromBottom="true"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/buttonChatMessageSend"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
