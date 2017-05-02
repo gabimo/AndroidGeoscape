@@ -3,7 +3,10 @@ package com.lawnscape;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,6 +38,7 @@ public class EditProfileActivity extends AppCompatActivity {
     // grab the widgets as objects
     private EditText etName;
     private EditText etLocation;
+    private EditText etEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 } else {
                     etName = (EditText) findViewById(R.id.etEditProfileName);
                     etLocation = (EditText) findViewById(R.id.etEditProfileLocation);
+                    etEmail = (EditText)  findViewById(R.id.etEditProfileEmail);
+                    etEmail.setText(currentUser.getEmail());
                     storage = FirebaseStorage.getInstance();
                     database = FirebaseDatabase.getInstance();
                     usersRef = database.getReference("Users").child(currentUser.getUid().toString());
@@ -94,6 +100,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         };
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
     public void onStart() {
@@ -110,6 +117,7 @@ public class EditProfileActivity extends AppCompatActivity {
     public void updateUserInfo(View v) {
         String newName = etName.getText().toString();
         String newLoc = etLocation.getText().toString();
+        String newEmail = etEmail.getText().toString();
 
         // Set name of user and location
         if (!newName.isEmpty() && !newLoc.isEmpty()) {
@@ -118,6 +126,9 @@ public class EditProfileActivity extends AppCompatActivity {
         if (ivProfileImage.getDrawable() != null) {
             StorageReference pathReference = storage.getReference().child("userprofilephotos").child(currentUser.getUid());
             pathReference.putFile(imageUri);
+        }
+        if (!newEmail.equals("") || newEmail.contains("@") || !newEmail.equals(currentUser.getEmail())){
+            currentUser.updateEmail(newEmail);
         }
         startActivity(new Intent(this, ViewMyProfileActivity.class));
         finish();
@@ -133,5 +144,31 @@ public class EditProfileActivity extends AppCompatActivity {
             ivProfileImage.setImageURI(targetURI);
             imageUri = targetURI;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                upIntent.putExtra("View", "all");
+                if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    TaskStackBuilder builder = TaskStackBuilder.create(this);
+                    builder.addNextIntentWithParentStack(upIntent);
+                    builder.startActivities();
+                } else {
+                    if (upIntent != null) {
+                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        this.startActivity(upIntent);
+                        this.finish();
+                    } else {
+                        upIntent = new Intent( this, ViewJobsListsActivity.class);
+                        upIntent.putExtra("View", "all");
+                        startActivity(upIntent);
+                    }
+                }
+                return true;
+        }
+        return false;
     }
 }

@@ -10,9 +10,12 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -97,6 +100,7 @@ public class PostJobActivity extends AppCompatActivity {
                 }
             }
         };
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
     public void onStart() {
@@ -220,5 +224,31 @@ public class PostJobActivity extends AppCompatActivity {
             localUriList.add(targetURI);
             photoAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                upIntent.putExtra("View", "all");
+                if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    TaskStackBuilder builder = TaskStackBuilder.create(this);
+                    builder.addNextIntentWithParentStack(upIntent);
+                    builder.startActivities();
+                } else {
+                    if (upIntent != null) {
+                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        this.startActivity(upIntent);
+                        this.finish();
+                    } else {
+                        upIntent = new Intent( this, ViewJobsListsActivity.class);
+                        upIntent.putExtra("View", "all");
+                        startActivity(upIntent);
+                    }
+                }
+                return true;
+        }
+        return false;
     }
 }
