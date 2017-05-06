@@ -156,23 +156,25 @@ public class ViewMyPostsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent upIntent = NavUtils.getParentActivityIntent(this);
-                upIntent.putExtra("View", "all");
-                if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    TaskStackBuilder builder = TaskStackBuilder.create(this);
-                    builder.addNextIntentWithParentStack(upIntent);
-                    builder.startActivities();
-                } else {
-                    if (upIntent != null) {
-                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        this.startActivity(upIntent);
-                        this.finish();
+                if(isTaskRoot()) {
+                    Intent upIntent = NavUtils.getParentActivityIntent(this);
+                    upIntent.putExtra("View", "all");
+                    if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                        TaskStackBuilder builder = TaskStackBuilder.create(this);
+                        builder.addNextIntentWithParentStack(upIntent);
+                        builder.startActivities();
                     } else {
-                        upIntent = new Intent(this, ViewJobsListsActivity.class);
-                        upIntent.putExtra("View", "all");
-                        startActivity(upIntent);
+                        if (upIntent != null) {
+                            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            this.startActivity(upIntent);
+                        } else {
+                            upIntent = new Intent(this, ViewJobsListsActivity.class);
+                            upIntent.putExtra("View", "all");
+                            startActivity(upIntent);
+                        }
                     }
                 }
+                finish();
                 return true;
             case R.id.viewPostsMenuPostJob:
                 startActivity(new Intent(ViewMyPostsActivity.this, PostJobActivity.class));

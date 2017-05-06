@@ -202,6 +202,29 @@ public class ChatFragment extends Fragment {
             case android.R.id.home:
                 getHostFragmentManager().popBackStack();
                 return true;
+            case R.id.chatMenuViewUserProfile:
+                Intent viewProfileIntent = new Intent(getContext(), ViewUserProfileActivity.class);
+                viewProfileIntent.putExtra("UserID", otherUserid);
+                startActivity(viewProfileIntent);
+                return true;
+            case R.id.chatMenuMyJobPosts:
+                startActivity(new Intent(getContext(), ViewMyPostsActivity.class));
+                getActivity().finish();
+                return true;
+            case R.id.chatMenuMyProfile:
+                startActivity( new Intent( getContext(), ViewMyProfileActivity.class));
+                return true;
+            case R.id.chatMenuSearch:
+                Intent SearchIntent = new Intent(getContext(), SearchActivity.class);
+                startActivity(SearchIntent);
+                return true;
+            case R.id.chatMenuSignOut:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                getActivity().finish();
+                return true;
         }
         return false;
     }

@@ -313,7 +313,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
     public void saveJob(View v) {
         DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs");
         mySavedJobsRef.addListenerForSingleValueEvent(
-                new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid()));
+                new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid(), jobPost.getPostid()));
     }
 
     public void requestJob(View v) {

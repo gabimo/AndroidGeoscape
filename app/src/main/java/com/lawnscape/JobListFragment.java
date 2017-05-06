@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,6 +68,7 @@ public class JobListFragment extends Fragment {
         // The adaptor handles pushing each object in the ArrayList to the listview
         // but you must call jobsAdaptor.notifyDataSetChanged(); to update the listview
         allPostsList.setAdapter(jobsAdapter);
+
         if(jobSet == null){
             myListRef = database.getReference("Jobs");
             jobsToFetch = null;
@@ -92,6 +94,7 @@ public class JobListFragment extends Fragment {
                 public void onCancelled(DatabaseError databaseError) {/* idk what we would do*/ }
             });
         }
+
         //Clicking a list item will bring you to a page for that item
         allPostsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

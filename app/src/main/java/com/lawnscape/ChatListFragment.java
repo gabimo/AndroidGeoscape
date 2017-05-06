@@ -216,6 +216,32 @@ public class ChatListFragment extends Fragment {
                     getActivity().finish();
                 }
                 return true;
+            case R.id.viewPostsMenuPostJob:
+                startActivity(new Intent(getContext(), PostJobActivity.class));
+                getActivity().finish();
+                return true;
+            case R.id.viewPostsMenuMyProfile:
+                startActivity( new Intent(getContext(), ViewMyProfileActivity.class));
+                return true;
+            case R.id.viewPostsMenuMyJobs:
+                startActivity(new Intent(getContext(), ViewMyPostsActivity.class));
+                getActivity().finish();
+                return true;
+            case R.id.viewPostsMenuSearch:
+                Intent SearchIntent = new Intent(getContext(), SearchActivity.class);
+                startActivity(SearchIntent);
+                return true;
+            case R.id.viewPostsMenuJobsMap:
+                Intent MapAllJobsViewIntent = new Intent(getContext(), MapJobsActivity.class);
+                startActivity(MapAllJobsViewIntent);
+                return true;
+            case R.id.viewPostsMenuSignOut:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                getActivity().finish();
+                return true;
         }
         return false;
     }

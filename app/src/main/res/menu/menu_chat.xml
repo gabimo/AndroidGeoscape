@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/chatMenuDeleteChat"
-        android:title="Delete Chat"
-        android:orderInCategory="200"
-        app:showAsAction="always"
-        android:icon="@drawable/delete_icon">
-    </item>
     <item android:id="@+id/chatMenuViewUserProfile"
         android:title="Poster Profile"
         android:orderInCategory="100"

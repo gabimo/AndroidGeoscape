@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,12 +30,44 @@ public class ViewJobsListsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
+    private TextView all;
+    private TextView active;
+    private TextView saved;
+    private TextView requested;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_job_lists);
         mAuth = FirebaseAuth.getInstance();
+        all = (TextView) findViewById(R.id.buttonViewAllJobs);
+        requested = (TextView) findViewById(R.id.buttonRequestedJobs);
+        active = (TextView) findViewById(R.id.buttonViewActiveJobsList);
+        saved = (TextView) findViewById(R.id.buttonViewSavedJobs);
+        all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listHandler(null);
+            }
+        });
+        requested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listHandler("requestedjobs");
+            }
+        });
+        saved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listHandler("savedjobs");
+            }
+        });
+        active.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listHandler("activejobs");
+            }
+        });
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
@@ -46,15 +79,14 @@ public class ViewJobsListsActivity extends AppCompatActivity {
                 }else{
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
-                    JobListFragment f = (JobListFragment) fm.findFragmentByTag("JobListFragment");
+                    JobListFragment f = (JobListFragment) fm.findFragmentByTag("JobListFrag");
 
                     if(f == null) {  // not added
                         f = new JobListFragment();
-                        ft.add(R.id.jobsListFrame, f, "JobListFragment");
+                        ft.add(R.id.jobsListFrame, f, "JobListFrag");
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
                     }
-
                     ft.commit();
                 }
             }
@@ -129,7 +161,19 @@ public class ViewJobsListsActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    private void listHandler(String list){
+        JobListFragment f = new JobListFragment();
 
+        Bundle args = new Bundle();
+        args.putString("jobset", list);
+        f.setArguments(args);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.jobsListFrame, f, "JobListFrag");
+        fragmentTransaction.disallowAddToBackStack();
+        fragmentTransaction.commit();
+    }
 /********************* Switch to map view ********************/
     public void showMapOfJobs(View v){
         Intent MapJobsViewIntent = new Intent(this, MapJobsActivity.class);
