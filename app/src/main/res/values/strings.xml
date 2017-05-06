@@ -31,8 +31,8 @@
     <string name="write_your_opinion_here">Write your opinion here</string>
     <string name="rate">Rate</string>
     <string name="review">Review</string>
-    <string name="your_name">Your Name</string>
-    <string name="your_address">Your Address</string>
+    <string name="your_name">First Last</string>
+    <string name="your_address">City/State/Region</string>
     <string name="back_to_profile">Back to Profile</string>
     <string name="apply_changes">Apply Changes</string>
     <string name="new_job_post">New Job Post</string>

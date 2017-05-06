@@ -40,7 +40,7 @@
         <activity android:name=".ViewJobsListsActivity" />
         <activity android:name=".ChatActivity"
             android:parentActivityName=".ViewJobsListsActivity"/>
-        <activity android:name=".ViewActiveChatsActivity"
+        <activity android:name=".ViewChatListActivity"
             android:parentActivityName=".ViewJobsListsActivity"/>
         <activity
             android:name=".ViewUserProfileActivity"

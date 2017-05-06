@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -137,7 +136,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.profileMenuChats:
-                startActivity(new Intent(this, ViewActiveChatsActivity.class));
+                startActivity(new Intent(this, ViewChatListActivity.class));
                 return true;
             case R.id.profileMenuSearch:
                 startActivity(new Intent(this, SearchActivity.class));

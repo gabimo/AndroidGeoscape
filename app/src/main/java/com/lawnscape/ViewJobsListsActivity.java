@@ -128,7 +128,7 @@ public class ViewJobsListsActivity extends AppCompatActivity {
                 startActivity( new Intent( ViewJobsListsActivity.this, ViewMyProfileActivity.class));
                 return true;
             case R.id.viewPostsMenuAllChats:
-                startActivity(new Intent(ViewJobsListsActivity.this, ViewActiveChatsActivity.class));
+                startActivity(new Intent(ViewJobsListsActivity.this, ViewChatListActivity.class));
                 finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:
