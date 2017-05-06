@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                     loginIntent.putExtra("View", "all");
                     startActivity(loginIntent);
                     finish();
+
                 }
             }
         };
