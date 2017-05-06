@@ -14,7 +14,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,7 +21,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ThrowOnExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -45,7 +43,7 @@ public class ChatActivity extends AppCompatActivity {
         /*********************** IMPORTANT ****************************/
         otherUserid = getIntent().getExtras().get("otherid").toString();
 
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.fragment_chat);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         mAuth = FirebaseAuth.getInstance();

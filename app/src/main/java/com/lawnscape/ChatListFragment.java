@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,18 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class UserFragment extends Fragment {
+public class ChatListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
     private UserListAdapter userAdapter;
@@ -47,11 +40,11 @@ public class UserFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public UserFragment() {
+    public ChatListFragment() {
     }
 
-    public static UserFragment newInstance() {
-        UserFragment fragment = new UserFragment();
+    public static ChatListFragment newInstance() {
+        ChatListFragment fragment = new ChatListFragment();
         return fragment;
     }
 
@@ -103,10 +96,18 @@ public class UserFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position,
                                         long id) {
-                    User selectedUser = (User) userAdapter.getItem(position);
-                    Intent chatIntent = new Intent(context, ChatActivity.class);
-                    chatIntent.putExtra("otherid", selectedUser.getUserid());
-                    startActivity(chatIntent);
+                    ChatFragment chatFrag = new ChatFragment();
+                    User selectedUser = userAdapter.getItem(position);
+
+                    Bundle args = new Bundle();
+                    args.putString("otherid", selectedUser.getUserid());
+                    chatFrag.setArguments(args);
+
+                    FragmentManager fragmentManager = getHostFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.chatsFrameLayout, chatFrag, selectedUser.getUserid());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
                 }
             });
             // Hold down on a user in the chat list to get a popup
@@ -127,7 +128,6 @@ public class UserFragment extends Fragment {
                     final User selectedUser = (User) userAdapter.getItem(position);
                     switch (item.getItemId()){
                         case R.id.longclickDeleteChat:
-                            final FirebaseDatabase database = FirebaseDatabase.getInstance();
                             //remove the chat from the list of all chats for both users with a listener
                             DatabaseReference myChatidRef = database.getReference("Users").child(currentUser.getUid().toString()).child("chatids");
                             //doesnt delete the actual chat log ;)
@@ -164,7 +164,13 @@ public class UserFragment extends Fragment {
             return true;
         }
     };
-
+    public FragmentManager getHostFragmentManager() {
+        FragmentManager fm = getFragmentManager();
+        if (fm == null && isAdded()) {
+            fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+        }
+        return fm;
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

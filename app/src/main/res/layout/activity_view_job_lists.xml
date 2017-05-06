@@ -33,45 +33,45 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginRight="27dp"
             android:onClick="viewAllJobs"
             android:text="@string/all_jobs"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintRight_toLeftOf="@+id/buttonViewActiveJobsList"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/lvJobs"
-            android:layout_marginLeft="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/jobsListFrame"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintHorizontal_bias="1.0" />
+            app:layout_constraintRight_toLeftOf="@+id/buttonViewActiveJobsList" />
 
         <TextView
             android:id="@+id/buttonViewActiveJobsList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
             android:layout_marginRight="30dp"
             android:onClick="viewActiveJobs"
             android:text="@string/active"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintRight_toLeftOf="@+id/buttonViewSavedJobs"
-            android:layout_marginBottom="7dp"
-            app:layout_constraintBottom_toTopOf="@+id/lvJobs" />
+            app:layout_constraintBottom_toTopOf="@+id/jobsListFrame"
+            app:layout_constraintRight_toLeftOf="@+id/buttonViewSavedJobs" />
 
         <TextView
             android:id="@+id/buttonRequestedJobs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:layout_marginRight="34dp"
             android:onClick="viewRequestedJobs"
             android:text="@string/requests"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="7dp"
-            app:layout_constraintBottom_toTopOf="@+id/lvJobs"
-            android:layout_marginRight="34dp"
+            app:layout_constraintBottom_toTopOf="@+id/jobsListFrame"
             app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
@@ -81,18 +81,18 @@
             android:layout_alignBottom="@+id/buttonRequestedJobs"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_marginBottom="7dp"
             android:layout_marginRight="27dp"
             android:onClick="viewSavedJobs"
             android:text="@string/saved"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintRight_toLeftOf="@+id/buttonRequestedJobs"
-            android:layout_marginBottom="7dp"
-            app:layout_constraintBottom_toTopOf="@+id/lvJobs" />
+            app:layout_constraintBottom_toTopOf="@+id/jobsListFrame"
+            app:layout_constraintRight_toLeftOf="@+id/buttonRequestedJobs" />
 
-        <ListView
-            android:id="@+id/lvJobs"
+        <FrameLayout
+            android:id="@+id/jobsListFrame"
             android:layout_width="366dp"
             android:layout_height="442dp"
             android:layout_alignParentLeft="true"
@@ -105,8 +105,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:layout_editor_absoluteY="45dp"
-            tools:layout_editor_absoluteX="8dp" />
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="45dp" />
 
 
     </android.support.constraint.ConstraintLayout>

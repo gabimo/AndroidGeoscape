@@ -40,19 +40,14 @@ public class ViewChatListActivity extends AppCompatActivity {
                     //user is logged in
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
-                    UserFragment f = (UserFragment) fm.findFragmentByTag("ChatListFragment");
+                    ChatListFragment f = (ChatListFragment) fm.findFragmentByTag("ChatListFragment");
 
                     if(f == null) {  // not added
-                        f = new UserFragment();
+                        f = new ChatListFragment();
                         ft.add(R.id.chatsFrameLayout, f, "ChatListFragment");
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
-                    } else {  // already added
-
-                        ft.remove(f);
-                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
                     }
-
                     ft.commit();
                 }
             }
@@ -94,24 +89,29 @@ public class ViewChatListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home: 
-                Intent upIntent = NavUtils.getParentActivityIntent(this);
-                upIntent.putExtra("View", "all");
-                if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    TaskStackBuilder builder = TaskStackBuilder.create(this);
-                    builder.addNextIntentWithParentStack(upIntent);
-                    builder.startActivities();
-                } else {
-                    if (upIntent != null) {
-                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        this.startActivity(upIntent);
+            case android.R.id.home:
+                FragmentManager fm = getSupportFragmentManager();
+                if(fm.getBackStackEntryCount()>0) {
+                    fm.popBackStack();
+                }else {
+                    Intent upIntent = NavUtils.getParentActivityIntent(this);
+                    upIntent.putExtra("View", "all");
+                    if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                        TaskStackBuilder builder = TaskStackBuilder.create(this);
+                        builder.addNextIntentWithParentStack(upIntent);
+                        builder.startActivities();
                     } else {
-                        upIntent = new Intent( this, ViewJobsListsActivity.class);
-                        upIntent.putExtra("View", "all");
-                        startActivity(upIntent);
+                        if (upIntent != null) {
+                            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            this.startActivity(upIntent);
+                        } else {
+                            upIntent = new Intent(this, ViewJobsListsActivity.class);
+                            upIntent.putExtra("View", "all");
+                            startActivity(upIntent);
+                        }
                     }
+                    finish();
                 }
-                finish();
                 return true;
         }
         return false;
