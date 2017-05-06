@@ -96,7 +96,6 @@
         app:layout_constraintTop_toTopOf="@+id/etEditJobDescription"
         app:layout_constraintLeft_toLeftOf="@+id/tvPostJobLocationLabel"
         app:layout_constraintBottom_toBottomOf="@+id/etEditJobDescription"
-        app:layout_constraintRight_toRightOf="@+id/tvPostJobLocationLabel"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintVertical_bias="0.441" />
 
@@ -113,7 +112,6 @@
         app:layout_constraintTop_toTopOf="@+id/etEditJobLocation"
         app:layout_constraintLeft_toLeftOf="@+id/tvEditJobTitleLabel"
         app:layout_constraintBottom_toBottomOf="@+id/etEditJobLocation"
-        app:layout_constraintRight_toRightOf="@+id/tvEditJobTitleLabel"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintVertical_bias="0.476" />
 
@@ -156,14 +154,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/add_job_plus_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/gvEditPost"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.651"
-        app:layout_constraintLeft_toLeftOf="@+id/tvPostJobCategoryLabel"
-        app:layout_constraintHorizontal_bias="0.911"
-        app:layout_constraintRight_toRightOf="@+id/tvPostJobCategoryLabel"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginLeft="49dp"
+        app:layout_constraintVertical_bias="0.57" />
 
     <Spinner
         android:id="@+id/spEditCategories"
@@ -188,8 +184,16 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="199dp"
         app:layout_constraintLeft_toLeftOf="@+id/tvPostJobDescriptionLabel"
-        app:layout_constraintRight_toRightOf="@+id/tvPostJobDescriptionLabel"
         app:layout_constraintHorizontal_bias="0.0" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        app:layout_constraintGuide_begin="20dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="20dp" />
 
     <GridView
         android:id="@+id/gvEditPost"
