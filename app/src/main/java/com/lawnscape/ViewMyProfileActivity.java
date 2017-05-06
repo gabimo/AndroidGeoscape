@@ -51,12 +51,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                /*
-                The following code will be ran when onStart runs in the Android Lifecycle
-                 */
-                //This finds the current phone's login info, if any
                 currentUser = firebaseAuth.getCurrentUser();
-                //currentUser will be null if the user has not logged in(or logged out)
                 if (currentUser == null) {
                     // User needs to sign in
                     startActivity(new Intent(ViewMyProfileActivity.this, LoginActivity.class));
@@ -158,10 +153,8 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 finish();
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                finish();
+                return true;
         }
     }
-    /*
-    Not necessary, these are just placeholding button actions on the profile activity
-     */
 }

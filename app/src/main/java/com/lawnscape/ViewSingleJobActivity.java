@@ -251,7 +251,6 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                     Intent chatIntent = new Intent(ViewSingleJobActivity.this, ChatActivity.class);
                     chatIntent.putExtra("otherid", jobPost.getUserid());
                     startActivity(chatIntent);
-                    finish();
                 }
                 return true;
             case R.id.viewSinglePostMenuMyJobs:

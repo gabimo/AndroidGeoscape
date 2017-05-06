@@ -103,7 +103,7 @@
         android:layout_height="167dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="63dp"
-        android:background="@android:drawable/ic_menu_gallery"
+        android:src="@android:drawable/ic_menu_gallery"
         android:contentDescription="Profile Picture"
         app:layout_constraintBottom_toTopOf="@+id/tvMyProfileUserIDLabel"
         app:layout_constraintLeft_toLeftOf="parent"

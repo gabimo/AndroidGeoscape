@@ -1,5 +1,6 @@
 package com.lawnscape;
 
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,8 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 
 public class ViewChatListActivity extends AppCompatActivity {
     //Firebase global init
@@ -72,49 +75,6 @@ public class ViewChatListActivity extends AppCompatActivity {
         }
     }
 
-    /*******************
-     * Menu Handling
-     *******************/
-    //make the menu show up
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_view_posts, menu);
-        //WHile on the chat list activity replace the chat list icon with a link to view jobs
-        menu.findItem(R.id.viewPostsMenuAllChats).setIcon(R.drawable.view_list_icon);
-        menu.findItem(R.id.viewPostsMenuPostJob).setVisible(false);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                FragmentManager fm = getSupportFragmentManager();
-                if(fm.getBackStackEntryCount()>0) {
-                    fm.popBackStack();
-                }else {
-                    Intent upIntent = NavUtils.getParentActivityIntent(this);
-                    upIntent.putExtra("View", "all");
-                    if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                        TaskStackBuilder builder = TaskStackBuilder.create(this);
-                        builder.addNextIntentWithParentStack(upIntent);
-                        builder.startActivities();
-                    } else {
-                        if (upIntent != null) {
-                            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            this.startActivity(upIntent);
-                        } else {
-                            upIntent = new Intent(this, ViewJobsListsActivity.class);
-                            upIntent.putExtra("View", "all");
-                            startActivity(upIntent);
-                        }
-                    }
-                    finish();
-                }
-                return true;
-        }
-        return false;
-    }
 
 }

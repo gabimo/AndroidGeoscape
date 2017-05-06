@@ -1,11 +1,19 @@
 package com.lawnscape;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -25,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.zip.Inflater;
 
 
 public class ChatFragment extends Fragment {
@@ -54,6 +63,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
@@ -180,13 +190,33 @@ public class ChatFragment extends Fragment {
             }
         });
     }
-
+    /********************* MENU STUFF ACTION BAR ********************/
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_chat, menu);
+        //getActivity().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getHostFragmentManager().popBackStack();
+                return true;
+        }
+        return false;
+    }
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
-
+    public FragmentManager getHostFragmentManager() {
+        FragmentManager fm = getFragmentManager();
+        if (fm == null && isAdded()) {
+            fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+        }
+        return fm;
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

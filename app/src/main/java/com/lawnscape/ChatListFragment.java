@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +55,7 @@ public class ChatListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -170,6 +174,50 @@ public class ChatListFragment extends Fragment {
             fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
         }
         return fm;
+    }
+
+
+
+
+    @Override
+    public void  onCreateOptionsMenu( Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_view_posts, menu);
+        //WHile on the chat list activity replace the chat list icon with a link to view jobs
+        menu.findItem(R.id.viewPostsMenuAllChats).setIcon(R.drawable.view_list_icon);
+        menu.findItem(R.id.viewPostsMenuPostJob).setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                FragmentManager fm = getHostFragmentManager();
+                if(fm.getBackStackEntryCount()>0) {
+                    fm.popBackStack();
+                }else {
+                    if(getActivity().isTaskRoot()) {
+                        Intent upIntent = NavUtils.getParentActivityIntent(getActivity());
+                        upIntent.putExtra("View", "all");
+                        if (upIntent != null && NavUtils.shouldUpRecreateTask(getActivity(), upIntent)) {
+                            TaskStackBuilder builder = TaskStackBuilder.create(getContext());
+                            builder.addNextIntentWithParentStack(upIntent);
+                            builder.startActivities();
+                        } else {
+                            if (upIntent != null) {
+                                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                this.startActivity(upIntent);
+                            } else {
+                                upIntent = new Intent(getContext(), ViewJobsListsActivity.class);
+                                upIntent.putExtra("View", "all");
+                                startActivity(upIntent);
+                            }
+                        }
+                    }
+                    getActivity().finish();
+                }
+                return true;
+        }
+        return false;
     }
     @Override
     public void onAttach(Context context) {

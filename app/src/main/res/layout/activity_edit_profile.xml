@@ -170,7 +170,7 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/add_image_icon"
+        android:src="@drawable/add_image_icon"
         android:cropToPadding="true"
         android:scaleType="fitCenter"
         android:visibility="visible"
