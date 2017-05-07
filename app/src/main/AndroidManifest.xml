@@ -18,9 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.ViewProfileActivity"
+            android:name=".activities.ViewProfileActivity"
             android:label="My Profile"></activity>
-        <activity android:name=".Activities.LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,17 +28,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.PostJobActivity"
-            android:parentActivityName=".Activities.ViewJobsListsActivity"
+            android:name=".activities.PostJobActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity"
             android:label="Post a New Job"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Activities.ViewSingleJobActivity" />
-        <activity android:name=".Activities.ViewJobsListsActivity" />
-        <activity android:name=".Activities.ChatActivity"
-            android:parentActivityName=".Activities.ViewJobsListsActivity"/>
-        <activity android:name=".Activities.ViewChatListActivity"
-            android:parentActivityName=".Activities.ViewJobsListsActivity"/>
-        <activity android:name=".Activities.ViewJobRequestsActivity" />
+        <activity android:name=".activities.ViewSingleJobActivity" />
+        <activity android:name=".activities.ViewJobsListsActivity" />
+        <activity android:name=".activities.ChatActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity"/>
+        <activity android:name=".activities.ViewChatListActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity"/>
+        <activity android:name=".activities.ViewJobRequestsActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -52,11 +52,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Activities.MapJobsActivity"
+            android:name=".activities.MapJobsActivity"
             android:label="@string/title_activity_map_jobs" />
-        <activity android:name=".Activities.SearchActivity"
-            android:parentActivityName=".Activities.ViewJobsListsActivity"/>
-        <activity android:name=".Activities.EditJobActivity"></activity>
+        <activity android:name=".activities.SearchActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity"/>
+        <activity android:name=".activities.EditJobActivity"></activity>
     </application>
 
 </manifest>

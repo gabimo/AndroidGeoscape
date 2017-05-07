@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.lawnscape.Activities.ViewSingleJobActivity"
+    tools:context="com.lawnscape.activities.ViewSingleJobActivity"
     android:weightSum="1"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
