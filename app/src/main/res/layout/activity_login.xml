@@ -5,7 +5,7 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lawnscape.LoginActivity">
+    tools:context="com.lawnscape.activities.LoginActivity">
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
         android:id="@+id/etLoginEmail"

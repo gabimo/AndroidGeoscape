@@ -18,9 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ViewMyProfileActivity"
+            android:name=".activities.ViewProfileActivity"
             android:label="My Profile"></activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,25 +28,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PostJobActivity"
-            android:parentActivityName=".ViewJobsListsActivity"
+            android:name=".activities.PostJobActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity"
             android:label="Post a New Job"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ViewMyPostsActivity"
-            android:parentActivityName=".ViewJobsListsActivity"
-            android:label="My Posts" />
-        <activity android:name=".ViewSingleJobActivity" />
-        <activity android:name=".ViewJobsListsActivity" />
-        <activity android:name=".ChatActivity"
-            android:parentActivityName=".ViewJobsListsActivity"/>
-        <activity android:name=".ViewChatListActivity"
-            android:parentActivityName=".ViewJobsListsActivity"/>
-        <activity
-            android:name=".ViewUserProfileActivity"
-            android:label="User Profile"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ViewJobRequestsActivity" />
+        <activity android:name=".activities.ViewSingleJobActivity" />
+        <activity android:name=".activities.ViewJobsListsActivity" />
+        <activity android:name=".activities.ChatActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity"/>
+        <activity android:name=".activities.ViewChatListActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity"/>
+        <activity android:name=".activities.ViewJobRequestsActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -60,13 +52,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapJobsActivity"
+            android:name=".activities.MapJobsActivity"
             android:label="@string/title_activity_map_jobs" />
-        <activity android:name=".SearchActivity"
-            android:parentActivityName=".ViewJobsListsActivity"/>
-        <activity android:name=".EditProfileActivity"
-            android:parentActivityName=".ViewMyProfileActivity"/>
-        <activity android:name=".EditJobActivity"></activity>
+        <activity android:name=".activities.SearchActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity"/>
+        <activity android:name=".activities.EditJobActivity"></activity>
     </application>
 
 </manifest>
