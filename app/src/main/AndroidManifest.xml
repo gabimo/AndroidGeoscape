@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ViewMyProfileActivity"
+            android:name=".ViewProfileActivity"
             android:label="My Profile"></activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -42,10 +42,6 @@
             android:parentActivityName=".ViewJobsListsActivity"/>
         <activity android:name=".ViewChatListActivity"
             android:parentActivityName=".ViewJobsListsActivity"/>
-        <activity
-            android:name=".ViewUserProfileActivity"
-            android:label="User Profile"
-            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ViewJobRequestsActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -65,7 +61,7 @@
         <activity android:name=".SearchActivity"
             android:parentActivityName=".ViewJobsListsActivity"/>
         <activity android:name=".EditProfileActivity"
-            android:parentActivityName=".ViewMyProfileActivity"/>
+            android:parentActivityName=".ViewProfileActivity"/>
         <activity android:name=".EditJobActivity"></activity>
     </application>
 

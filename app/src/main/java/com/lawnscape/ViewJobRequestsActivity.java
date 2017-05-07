@@ -117,7 +117,7 @@ public class ViewJobRequestsActivity extends AppCompatActivity {
                                 reuesterAdapter.notifyDataSetChanged();
                                 return true;
                             case R.id.longclickViewProfile:
-                                Intent viewProfileIntent = new Intent(ViewJobRequestsActivity.this, ViewUserProfileActivity.class);
+                                Intent viewProfileIntent = new Intent(ViewJobRequestsActivity.this, ViewProfileActivity.class);
                                 viewProfileIntent.putExtra("UserID", selectedUser.getUserid());
                                 startActivity(viewProfileIntent);
                                 return true;

@@ -130,7 +130,7 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!newEmail.equals("") || newEmail.contains("@") || !newEmail.equals(currentUser.getEmail())){
             currentUser.updateEmail(newEmail);
         }
-        startActivity(new Intent(this, ViewMyProfileActivity.class));
+        startActivity(new Intent(this, ViewProfileActivity.class));
         finish();
     }
     public void backToProfile(View v) {

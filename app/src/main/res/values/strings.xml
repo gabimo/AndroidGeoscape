@@ -62,6 +62,8 @@
     <string name="main_job_photo">Main Job Photo</string>
 
     <string name="category_prompt">Choose a category</string>
+    <string name="rating_submitted">Your rating has been submitted</string>
+    <string name="review_submitted">Your review has been submitted, to edit submit a new review</string>
 
     <string-array name="category_arrays">
         <item>Repairs</item>

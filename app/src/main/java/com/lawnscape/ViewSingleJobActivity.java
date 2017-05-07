@@ -8,7 +8,6 @@ For an example please see ViewMyPostsActivity
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -244,7 +243,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                 reportPost();
                 return true;
             case R.id.viewSinglePostMenuMyProfile:
-                startActivity(new Intent(ViewSingleJobActivity.this, ViewMyProfileActivity.class));
+                startActivity(new Intent(ViewSingleJobActivity.this, ViewProfileActivity.class));
                 return true;
             case R.id.viewSinglePostMenuChat:
                 if (!currentUser.getUid().toString().equals(jobPost.getUserid())) {

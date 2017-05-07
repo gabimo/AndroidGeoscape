@@ -156,7 +156,7 @@ public class ChatListFragment extends Fragment {
                             userAdapter.notifyDataSetChanged();
                             return true;
                         case R.id.longclickViewProfile:
-                            Intent viewProfileIntent = new Intent(getContext(), ViewUserProfileActivity.class);
+                            Intent viewProfileIntent = new Intent(getContext(), ViewProfileActivity.class);
                             viewProfileIntent.putExtra("UserID", selectedUser.getUserid());
                             startActivity(viewProfileIntent);
                             return true;
@@ -221,7 +221,7 @@ public class ChatListFragment extends Fragment {
                 getActivity().finish();
                 return true;
             case R.id.viewPostsMenuMyProfile:
-                startActivity( new Intent(getContext(), ViewMyProfileActivity.class));
+                startActivity( new Intent(getContext(), ViewProfileActivity.class));
                 return true;
             case R.id.viewPostsMenuMyJobs:
                 startActivity(new Intent(getContext(), ViewMyPostsActivity.class));

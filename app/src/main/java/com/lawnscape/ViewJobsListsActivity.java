@@ -9,20 +9,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class ViewJobsListsActivity extends AppCompatActivity {
     //Firebase global init
@@ -127,7 +117,7 @@ public class ViewJobsListsActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.viewPostsMenuMyProfile:
-                startActivity( new Intent( ViewJobsListsActivity.this, ViewMyProfileActivity.class));
+                startActivity( new Intent( ViewJobsListsActivity.this, ViewProfileActivity.class));
                 return true;
             case R.id.viewPostsMenuAllChats:
                 startActivity(new Intent(ViewJobsListsActivity.this, ViewChatListActivity.class));

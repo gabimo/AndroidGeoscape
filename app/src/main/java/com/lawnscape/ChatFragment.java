@@ -6,8 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.zip.Inflater;
 
 
 public class ChatFragment extends Fragment {
@@ -203,7 +199,7 @@ public class ChatFragment extends Fragment {
                 getHostFragmentManager().popBackStack();
                 return true;
             case R.id.chatMenuViewUserProfile:
-                Intent viewProfileIntent = new Intent(getContext(), ViewUserProfileActivity.class);
+                Intent viewProfileIntent = new Intent(getContext(), ViewProfileActivity.class);
                 viewProfileIntent.putExtra("UserID", otherUserid);
                 startActivity(viewProfileIntent);
                 return true;
@@ -212,7 +208,7 @@ public class ChatFragment extends Fragment {
                 getActivity().finish();
                 return true;
             case R.id.chatMenuMyProfile:
-                startActivity( new Intent( getContext(), ViewMyProfileActivity.class));
+                startActivity( new Intent( getContext(), ViewProfileActivity.class));
                 return true;
             case R.id.chatMenuSearch:
                 Intent SearchIntent = new Intent(getContext(), SearchActivity.class);

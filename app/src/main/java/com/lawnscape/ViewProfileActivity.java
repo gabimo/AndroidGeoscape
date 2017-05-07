@@ -1,50 +1,29 @@
 package com.lawnscape;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import com.squareup.picasso.Picasso;
 
 //Profile Activity
-public class ViewMyProfileActivity extends AppCompatActivity {
+public class ViewProfileActivity extends AppCompatActivity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
-
     private FirebaseUser currentUser;
-
-    private FirebaseStorage storage;
-
-    private TextView tvEmail;
-    private TextView tvUserID;
-    private TextView tvLocation;
-    private TextView tvName;
-
-    private ImageView ivProfilePhoto;
-
-    private FirebaseDatabase database;
+    private String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_my_profile);
+        setContentView(R.layout.activity_view_profile);
         //get firebase auth instance
         mAuth = FirebaseAuth.getInstance();
         //This mAuthListener will be called every time that the activity runs onStart()
@@ -54,48 +33,37 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 currentUser = firebaseAuth.getCurrentUser();
                 if (currentUser == null) {
                     // User needs to sign in
-                    startActivity(new Intent(ViewMyProfileActivity.this, LoginActivity.class));
+                    startActivity(new Intent(ViewProfileActivity.this, LoginActivity.class));
                     finish();
                 }else{
                     //user is logged in
-                    storage = FirebaseStorage.getInstance();
-                    database = FirebaseDatabase.getInstance ();
-
-                    tvEmail = (TextView) findViewById(R.id.tvMyProfileUserEmail);
-                    tvUserID = (TextView) findViewById(R.id.tvMyProfileUserID);
-                    tvLocation = (TextView) findViewById(R.id.tvMyProfileLocation);
-                    tvName = (TextView) findViewById(R.id.tvMyProfileName);
-                    ivProfilePhoto = (ImageView) findViewById(R.id.ivMyProfileImage);
-
-                    tvEmail.setText(currentUser.getEmail().toString());
-                    tvUserID.setText(currentUser.getUid().toString());
-                    ivProfilePhoto.setImageDrawable(null);
-
-                    //This finds and displays the photo data by the user id from firebase storage
-                    StorageReference jobPhotoRef = storage.getReference().child("userprofilephotos").child(currentUser.getUid());
-                    jobPhotoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            // Pass it to Picasso to download, show in ImageView and caching
-                            Picasso.with(ViewMyProfileActivity.this).load(uri.toString()).into(ivProfilePhoto);
+                    /*********************** IMPORTANT ****************************/
+                    try {
+                        userid = getIntent().getExtras().get("UserID").toString();
+                    }catch (Exception e){
+                        //programmer error
+                    }
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    if(userid == null) {
+                        MyProfileFragment myProfileFrag = (MyProfileFragment) fm.findFragmentByTag("MyProfileFrag");
+                        if (myProfileFrag == null) {  // not added
+                            myProfileFrag = new MyProfileFragment();
+                            ft.add(R.id.profileFrame, myProfileFrag, "MyProfileFrag");
+                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         }
-                    });
-
-                    //This finds and displays the users name and location
-                    database.getReference("Users").child(currentUser.getUid())
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.hasChild("name")) {
-                                tvName.setText(dataSnapshot.child("name").getValue().toString());
-                            }
-                            if(dataSnapshot.hasChild("location")) {
-                                tvLocation.setText(dataSnapshot.child("location").getValue().toString());
-                            }
+                    }else{
+                        OtherProfileFragment otherProfileFrag = (OtherProfileFragment) fm.findFragmentByTag("OtherProfileFrag");
+                        Bundle args = new Bundle();
+                        args.putString("otherid", userid);
+                        if (otherProfileFrag == null) {  // not added
+                            otherProfileFrag = new OtherProfileFragment();
+                            otherProfileFrag.setArguments(args);
+                            ft.add(R.id.profileFrame, otherProfileFrag, "OtherProfileFrag");
+                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         }
-                        @Override
-                        public void onCancelled(DatabaseError error) { }
-                    });
+                    }
+                    ft.commit();
                 }
             }
         };

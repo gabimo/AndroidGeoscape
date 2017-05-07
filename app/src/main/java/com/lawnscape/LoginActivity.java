@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                                 emailBox.setEnabled(true);
                                 passBox.setEnabled(true);
                             } else {
-                                Intent i = new Intent(LoginActivity.this, ViewMyProfileActivity.class);
+                                Intent i = new Intent(LoginActivity.this, ViewProfileActivity.class);
                                 startActivity(i);
                                 finish();
                             }
@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                                         DatabaseReference newUserRef = usersRef;
                                         newUserRef.setValue(new User(newName, newLoc));
                                     }
-                                    startActivity(new Intent(LoginActivity.this, ViewMyProfileActivity.class));
+                                    startActivity(new Intent(LoginActivity.this, ViewProfileActivity.class));
                                     finish();
                                 }
                             }
