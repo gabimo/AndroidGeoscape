@@ -5,7 +5,7 @@
     android:id="@+id/activity_chat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lawnscape.ChatActivity">
+    tools:context="com.lawnscape.Activities.ChatActivity">
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/buttonChatMessageSend"
