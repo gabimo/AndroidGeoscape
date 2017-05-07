@@ -77,9 +77,9 @@ public class ViewJobsListsActivity extends AppCompatActivity {
                         FragmentTransaction ft = fm.beginTransaction();
                         JobListFragment f = (JobListFragment) fm.findFragmentByTag("JobListFrag");
                         f = new JobListFragment();
-                        ft.add(R.id.jobsListFrame, f, "JobListFrag");
+                        ft.replace(R.id.jobsListFrame, f, "JobListFrag");
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-
+                        ft.disallowAddToBackStack();
                         ft.commit();
                     }
                 }
