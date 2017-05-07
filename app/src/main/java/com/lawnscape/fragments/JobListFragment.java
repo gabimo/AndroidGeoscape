@@ -46,6 +46,16 @@ public class JobListFragment extends Fragment {
     public JobListFragment() {
         // Required empty public constructor
     }
+    /*
+        the variable jobset is important
+        None or all: all jobs
+        savedjobs: saved jobs
+        requestedjobs.. if any
+        activejobs.. if any
+        myjobs: will be the users own posts
+        TODO: I dont know if this handles exceptions
+
+     */
 
     public static JobListFragment newInstance(String jobsToGet) {
         JobListFragment fragment = new JobListFragment();

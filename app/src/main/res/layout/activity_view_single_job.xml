@@ -20,7 +20,6 @@
         android:layout_width="135dp"
         android:layout_height="125dp"
         android:layout_weight="0.18"
-        app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_000"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"

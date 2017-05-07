@@ -1,16 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.lawnscape"
-        minSdkVersion 15
-        targetSdkVersion 24
+        minSdkVersion 17
+        targetSdkVersion 25
         multiDexEnabled = true
-        versionCode 3
-        versionName "1.6"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 4
+        versionName "2.0"
     }
     buildTypes {
         release {
@@ -22,9 +21,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     /* Android studio likes to change it to vesion 10.2.0 which doesnt work! */
     /* here is a list of dependencies to copy and paste if google resets it
         compile 'com.google.firebase:firebase-core:10.0.1'
@@ -37,16 +33,14 @@ dependencies {
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.google.firebase:firebase-database:10.0.1'
-    compile 'com.google.firebase:firebase-messaging:10.0.1'
     compile 'com.google.firebase:firebase-storage:10.0.1'
-    compile 'com.google.android.gms:play-services:10.0.1'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.beardedhen:androidbootstrap:2.3.1'
     compile 'com.github.d-max:spots-dialog:0.7@aar'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:support-compat:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.0.1'
 }
 
 // at bottom for some reason its weird

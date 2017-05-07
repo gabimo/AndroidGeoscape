@@ -128,8 +128,7 @@ public class ViewJobsListsActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.viewPostsMenuMyJobs:
-                startActivity(new Intent(ViewJobsListsActivity.this, ViewJobsListsActivity.class).putExtra("View","myjobs"));
-                finish();
+                listHandler("myjobs");
                 return true;
             case R.id.viewPostsMenuAllJobs:
                 if(getIntent().getExtras().get("View").toString().equals("saved")) {

@@ -76,7 +76,6 @@
         android:id="@+id/ivPostLayoutThumbnail"
         android:layout_width="68dp"
         android:layout_height="65dp"
-        app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_005"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="2dp" />
