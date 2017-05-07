@@ -87,6 +87,19 @@ public class JobListFragment extends Fragment {
         // but you must call jobsAdaptor.notifyDataSetChanged(); to update the listview
         allPostsList.setAdapter(jobsAdapter);
 
+        //Clicking a list item will bring you to a page for that item
+        allPostsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Job selectedJob = jobsAdapter.getItem(position);
+                Intent singleJobViewIntent = new Intent(getContext(), ViewSingleJobActivity.class);
+                //The Job class implements 'Parcelable' in order to be passed as an intent extra
+                singleJobViewIntent.putExtra("Job",selectedJob);
+                startActivity(singleJobViewIntent);
+            }
+        });
+
         if(jobSet == null){
             /* ALL JOBS */
             myListRef = database.getReference("Jobs");
@@ -184,18 +197,6 @@ public class JobListFragment extends Fragment {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {/* idk what we would do*/ }
-            });
-            //Clicking a list item will bring you to a page for that item
-            allPostsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position,
-                                        long id) {
-                    Job selectedJob = jobsAdapter.getItem(position);
-                    Intent singleJobViewIntent = new Intent(getContext(), ViewSingleJobActivity.class);
-                    //The Job class implements 'Parcelable' in order to be passed as an intent extra
-                    singleJobViewIntent.putExtra("Job",selectedJob);
-                    startActivity(singleJobViewIntent);
-                }
             });
         }
 
