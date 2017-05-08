@@ -1,7 +1,5 @@
 package com.lawnscape.VElisteners;
 
-import android.content.Context;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -10,23 +8,17 @@ import com.lawnscape.classes.User;
 
 import java.util.ArrayList;
 
-/**
- * Created by Mellis on 2/24/2017.
- */
-
 public class UserListVEListener implements ValueEventListener {
 
-    private ArrayList<User> usersList;
+    private final ArrayList<User> usersList;
     //Leave this alone to get all jobs
-    private ArrayList<String> usersToGet;
-    private UserListAdapter userAdapter;
-    private Context thisContext;
+    private final ArrayList<String> usersToGet;
+    private final UserListAdapter userAdapter;
 
-    public UserListVEListener(Context aCntxt, ArrayList<User> listofusers, ArrayList<String> desiredUsers, UserListAdapter userAdapt){
+    public UserListVEListener(ArrayList<User> listofusers, ArrayList<String> desiredUsers, UserListAdapter userAdapt){
         usersList = listofusers;
         usersToGet = desiredUsers;
         userAdapter = userAdapt;
-        thisContext = aCntxt;
     }
 
     @Override
@@ -34,12 +26,12 @@ public class UserListVEListener implements ValueEventListener {
         usersList.clear();
         for (DataSnapshot userNode : dataSnapshot.getChildren()) {
             //Either grabs all jobs, or the list of jobs passed via constructor
-            if(usersToGet.contains(userNode.getKey().toString())) {
+            if(usersToGet.contains(userNode.getKey())) {
                 if(userNode.hasChild("name")&&userNode.hasChild("location")) {
-                    String title = title = (String) userNode.child("name").getValue().toString();
-                    String location = location = (String) userNode.child("location").getValue().toString();
-                    String userid = (String) userNode.getKey().toString();
-                    usersList.add(new User(title, location, userid));
+                    usersList.add(new User(
+                            userNode.child("name").getValue().toString(),
+                            userNode.child("location").getValue().toString(),
+                            userNode.getKey()));
                     //Tell the listview adaptor to update the listview based on the ArrayList updates
                     userAdapter.notifyDataSetChanged();
                 }

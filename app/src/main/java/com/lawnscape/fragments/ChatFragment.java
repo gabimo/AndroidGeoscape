@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,15 +25,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lawnscape.R;
+import com.lawnscape.VElisteners.ChatMessageListVEListener;
+import com.lawnscape.VElisteners.ToggleAddIDVEListener;
 import com.lawnscape.activities.LoginActivity;
 import com.lawnscape.activities.SearchActivity;
 import com.lawnscape.activities.ViewJobsListsActivity;
 import com.lawnscape.activities.ViewProfileActivity;
 import com.lawnscape.adapters.ChatMessageAdapter;
-import com.lawnscape.VElisteners.ChatMessageListVEListener;
 import com.lawnscape.classes.ChatMessage;
-import com.lawnscape.R;
-import com.lawnscape.VElisteners.ToggleAddIDVEListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,7 +72,7 @@ public class ChatFragment extends Fragment {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
 
-        allMessages = new ArrayList<ChatMessage>();
+        allMessages = new ArrayList<>();
         if (getArguments() != null) {
             otherUserid = getArguments().getString(otherid);
         }
@@ -88,7 +87,7 @@ public class ChatFragment extends Fragment {
         rootView.findViewById(R.id.buttonChatMessageSend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage(null);
+                sendMessage();
             }
         });
         messagesWindow = (ListView) rootView.findViewById(R.id.lvChatMessageView);
@@ -101,7 +100,7 @@ public class ChatFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    sendMessage(null);
+                    sendMessage();
                     handled = true;
                 }
                 return handled;
@@ -110,7 +109,7 @@ public class ChatFragment extends Fragment {
         return rootView;
     }
 
-    public void sendMessage(View v){
+    private void sendMessage(){
         //Find the chat
         super.onStart();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -158,7 +157,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //chat id
-                String idToFetch = "";
+                String idToFetch;
                 // The chatid ref will have key-value pairs like "OtherUserID":"chatid"
 
                 if(dataSnapshot.hasChild(getArguments().getString(otherid))){
@@ -168,19 +167,19 @@ public class ChatFragment extends Fragment {
                     //make new chat and give both users the id in their chat list
                     DatabaseReference allChatsRef = database.getReference("Chats");
                     DatabaseReference newChatid = allChatsRef.push();
-                    String newChatID = newChatid.getKey().toString();
+                    String newChatID = newChatid.getKey();
                     newChatid.child("Members").addListenerForSingleValueEvent(
-                            new ToggleAddIDVEListener(getContext(),currentUser.getUid().toString(),"true",false));
+                            new ToggleAddIDVEListener(getContext(), currentUser.getUid(),"true"));
                     newChatid.child("Members").addListenerForSingleValueEvent(
-                            new ToggleAddIDVEListener(getContext(),otherUserid.toString(),"true",false));
+                            new ToggleAddIDVEListener(getContext(), otherUserid,"true"));
                     DatabaseReference addChatIDRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
                     addChatIDRef.addListenerForSingleValueEvent(
                             new ToggleAddIDVEListener(getContext(),otherUserid,newChatID));
-                    /*****      now give the other user the chat id       ******/
+                    /****      now give the other user the chat id       ******/
                     addChatIDRef = database.getReference("Users").child(otherUserid).child("chatids");
                     addChatIDRef.addListenerForSingleValueEvent(
-                            new ToggleAddIDVEListener(getContext(),currentUser.getUid().toString(),newChatID));
-                    idToFetch = newChatid.getKey().toString();
+                            new ToggleAddIDVEListener(getContext(), currentUser.getUid(),newChatID));
+                    idToFetch = newChatid.getKey();
                 }
 
                 //Set up the listview to grab all the messages continuously
@@ -241,10 +240,10 @@ public class ChatFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-    public FragmentManager getHostFragmentManager() {
+    private FragmentManager getHostFragmentManager() {
         FragmentManager fm = getFragmentManager();
         if (fm == null && isAdded()) {
-            fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+            fm = getActivity().getSupportFragmentManager();
         }
         return fm;
     }

@@ -21,9 +21,9 @@ import java.util.ArrayList;
  */
 
 public class PhotoAdapter extends BaseAdapter {
-    ArrayList<Uri> photoUriList;
-    private LayoutInflater layoutInflater;
-    Context context;
+    private final ArrayList<Uri> photoUriList;
+    private final LayoutInflater layoutInflater;
+    private final Context context;
     public PhotoAdapter(Context ctx, ArrayList<Uri> pList){
         context = ctx;
         photoUriList = pList;

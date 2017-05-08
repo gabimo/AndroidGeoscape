@@ -11,14 +11,10 @@ import com.lawnscape.classes.ChatMessage;
 
 import java.util.ArrayList;
 
-/**
- * Created by Mellis on 2/23/2017.
- */
-
 public class ChatMessageListVEListener implements ValueEventListener {
-    private Context thisContext;
-    private ChatMessageAdapter messageAdapter;
-    private ArrayList<ChatMessage> messageList;
+    private final Context thisContext;
+    private final ChatMessageAdapter messageAdapter;
+    private final ArrayList<ChatMessage> messageList;
 
     public ChatMessageListVEListener(Context aContext, ChatMessageAdapter adapter, ArrayList<ChatMessage> messages){
         thisContext = aContext;

@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.ViewProfileActivity"
-            android:label="My Profile"></activity>
+            android:label="My Profile" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,18 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.PostJobActivity"
-            android:parentActivityName=".activities.ViewJobsListsActivity"
-            android:label="Post a New Job"
-            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.ViewSingleJobActivity" />
         <activity android:name=".activities.ViewJobsListsActivity" />
         <activity android:name=".activities.ChatActivity"
             android:parentActivityName=".activities.ViewJobsListsActivity"/>
         <activity android:name=".activities.ViewChatListActivity"
             android:parentActivityName=".activities.ViewJobsListsActivity"/>
-        <activity android:name=".activities.ViewJobRequestsActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -56,7 +50,7 @@
             android:label="@string/title_activity_map_jobs" />
         <activity android:name=".activities.SearchActivity"
             android:parentActivityName=".activities.ViewJobsListsActivity"/>
-        <activity android:name=".activities.EditJobActivity"></activity>
+        <activity android:name=".activities.EditJobActivity" />
     </application>
 
 </manifest>

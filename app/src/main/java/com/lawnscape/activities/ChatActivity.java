@@ -35,7 +35,6 @@ import java.util.Date;
 public class ChatActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private String otherUserid;
-    private FirebaseAuth mAuth;
 
     private ArrayList<ChatMessage> allMessages;
     private ChatMessageAdapter messageAdapter;
@@ -45,15 +44,13 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*********************** IMPORTANT ****************************/
         otherUserid = getIntent().getExtras().get("otherid").toString();
 
         setContentView(R.layout.fragment_chat);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-        allMessages = new ArrayList<ChatMessage>();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        allMessages = new ArrayList<>();
         messagesWindow = (ListView) findViewById(R.id.lvChatMessageView);
         messageAdapter = new ChatMessageAdapter(this,allMessages, currentUser.getUid());
         messagesWindow.setAdapter(messageAdapter);
@@ -66,7 +63,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //chat id
-                String idToFetch = "";
+                String idToFetch;
                 // The chatid ref will have key-value pairs like "OtherUserID":"chatid"
 
                 if(dataSnapshot.hasChild(otherUserid)){
@@ -76,19 +73,19 @@ public class ChatActivity extends AppCompatActivity {
                     //make new chat and give both users the id in their chat list
                     DatabaseReference allChatsRef = database.getReference("Chats");
                     DatabaseReference newChatid = allChatsRef.push();
-                    String newChatID = newChatid.getKey().toString();
+                    String newChatID = newChatid.getKey();
                     newChatid.child("Members").addListenerForSingleValueEvent(
-                            new ToggleAddIDVEListener(ChatActivity.this,currentUser.getUid().toString(),"true",false));
+                            new ToggleAddIDVEListener(ChatActivity.this, currentUser.getUid(),"true"));
                     newChatid.child("Members").addListenerForSingleValueEvent(
-                            new ToggleAddIDVEListener(ChatActivity.this,otherUserid.toString(),"true",false));
+                            new ToggleAddIDVEListener(ChatActivity.this, otherUserid,"true"));
                     DatabaseReference addChatIDRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
                     addChatIDRef.addListenerForSingleValueEvent(
                             new ToggleAddIDVEListener(ChatActivity.this,otherUserid,newChatID));
-                    /*****      now give the other user the chat id       ******/
+                    /***      now give the other user the chat id       ******/
                     addChatIDRef = database.getReference("Users").child(otherUserid).child("chatids");
                     addChatIDRef.addListenerForSingleValueEvent(
-                            new ToggleAddIDVEListener(ChatActivity.this,currentUser.getUid().toString(),newChatID));
-                    idToFetch = newChatid.getKey().toString();
+                            new ToggleAddIDVEListener(ChatActivity.this, currentUser.getUid(),newChatID));
+                    idToFetch = newChatid.getKey();
                 }
 
                 //Set up the listview to grab all the messages continuously
@@ -118,7 +115,8 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    public void sendMessage(View v){
+    @SuppressWarnings("UnusedParameters")
+    private void sendMessage(View v){
         //Find the chat
         super.onStart();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -160,20 +158,14 @@ public class ChatActivity extends AppCompatActivity {
             case android.R.id.home:
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
                 upIntent.putExtra("View", "all");
-                if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
                     TaskStackBuilder builder = TaskStackBuilder.create(this);
                     builder.addNextIntentWithParentStack(upIntent);
                     builder.startActivities();
                 } else {
-                    if (upIntent != null) {
-                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        this.startActivity(upIntent);
-                        this.finish();
-                    } else {
-                        upIntent = new Intent( this, ViewJobsListsActivity.class);
-                        upIntent.putExtra("View", "all");
-                        startActivity(upIntent);
-                    }
+                    upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    this.startActivity(upIntent);
+                    this.finish();
                 }
                 return true;
         }

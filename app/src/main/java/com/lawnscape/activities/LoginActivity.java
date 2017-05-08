@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Incorrect Username or Password",
+                                Toast.makeText(LoginActivity.this, R.string.incorrect_login,
                                         Toast.LENGTH_SHORT).show();
                                 v.setEnabled(true);
                                 emailBox.setEnabled(true);
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         }else{
-            Toast.makeText(LoginActivity.this, "Incorrect Username or Password",
+            Toast.makeText(LoginActivity.this, R.string.incorrect_login,
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -131,10 +131,9 @@ public class LoginActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                     // Set name of user and location
                                     database = FirebaseDatabase.getInstance();
-                                    DatabaseReference usersRef = database.getReference("Users").child(currentUser.getUid().toString());
+                                    DatabaseReference usersRef = database.getReference("Users").child(currentUser.getUid());
                                     if (!newName.isEmpty() && !newLoc.isEmpty()) {
-                                        DatabaseReference newUserRef = usersRef;
-                                        newUserRef.setValue(new User(newName, newLoc));
+                                        usersRef.setValue(new User(newName, newLoc));
                                     }
                                     startActivity(new Intent(LoginActivity.this, ViewProfileActivity.class));
                                     finish();
@@ -145,11 +144,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     /************** Switch to SIGN UP view ****************/
+    @SuppressWarnings("UnusedParameters")
     public void signup(View v){
         //switch the user's screen to the sign up view
         setContentView(R.layout.activity_sign_up);
     }
     /************** Switch to LOG IN view ****************/
+    @SuppressWarnings("UnusedParameters")
     public void backToLogin(View v){
         //switch the user's screen to the login view
         setContentView(R.layout.activity_login);

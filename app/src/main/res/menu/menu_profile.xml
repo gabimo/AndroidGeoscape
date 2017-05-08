@@ -2,30 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/profileMenuSettings"
-        android:title="Settings"
+        android:title="@string/settings"
         android:orderInCategory="200"
         app:showAsAction="always"
         android:icon="@drawable/edit_profile_icon">
     </item>
     <item android:id="@+id/profileMenuChats"
-        android:title="My Chats"
+        android:title="@string/my_chats"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:icon="@drawable/chat_icon">
     </item>
     <item android:id="@+id/profileMenuMyJobs"
-        android:title="My Job Posts" >
+        android:title="@string/my_job_posts" >
     </item>
     <item android:id="@+id/profileMenuAllJobs"
-        android:title="View All Jobs" >
+        android:title="@string/view_all_jobs" >
     </item>
     <item android:id="@+id/profileMenuSearch"
-        android:title="Search Jobs">
+        android:title="@string/search_jobs">
     </item>
     <item android:id="@+id/profileMenuAllJobsMap"
-        android:title="Map of All Jobs" >
+        android:title="@string/map_of_all_jobs" >
     </item>
     <item android:id="@+id/profileMenuSignOut"
-        android:title="Sign Out" >
+        android:title="@string/sign_out" >
     </item>
 </menu>

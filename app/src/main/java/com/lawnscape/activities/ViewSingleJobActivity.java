@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,10 +25,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.lawnscape.adapters.PhotoAdapter;
-import com.lawnscape.classes.Job;
 import com.lawnscape.R;
 import com.lawnscape.VElisteners.ToggleAddIDVEListener;
+import com.lawnscape.adapters.PhotoAdapter;
+import com.lawnscape.classes.Job;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,12 +42,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser currentUser;
     private Job jobPost;
-    private TextView tvTitle;
-    private TextView tvLoc;
-    private TextView tvDesc;
-    private TextView tvDate;
     private ImageView ivPhoto;
-    private GridView gvOtherPhotos;
     private PhotoAdapter photoAdapter;
     private ArrayList<Uri> otherPhotoList;
     private BootstrapButton deleteButton;
@@ -59,14 +55,33 @@ public class ViewSingleJobActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_single_job);
         deleteButton = (BootstrapButton) findViewById(R.id.buttonDeletePost);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deletePost(null);
+            }
+        });
         requestButton = (BootstrapButton) findViewById(R.id.buttonRequestJob);
+        requestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestJob();
+            }
+        });
         editButton = (BootstrapButton) findViewById(R.id.buttonEditPostDetails);
-        tvTitle = (TextView) findViewById(R.id.tvSingleJobTitle);
-        tvLoc = (TextView) findViewById(R.id.tvSingleJobLocation);
-        tvDesc = (TextView) findViewById(R.id.tvSingleJobDescription);
-        tvDate = (TextView) findViewById(R.id.tvSingleJobDate);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Edit Post
+                Toast.makeText(ViewSingleJobActivity.this,"Need To Implement", Toast.LENGTH_SHORT ).show();
+            }
+        });
+        TextView tvTitle = (TextView) findViewById(R.id.tvSingleJobTitle);
+        TextView tvLoc = (TextView) findViewById(R.id.tvSingleJobLocation);
+        TextView tvDesc = (TextView) findViewById(R.id.tvSingleJobDescription);
+        TextView tvDate = (TextView) findViewById(R.id.tvSingleJobDate);
         ivPhoto = (ImageView) findViewById(R.id.ivSingleJobPhoto);
-        gvOtherPhotos = (GridView) findViewById(R.id.gvSingleJob);
+        GridView gvOtherPhotos = (GridView) findViewById(R.id.gvSingleJob);
         otherPhotoList = new ArrayList<>();
         photoAdapter = new PhotoAdapter(this, otherPhotoList);
         gvOtherPhotos.setAdapter(photoAdapter);
@@ -136,9 +151,9 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                     adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.hasChild(currentUser.getUid().toString())) {
-                                deleteButton.setText("Admin Delete");
-                                editButton.setText("Admin Edit");
+                            if (dataSnapshot.hasChild(currentUser.getUid())) {
+                                deleteButton.setText(R.string.admin_delete);
+                                editButton.setText(R.string.admin_edit);
                                 deleteButton.setVisibility(View.VISIBLE);
                                 editButton.setVisibility(View.VISIBLE);
                             }
@@ -170,7 +185,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    /************** End LifeCycle ****************/
+    /************* End LifeCycle ****************/
     /******************* Menu Handling *******************/
     //make the menu show up
     @Override
@@ -187,7 +202,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
             deletePostMenuItem.setVisible(false);
 
             DatabaseReference postFavoritedRef;
-            postFavoritedRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs").getRef();
+            postFavoritedRef = database.getReference("Users").child(currentUser.getUid()).child("savedjobs").getRef();
             postFavoritedRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -223,10 +238,10 @@ public class ViewSingleJobActivity extends AppCompatActivity {
             case R.id.viewSinglePostMenuFavorite:
                 if (isFavorite) {
                     item.setIcon(R.drawable.favorite_icon);
-                    saveJob(null);
+                    saveJob();
                 } else {
                     item.setIcon(R.drawable.unfavorite_icon);
-                    saveJob(null);
+                    saveJob();
                 }
                 isFavorite = !isFavorite;
                 return true;
@@ -246,7 +261,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                 startActivity(new Intent(ViewSingleJobActivity.this, ViewProfileActivity.class));
                 return true;
             case R.id.viewSinglePostMenuChat:
-                if (!currentUser.getUid().toString().equals(jobPost.getUserid())) {
+                if (!currentUser.getUid().equals(jobPost.getUserid())) {
                     Intent chatIntent = new Intent(ViewSingleJobActivity.this, ChatActivity.class);
                     chatIntent.putExtra("otherid", jobPost.getUserid());
                     startActivity(chatIntent);
@@ -260,6 +275,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                 return true;
             case R.id.viewSinglePostMenuSignOut:
                 mAuth.signOut();
+                finish();
                 return true;
             default:
                 finish();
@@ -267,20 +283,16 @@ public class ViewSingleJobActivity extends AppCompatActivity {
         }
     }
 
-    public void gotoPostNewJob(View v) {
-        startActivity(new Intent(ViewSingleJobActivity.this, PostJobActivity.class));
-        finish();
-    }
-    public void reportPost(){
+    private void reportPost(){
         DatabaseReference ref = database.getReference("Jobs").child(jobPost.getPostid()).child("reporters");
         ref.addListenerForSingleValueEvent(
-                new ToggleAddIDVEListener(ViewSingleJobActivity.this, currentUser.getUid(),"true",false));
+                new ToggleAddIDVEListener(ViewSingleJobActivity.this, currentUser.getUid(),"true"));
         ref = database.getReference("ReportedJobs");
         ref.addListenerForSingleValueEvent(
-                new ToggleAddIDVEListener(ViewSingleJobActivity.this, currentUser.getUid(),jobPost.getPostid(),false));
+                new ToggleAddIDVEListener(ViewSingleJobActivity.this, currentUser.getUid(),jobPost.getPostid()));
     }
 
-    public void deletePost(View v) {
+    private void deletePost(@SuppressWarnings("UnusedParameters") BootstrapButton v) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         //remove the job from the list of all jobs with a listener
         DatabaseReference myJobRef = database.getReference("Jobs");
@@ -309,21 +321,27 @@ public class ViewSingleJobActivity extends AppCompatActivity {
         finish();
     }
 
-    public void saveJob(View v) {
-        DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid().toString()).child("savedjobs");
+    @SuppressWarnings("UnusedParameters")
+    private void saveJob() {
+        DatabaseReference mySavedJobsRef = database.getReference("Users").child(currentUser.getUid()).child("savedjobs");
         mySavedJobsRef.addListenerForSingleValueEvent(
                 new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid(), jobPost.getPostid()));
     }
 
-    public void requestJob(View v) {
+    @SuppressWarnings("UnusedParameters")
+    public void requestJob() {
         DatabaseReference ref = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
         ref.addListenerForSingleValueEvent(
-                new ToggleAddIDVEListener(ViewSingleJobActivity.this, currentUser.getUid().toString()));
+                new ToggleAddIDVEListener(ViewSingleJobActivity.this, currentUser.getUid()));
         ref = database.getReference("Users").child(currentUser.getUid()).child("requestedjobs");
         ref.addListenerForSingleValueEvent(
                 new ToggleAddIDVEListener(ViewSingleJobActivity.this, jobPost.getPostid()));
+        ref = database.getReference("Jobs").child(jobPost.getPostid()).child("requesters");
+        ref.addListenerForSingleValueEvent(
+                new ToggleAddIDVEListener(ViewSingleJobActivity.this, currentUser.getUid(), currentUser.getUid()));
     }
 
+    @SuppressWarnings("UnusedParameters")
     public void openChat(View v) {
         Intent chatIntent = new Intent(ViewSingleJobActivity.this, ChatActivity.class);
         chatIntent.putExtra("otherid", jobPost.getUserid());

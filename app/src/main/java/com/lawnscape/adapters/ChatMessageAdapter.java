@@ -12,14 +12,10 @@ import com.lawnscape.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by Mellis on 2/23/2017.
- */
-
 public class ChatMessageAdapter extends BaseAdapter {
-    private ArrayList<ChatMessage> messages;
-    private LayoutInflater layoutInflater;
-    private String currentUserID;
+    private final ArrayList<ChatMessage> messages;
+    private final LayoutInflater layoutInflater;
+    private final String currentUserID;
     public ChatMessageAdapter(Context aContext, ArrayList<ChatMessage> messageData, String curUserID) {
         this.messages = messageData;
         layoutInflater = LayoutInflater.from(aContext);

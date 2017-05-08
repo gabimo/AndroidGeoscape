@@ -3,7 +3,6 @@ package com.lawnscape.adapters;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,25 +15,20 @@ import com.lawnscape.classes.Job;
 
 import java.util.ArrayList;
 
-/**
- * Created by Mellis on 3/6/2017.
- */
-
 public class SearchTextWatcher implements TextWatcher {
 
-    private DatabaseReference database;
-    private Query searchRef;
-    private ArrayList<Job> searchResults;
-    private ArrayList<String> resultIDs;
-    private JobListAdapter jobsAdapter;
-    private Context context;
+    private final Query searchRef;
+    private final ArrayList<Job> searchResults;
+    private final ArrayList<String> resultIDs;
+    private final JobListAdapter jobsAdapter;
+    private final Context context;
     private String keyword;
     private ValueEventListener searchVEListener;
     private int startIndex, endIndex;
 
-    public SearchTextWatcher(Context ctxt, EditText etSearch, ArrayList<Job> results, JobListAdapter jAdapt){
+    public SearchTextWatcher(Context ctxt, ArrayList<Job> results, JobListAdapter jAdapt){
 
-        database = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         searchRef = database.child("Jobs").orderByKey();
         context = ctxt;
         searchResults = results;

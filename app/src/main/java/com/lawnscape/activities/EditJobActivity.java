@@ -79,7 +79,7 @@ public class EditJobActivity extends AppCompatActivity {
                     adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.hasChild(currentUser.getUid().toString())) {
+                            if (dataSnapshot.hasChild(currentUser.getUid())) {
                                 //is an admin
                             }
                         }
@@ -109,6 +109,7 @@ public class EditJobActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressWarnings("UnusedParameters")
     public void postChanges(View v) {
         DatabaseReference myUserJobRef = database.getReference("Jobs").child(jobPost.getPostid());
         myUserJobRef.addListenerForSingleValueEvent(new ValueEventListener() {

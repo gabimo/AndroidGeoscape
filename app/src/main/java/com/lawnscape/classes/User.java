@@ -3,13 +3,9 @@ package com.lawnscape.classes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Mellis on 2/17/2017.
- */
-
 public class User implements Parcelable{
-    private String name;
-    private String location;
+    private final String name;
+    private final String location;
     private String userid;
 
     public User(String n, String l){

@@ -17,10 +17,11 @@ public class Job implements Parcelable {
     private String location;
     private String description;
     private String category;
-    private String userid;
-    private String postid;
+    private final String userid;
+    private final String postid;
     private String date;
-    private String latitude, longitude;
+    private final String latitude;
+    private final String longitude;
 
     public Job(String postDate, String t, String l, String c, String u, String lat, String lng) {
         date = postDate;

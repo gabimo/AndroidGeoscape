@@ -19,11 +19,9 @@ import com.lawnscape.adapters.SearchTextWatcher;
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
-    private ArrayList<Job> searchResults;
     private JobListAdapter jobsAdapter;
 
     private EditText searchBar;
-    private ListView searchResultsView;
     private SearchTextWatcher searchTextWatcher;
 
     @Override
@@ -33,21 +31,21 @@ public class SearchActivity extends AppCompatActivity {
         //make sure user is logged in and has an account
         searchBar = (EditText) findViewById(R.id.etSearchBar);
         //Gonna hold all the jobs, must init for adaptor
-        searchResults = new ArrayList<>();
+        ArrayList<Job> searchResults = new ArrayList<>();
         //Find the listview widget and set up a connection to our ArrayList
-        searchResultsView = (ListView) findViewById(R.id.lvSearchResults);
+        ListView searchResultsView = (ListView) findViewById(R.id.lvSearchResults);
         jobsAdapter = new JobListAdapter(this, searchResults);
         // The adaptor handles pushing each object in the ArrayList to the listview
         // but you MUST call jobsAdaptor.notifyDataSetChanged(); to update the listview
         searchResultsView.setAdapter(jobsAdapter);
-        searchTextWatcher = new SearchTextWatcher(this, searchBar,searchResults,jobsAdapter);
+        searchTextWatcher = new SearchTextWatcher(this, searchResults,jobsAdapter);
         //This handles clicks on individual job items from the list
         // and bring you to a job specific page with details
         searchResultsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                Job selectedJob = (Job) jobsAdapter.getItem(position);
+                Job selectedJob = jobsAdapter.getItem(position);
                 Intent singleJobViewIntent = new Intent(SearchActivity.this, ViewSingleJobActivity.class);
                 singleJobViewIntent.putExtra("Job",selectedJob);
                 startActivity(singleJobViewIntent);
@@ -74,20 +72,14 @@ public class SearchActivity extends AppCompatActivity {
             case android.R.id.home:
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
                 upIntent.putExtra("View", "all");
-                if (upIntent != null && NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
                     TaskStackBuilder builder = TaskStackBuilder.create(this);
                     builder.addNextIntentWithParentStack(upIntent);
                     builder.startActivities();
                 } else {
-                    if (upIntent != null) {
-                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        this.startActivity(upIntent);
-                        this.finish();
-                    } else {
-                        upIntent = new Intent( this, ViewJobsListsActivity.class);
-                        upIntent.putExtra("View", "all");
-                        startActivity(upIntent);
-                    }
+                    upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    this.startActivity(upIntent);
+                    this.finish();
                 }
                 return true;
         }

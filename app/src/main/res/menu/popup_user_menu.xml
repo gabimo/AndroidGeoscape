@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/longclickViewProfile"
-        android:title="View Profile"/>
+        android:title="@string/view_profile"/>
     <item
         android:id="@+id/longclickDeleteChat"
-        android:title="Delete Chat"/>
+        android:title="@string/delete_chat"/>
 </menu>

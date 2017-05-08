@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/chatMenuViewUserProfile"
-        android:title="Poster Profile"
+        android:title="@string/poster_profile"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:icon="@drawable/user_profile_icon">
     </item>
     <item android:id="@+id/chatMenuMyProfile"
-        android:title="My Profile">
+        android:title="@string/my_profile">
     </item>
     <item android:id="@+id/chatMenuMyJobPosts"
-        android:title="My Job Posts">
+        android:title="@string/my_job_posts">
     </item>
     <item android:id="@+id/chatMenuSearch"
-        android:title="Search Jobs">
+        android:title="@string/search_jobs">
     </item>
     <item android:id="@+id/chatMenuSignOut"
-        android:title="Sign Out" >
+        android:title="@string/sign_out" >
     </item>
 </menu>

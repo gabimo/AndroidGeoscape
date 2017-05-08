@@ -26,11 +26,11 @@ import java.util.ArrayList;
 
 public class JobListVEListener implements ValueEventListener {
 
-    ArrayList<Job> allPostDetailsList;
+    private final ArrayList<Job> allPostDetailsList;
     //Leave this alone to get all jobs
-    ArrayList<String> jobsToGet;
-    JobListAdapter jobsAdaptor;
-    Context thisContext;
+    private final ArrayList<String> jobsToGet;
+    private final JobListAdapter jobsAdaptor;
+    private final Context thisContext;
 
     //Used to get all jobs
     public JobListVEListener(Context context, ArrayList<Job> jobsList, JobListAdapter jobPostAdaptor){
@@ -62,7 +62,7 @@ public class JobListVEListener implements ValueEventListener {
                 String lat = (String) jobNode.child("latitude").getValue();
                 String lng = (String) jobNode.child("longitude").getValue();
                 String userid = (String) jobNode.child("userid").getValue();
-                String postid = (String) jobNode.getKey().toString();
+                String postid = jobNode.getKey();
                 allPostDetailsList.add(new Job(date, title, location, description, category, userid, postid, lat, lng));
             }
         }else{
@@ -76,7 +76,7 @@ public class JobListVEListener implements ValueEventListener {
                 String lat = (String) jobNode.child("latitude").getValue();
                 String lng = (String) jobNode.child("longitude").getValue();
                 String userid = (String) jobNode.child("userid").getValue();
-                String postid = (String) jobNode.getKey().toString();
+                String postid = jobNode.getKey();
                 allPostDetailsList.add(new Job(date, title, location, description, category, userid, postid, lat, lng));
             }
         }

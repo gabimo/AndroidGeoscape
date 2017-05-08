@@ -36,8 +36,6 @@ public class MyProfileFragment extends Fragment {
 
     private FirebaseStorage storage;
 
-    private TextView tvEmail;
-    private TextView tvUserID;
     private TextView tvLocation;
     private TextView tvName;
 
@@ -52,8 +50,7 @@ public class MyProfileFragment extends Fragment {
     }
 
     public static MyProfileFragment newInstance() {
-        MyProfileFragment fragment = new MyProfileFragment();
-        return fragment;
+        return new MyProfileFragment();
     }
 
     @Override
@@ -70,14 +67,14 @@ public class MyProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_my_profile, container, false);
 
-        tvEmail = (TextView) rootView.findViewById(R.id.tvMyProfileUserEmail);
-        tvUserID = (TextView) rootView.findViewById(R.id.tvMyProfileUserID);
+        TextView tvEmail = (TextView) rootView.findViewById(R.id.tvMyProfileUserEmail);
+        TextView tvUserID = (TextView) rootView.findViewById(R.id.tvMyProfileUserID);
         tvLocation = (TextView) rootView.findViewById(R.id.tvMyProfileLocation);
         tvName = (TextView) rootView.findViewById(R.id.tvMyProfileName);
         ivProfilePhoto = (ImageView) rootView.findViewById(R.id.ivMyProfileImage);
 
-        tvEmail.setText(currentUser.getEmail().toString());
-        tvUserID.setText(currentUser.getUid().toString());
+        tvEmail.setText(currentUser.getEmail());
+        tvUserID.setText(currentUser.getUid());
         ivProfilePhoto.setImageDrawable(null);
 
         //This finds and displays the photo data by the user id from firebase storage

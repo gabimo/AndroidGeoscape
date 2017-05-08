@@ -18,16 +18,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-/**
- * Created by Mellis on 2/24/2017.
- */
-
 public class UserListAdapter extends BaseAdapter {
-    private ArrayList<User> usersList;
-    private LayoutInflater layoutInflater;
-    private Context ctx;
+    private final ArrayList<User> usersList;
+    private final LayoutInflater layoutInflater;
+    private final Context ctx;
     // Create a storage reference from our app
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
     public UserListAdapter(Context aContext, ArrayList<User> listData) {
         this.usersList = listData;

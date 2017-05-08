@@ -32,10 +32,9 @@ import static android.app.Activity.RESULT_OK;
 
 public class EditProfileFragment extends Fragment {
 
-    private FirebaseDatabase database;
     private FirebaseStorage storage;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    // --Commented out by Inspection (5/7/2017 5:38 PM):private FirebaseAuth mAuth;
+    // --Commented out by Inspection (5/7/2017 5:38 PM):private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser currentUser;
     //photo vars
     private final int PICK_PHOTO_FROM_GALLERY = 25;
@@ -46,15 +45,14 @@ public class EditProfileFragment extends Fragment {
     private EditText etName;
     private EditText etLocation;
     private EditText etEmail;
-    private OnFragmentInteractionListener mListener;
+    // --Commented out by Inspection (5/7/2017 5:38 PM):private OnFragmentInteractionListener mListener;
 
     public EditProfileFragment() {
         // Required empty public constructor
     }
 
     public static EditProfileFragment newInstance() {
-        EditProfileFragment fragment = new EditProfileFragment();
-        return fragment;
+        return new EditProfileFragment();
     }
 
     @Override
@@ -69,14 +67,14 @@ public class EditProfileFragment extends Fragment {
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
-        database = FirebaseDatabase.getInstance();
-        usersRef = database.getReference("Users").child(currentUser.getUid().toString());
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        usersRef = database.getReference("Users").child(currentUser.getUid());
 
         View rootView = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         rootView.findViewById(R.id.buttonEditProfileEditProfile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateUserInfo(null);
+                updateUserInfo();
                 getFragmentManager().popBackStack();
             }
         });
@@ -85,7 +83,7 @@ public class EditProfileFragment extends Fragment {
             public void onClick(View v) {
                 getFragmentManager().popBackStackImmediate();
             }
-        });;
+        });
         etName = (EditText) rootView.findViewById(R.id.etEditProfileName);
         etLocation = (EditText) rootView.findViewById(R.id.etEditProfileLocation);
         etEmail = (EditText)  rootView.findViewById(R.id.etEditProfileEmail);
@@ -125,7 +123,7 @@ public class EditProfileFragment extends Fragment {
 
         return rootView;
     }
-    public void updateUserInfo(View v) {
+    private void updateUserInfo() {
         String newName = etName.getText().toString();
         String newLoc = etLocation.getText().toString();
         String newEmail = etEmail.getText().toString();
@@ -160,17 +158,17 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-
-        }
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+//        mListener = null;
     }
 
     /**

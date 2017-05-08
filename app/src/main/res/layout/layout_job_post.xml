@@ -19,7 +19,9 @@
         app:layout_constraintHorizontal_bias="0.963"
         app:layout_constraintLeft_toRightOf="@+id/tvPostLayoutTitle"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="2dp" />
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="2dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvPostLayoutTitle"
@@ -39,20 +41,22 @@
 
     <TextView
         android:id="@+id/tvPostLayoutDescription"
-        android:layout_width="302dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvPostLayoutTitle"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="6dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ivPostLayoutThumbnail"
         android:layout_toRightOf="@+id/ivPostLayoutThumbnail"
         android:textSize="14sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/ivPostLayoutThumbnail"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostLayoutLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPostLayoutLocation"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginEnd="6dp"
+        tools:layout_constraintLeft_creator="1" />
 
     <TextView
         android:id="@+id/tvPostLayoutLocation"
@@ -78,16 +82,17 @@
         android:layout_height="65dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="2dp"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/tvPostLayoutCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintLeft_toRightOf="@+id/ivPostLayoutThumbnail"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostLayoutDate" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPostLayoutDate"
+        android:layout_marginStart="8dp" />
 
 </android.support.constraint.ConstraintLayout>

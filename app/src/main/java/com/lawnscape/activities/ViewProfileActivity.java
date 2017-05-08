@@ -42,7 +42,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                     finish();
                 }else{
                     //user is logged in
-                    /*********************** IMPORTANT ****************************/
+                    /********************** IMPORTANT ****************************/
                     try {
                         userid = getIntent().getExtras().get("UserID").toString();
                     }catch (Exception e){
@@ -50,26 +50,28 @@ public class ViewProfileActivity extends AppCompatActivity {
                     }
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
-                    ft.addToBackStack("profile");
                     if(userid == null) {
                         MyProfileFragment myProfileFrag = (MyProfileFragment) fm.findFragmentByTag("MyProfileFrag");
                         if (myProfileFrag == null) {  // not added
                             myProfileFrag = new MyProfileFragment();
+                            ft.addToBackStack(null);
                             ft.add(R.id.profileFrame, myProfileFrag, "MyProfileFrag");
                             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            ft.commit();
                         }
                     }else{
-                        OtherProfileFragment otherProfileFrag = (OtherProfileFragment) fm.findFragmentByTag("OtherProfileFrag");
                         Bundle args = new Bundle();
                         args.putString("otherid", userid);
+                        OtherProfileFragment otherProfileFrag = (OtherProfileFragment) fm.findFragmentByTag("OtherProfileFrag");
                         if (otherProfileFrag == null) {  // not added
                             otherProfileFrag = new OtherProfileFragment();
                             otherProfileFrag.setArguments(args);
+                            ft.addToBackStack(null);
                             ft.add(R.id.profileFrame, otherProfileFrag, "OtherProfileFrag");
                             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            ft.commit();
                         }
                     }
-                    ft.commit();
                 }
             }
         };
@@ -93,6 +95,9 @@ public class ViewProfileActivity extends AppCompatActivity {
         //This stuff just draws the menu buttons
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_profile, menu);
+        if(userid != null){
+            menu.findItem(R.id.profileMenuSettings).setVisible(false);
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
     }
@@ -103,7 +108,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             case R.id.profileMenuSettings:
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                EditProfileFragment editProfileFrag = (EditProfileFragment) fm.findFragmentByTag("EditProfileFrag");
+                EditProfileFragment editProfileFrag;
                 editProfileFrag = new EditProfileFragment();
                 ft.addToBackStack("editProfile");
                 ft.replace(R.id.profileFrame, editProfileFrag, "EditProfileFrag");
@@ -138,7 +143,9 @@ public class ViewProfileActivity extends AppCompatActivity {
                 FragmentManager f = getSupportFragmentManager();
                 if(f.getBackStackEntryCount()>1) {
                     f.popBackStack();
-                    editProfileButton.setVisible(true);
+                    if(editProfileButton != null){
+                        editProfileButton.setVisible(true);
+                    }
                 }else{
                     finish();
                 }

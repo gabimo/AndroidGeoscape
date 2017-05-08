@@ -28,11 +28,11 @@ import java.util.ArrayList;
  */
 
 public class JobListAdapter extends BaseAdapter {
-    private ArrayList<Job> jobPostDetails;
-    private LayoutInflater layoutInflater;
-    Context ctx;
+    private final ArrayList<Job> jobPostDetails;
+    private final LayoutInflater layoutInflater;
+    private final Context ctx;
     // Create a storage reference from our app
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
     public JobListAdapter(Context aContext, ArrayList<Job> listData) {
         this.jobPostDetails = listData;

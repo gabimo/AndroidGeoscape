@@ -8,7 +8,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +24,6 @@ import dmax.dialog.SpotsDialog;
 public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private ArrayList<Job> jobsList;
-    private ArrayList<String> jobsToFetch = null;
     private SpotsDialog loadingBar;
 
     @Override
@@ -56,7 +54,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
         // Add a marker in Sydney and move the camera;
         DatabaseReference jobsRef = FirebaseDatabase.getInstance().getReference("Jobs");
 
-        jobsToFetch = getIntent().getStringArrayListExtra("JobsList");
+        ArrayList<String> jobsToFetch = getIntent().getStringArrayListExtra("JobsList");
         if(jobsToFetch != null){
             for(String jobid: jobsToFetch){
                 jobsRef.child(jobid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -70,7 +68,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
                         String lat = (String) dataSnapshot.child("latitude").getValue();
                         String lng = (String) dataSnapshot.child("longitude").getValue();
                         String userid = (String) dataSnapshot.child("userid").getValue();
-                        String postid = dataSnapshot.getKey().toString();
+                        String postid = dataSnapshot.getKey();
                         Job newJob = new Job(date, title, location, description, category, userid, postid, lat, lng);
                         //jobsList.add(newJob);
                         LatLng loc = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
@@ -88,7 +86,7 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
             }
             loadingBar.dismiss();
         }else {
-            jobsList = new ArrayList<Job>();
+            jobsList = new ArrayList<>();
             jobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -101,12 +99,12 @@ public class MapJobsActivity extends FragmentActivity implements OnMapReadyCallb
                         String lat = (String) jobNode.child("latitude").getValue();
                         String lng = (String) jobNode.child("longitude").getValue();
                         String userid = (String) jobNode.child("userid").getValue();
-                        String postid = (String) jobNode.getKey().toString();
+                        String postid = jobNode.getKey();
                         Job newJob = new Job(date, title, location, description,category, userid, postid, lat, lng);
                         jobsList.add(newJob);
                         LatLng loc = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
                         // add a point on the map
-                        Marker m = mMap.addMarker(new MarkerOptions().position(loc).title(newJob.getTitle()));
+                        mMap.addMarker(new MarkerOptions().position(loc).title(newJob.getTitle()));
                     }
                     loadingBar.dismiss();
                 }

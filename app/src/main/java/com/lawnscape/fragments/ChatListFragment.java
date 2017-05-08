@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,16 +25,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lawnscape.R;
+import com.lawnscape.VElisteners.UserListVEListener;
 import com.lawnscape.activities.LoginActivity;
 import com.lawnscape.activities.MapJobsActivity;
-import com.lawnscape.activities.PostJobActivity;
 import com.lawnscape.activities.SearchActivity;
 import com.lawnscape.activities.ViewJobsListsActivity;
 import com.lawnscape.activities.ViewProfileActivity;
 import com.lawnscape.adapters.UserListAdapter;
 import com.lawnscape.classes.User;
-import com.lawnscape.R;
-import com.lawnscape.VElisteners.UserListVEListener;
 
 import java.util.ArrayList;
 
@@ -44,7 +42,6 @@ public class ChatListFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
 
     private UserListAdapter userAdapter;
-    private ListView userListView;
     private ArrayList<User> usersList;
     private ArrayList<String> useridList;
     private FirebaseDatabase database;
@@ -58,8 +55,7 @@ public class ChatListFragment extends Fragment {
     }
 
     public static ChatListFragment newInstance() {
-        ChatListFragment fragment = new ChatListFragment();
-        return fragment;
+        return new ChatListFragment();
     }
 
     @Override
@@ -78,11 +74,11 @@ public class ChatListFragment extends Fragment {
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null) {
-            usersList = new ArrayList<User>();
-            useridList = new ArrayList<String>();
+            usersList = new ArrayList<>();
+            useridList = new ArrayList<>();
             database = FirebaseDatabase.getInstance();
             DatabaseReference myChatsRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
-            userListView = (ListView) view;
+            ListView userListView = (ListView) view;
             userAdapter = new UserListAdapter(context, usersList);
             //Get the users the current user has chat messages with
             myChatsRef.addValueEventListener(new ValueEventListener() {
@@ -91,11 +87,11 @@ public class ChatListFragment extends Fragment {
                     DatabaseReference myUserRef = database.getReference("Users");
                     useridList.clear();
                     for (DataSnapshot curUserid : dataSnapshot.getChildren()) {
-                        useridList.add(curUserid.getKey().toString());
+                        useridList.add(curUserid.getKey());
                     }
                     //Causes the listview to update with a list of user objects using UserListAdapter
                     myUserRef.addValueEventListener(
-                            new UserListVEListener(context, usersList, useridList, userAdapter));
+                            new UserListVEListener(usersList, useridList, userAdapter));
                 }
 
                 @Override
@@ -129,7 +125,7 @@ public class ChatListFragment extends Fragment {
         }
         return view;
     }
-    private AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener() {
+    private final AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
                                        long id) {
@@ -139,11 +135,11 @@ public class ChatListFragment extends Fragment {
             //registering popup with OnMenuItemClickListener
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
-                    final User selectedUser = (User) userAdapter.getItem(position);
+                    final User selectedUser = userAdapter.getItem(position);
                     switch (item.getItemId()){
                         case R.id.longclickDeleteChat:
                             //remove the chat from the list of all chats for both users with a listener
-                            DatabaseReference myChatidRef = database.getReference("Users").child(currentUser.getUid().toString()).child("chatids");
+                            DatabaseReference myChatidRef = database.getReference("Users").child(currentUser.getUid()).child("chatids");
                             //doesnt delete the actual chat log ;)
                             myChatidRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -178,10 +174,10 @@ public class ChatListFragment extends Fragment {
             return true;
         }
     };
-    public FragmentManager getHostFragmentManager() {
+    private FragmentManager getHostFragmentManager() {
         FragmentManager fm = getFragmentManager();
         if (fm == null && isAdded()) {
-            fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+            fm = getActivity().getSupportFragmentManager();
         }
         return fm;
     }
@@ -209,27 +205,25 @@ public class ChatListFragment extends Fragment {
                     if(getActivity().isTaskRoot()) {
                         Intent upIntent = NavUtils.getParentActivityIntent(getActivity());
                         upIntent.putExtra("View", "all");
-                        if (upIntent != null && NavUtils.shouldUpRecreateTask(getActivity(), upIntent)) {
+                        if (NavUtils.shouldUpRecreateTask(getActivity(), upIntent)) {
                             TaskStackBuilder builder = TaskStackBuilder.create(getContext());
                             builder.addNextIntentWithParentStack(upIntent);
                             builder.startActivities();
                         } else {
-                            if (upIntent != null) {
-                                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                this.startActivity(upIntent);
-                            } else {
-                                upIntent = new Intent(getContext(), ViewJobsListsActivity.class);
-                                upIntent.putExtra("View", "all");
-                                startActivity(upIntent);
-                            }
+                            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            this.startActivity(upIntent);
                         }
                     }
                     getActivity().finish();
                 }
                 return true;
             case R.id.viewPostsMenuPostJob:
-                startActivity(new Intent(getContext(), PostJobActivity.class));
-                getActivity().finish();
+                PostJobFragment f = new PostJobFragment();
+                FragmentManager fragmentManager = getHostFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.chatsFrameLayout, f, "PostJobFrag");
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
                 return true;
             case R.id.viewPostsMenuMyProfile:
                 startActivity( new Intent(getContext(), ViewProfileActivity.class));

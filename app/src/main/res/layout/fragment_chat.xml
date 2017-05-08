@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_chat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.lawnscape.activities.ChatActivity">
@@ -12,7 +11,7 @@
         android:layout_width="81dp"
         android:layout_height="37dp"
         android:backgroundTint="@android:color/holo_green_light"
-        android:text="Send"
+        android:text="@string/send"
         android:visibility="visible"
         app:bootstrapBrand="primary"
         app:bootstrapSize="lg"
@@ -27,7 +26,6 @@
         android:layout_marginRight="-1dp" />
 
     <EditText
-
         android:layout_width="298dp"
         android:layout_height="42dp"
         android:inputType="textCapSentences|textAutoCorrect"
@@ -40,7 +38,8 @@
         app:layout_constraintLeft_toLeftOf="@+id/lvChatMessageView"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
-        tools:layout_editor_absoluteY="463dp" />
+        tools:layout_editor_absoluteY="463dp"
+        tools:ignore="LabelFor" />
 
     <ListView
         android:layout_width="0dp"

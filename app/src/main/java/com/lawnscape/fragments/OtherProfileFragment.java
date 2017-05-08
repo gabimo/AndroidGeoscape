@@ -52,14 +52,12 @@ public class OtherProfileFragment extends Fragment {
     private EditText etUserReview;
     private ArrayList<String> reviewList;
     private ArrayAdapter<String> reviewAdapter;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference userRef;
     private TextView tvName;
     private TextView tvLoc;
     private ImageView ivProfilePhoto;
     private RatingBar rating;
-    // Create a storage reference from our app
-    private FirebaseStorage storage;
 
     public OtherProfileFragment() {
         // Required empty public constructor
@@ -119,7 +117,7 @@ public class OtherProfileFragment extends Fragment {
             }
         });
         //profile photo
-        storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference pathReference = storage.getReference().child("userprofilephotos").child(userid);
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -146,7 +144,7 @@ public class OtherProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 userRef.child("ratings").addListenerForSingleValueEvent(
-                        new ToggleAddIDVEListener(getContext(), currentUser.getUid(), String.valueOf(rating.getRating()),false));
+                        new ToggleAddIDVEListener(getContext(), currentUser.getUid(), String.valueOf(rating.getRating())));
                 Toast.makeText(getContext(), R.string.rating_submitted, Toast.LENGTH_SHORT).show();
             }
         });
@@ -154,7 +152,7 @@ public class OtherProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 userRef.child("reviews").addListenerForSingleValueEvent(
-                    new ToggleAddIDVEListener(getContext(), currentUser.getUid(), etUserReview.getText().toString(),false));
+                    new ToggleAddIDVEListener(getContext(), currentUser.getUid(), etUserReview.getText().toString()));
                 Toast.makeText(getContext(), R.string.review_submitted, Toast.LENGTH_SHORT).show();
             }
         });

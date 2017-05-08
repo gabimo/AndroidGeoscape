@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/longclickAssignJob"
-        android:title="View Requesters"/>
+        android:title="@string/view_requesters"/>
     <item
         android:id="@+id/longclickDeletePost"
-        android:title="Delete Post"/>
+        android:title="@string/delete_post"/>
 </menu>

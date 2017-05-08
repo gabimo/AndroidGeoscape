@@ -1,15 +1,7 @@
 <resources>
     <string name="app_name">Geoscape</string>
-    <string name="title_activity_profile_settings">ProfileSettings</string>
-    <string name="title_activity_post_job">PostJobActivity</string>
-    <string name="title_activity_view_jobs">ViewJobs</string>
-    <string name="title_activity_view_my_posts">ViewMyPosts</string>
-    <string name="title_activity_view_all_jobs">ViewAllJobs</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_view_user_profile">ViewUserProfile</string>
-    <string name="title_activity_maps">Map</string>
     <string name="title_activity_map_jobs">Map</string>
     <string name="create_account">Create Account</string>
     <string name="e_mail_address">E-mail Address</string>
@@ -33,8 +25,6 @@
     <string name="review">Review</string>
     <string name="your_name">First Last</string>
     <string name="your_address">City/State/Region</string>
-    <string name="back_to_profile">Back to Profile</string>
-    <string name="apply_changes">Apply Changes</string>
     <string name="new_job_post">New Job Post</string>
     <string name="post_job">Post Job</string>
     <string name="what_do_you_want_to_find">What do you want to find?</string>
@@ -46,24 +36,48 @@
     <string name="your_name_colon">Your Name:</string>
     <string name="user_id">User ID:</string>
     <string name="email">Email:</string>
-    <string name="edit_profile">Edit Profile</string>
-    <string name="post_new_job">Post New Job</string>
-    <string name="list_of_all_jobs">List of All Jobs</string>
     <string name="search_jobs">Search Jobs</string>
-    <string name="view_my_posts">View My Posts</string>
-    <string name="see_jobs_on_google_maps">See Jobs on Google Maps</string>
     <string name="request_job">Request Job</string>
-    <string name="save_job">Save Job</string>
     <string name="edit_post_details">Edit Post Details</string>
-    <string name="chat_with_poster">Chat with poster</string>
     <string name="delete_this_post">Delete This Post</string>
     <string name="date">Date:</string>
-    <string name="geoscape">GeoScape</string>
     <string name="main_job_photo">Main Job Photo</string>
 
     <string name="category_prompt">Choose a category</string>
     <string name="rating_submitted">Your rating has been submitted</string>
     <string name="review_submitted">Your review has been submitted, to edit submit a new review</string>
+    <string name="category">Category</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign up</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="send">Send</string>
+    <string name="new_email">New Email</string>
+    <string name="exit">Exit</string>
+    <string name="save">Save</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="poster_profile">Poster Profile</string>
+    <string name="my_profile">My Profile</string>
+    <string name="my_job_posts">My Job Posts</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="settings">Settings</string>
+    <string name="my_chats">My Chats</string>
+    <string name="view_all_jobs">View All Jobs</string>
+    <string name="map_of_all_jobs">Map of All Jobs</string>
+    <string name="delete_job">Delete Job</string>
+    <string name="save_this_post">Save This Post</string>
+    <string name="report_this_post">Report this post</string>
+    <string name="chat">Chat</string>
+    <string name="assign_job">Assign Job</string>
+    <string name="view_profile">View Profile</string>
+    <string name="delete_request">Delete Request</string>
+    <string name="view_requesters">View Requesters</string>
+    <string name="delete_post">Delete Post</string>
+    <string name="delete_chat">Delete Chat</string>
+    <string name="admin_delete">Admin Delete</string>
+    <string name="admin_edit">Admin Edit</string>
+    <string name="incorrect_login">Incorrect Username or Password</string>
 
     <string-array name="category_arrays">
         <item>Repairs</item>
@@ -76,5 +90,8 @@
         <item>Landscaping</item>
         <item>Windows</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -1,9 +1,5 @@
 package com.lawnscape.classes;
 
-/**
- * Created by Mellis on 2/23/2017.
- */
-
 public class ChatMessage {
     private String msgId, textMsg, sentByUid, date;
     private boolean isRead;

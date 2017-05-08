@@ -2,42 +2,42 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/viewSinglePostMenuEditPost"
-        android:title="Post Job"
+        android:title="@string/post_job"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:icon="@drawable/edit_item_icon">
     </item>
     <item android:id="@+id/viewSinglePostMenuDelete"
-        android:title="Post Job"
+        android:title="@string/delete_job"
         android:orderInCategory="200"
         app:showAsAction="always"
         android:icon="@drawable/delete_icon">
     </item>
     <item android:id="@+id/viewSinglePostMenuFavorite"
-        android:title="Save This Post"
+        android:title="@string/save_this_post"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:icon="@drawable/favorite_icon">
     </item>
     <item android:id="@+id/viewSinglePostMenuReport"
-        android:title="Report this post">
+        android:title="@string/report_this_post">
     </item>
     <item android:id="@+id/viewSinglePostMenuMyProfile"
-        android:title="My Profile">
+        android:title="@string/my_profile">
     </item>
     <item android:id="@+id/viewSinglePostMenuChat"
-        android:title="Chat"
+        android:title="@string/chat"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:icon="@drawable/new_chat_icon">
     </item>
     <item android:id="@+id/viewSinglePostMenuMyJobs"
-        android:title="My Job Posts">
+        android:title="@string/my_job_posts">
     </item>
     <item android:id="@+id/viewSinglePostMenuSearch"
-        android:title="Search Jobs">
+        android:title="@string/search_jobs">
     </item>
     <item android:id="@+id/viewSinglePostMenuSignOut"
-        android:title="Sign Out" >
+        android:title="@string/sign_out" >
     </item>
 </menu>

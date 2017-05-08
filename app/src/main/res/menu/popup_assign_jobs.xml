@@ -3,11 +3,9 @@
 
     <item
         android:id="@+id/longclickAssignJob"
-        android:title="Assign Job"/>
+        android:title="@string/assign_job"/>
     <item
         android:id="@+id/longclickViewProfile"
-        android:title="View Profile"/>
-    <item
-        android:id="@+id/longclickDeleteRequest"
-        android:title="Delete Request"/>
+        android:title="@string/view_profile"/>
+    <item android:title="@string/delete_request"/>
 </menu>

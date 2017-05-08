@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.lawnscape.activities.ViewJobRequestsActivity;
 import com.lawnscape.activities.ViewSingleJobActivity;
 import com.lawnscape.adapters.JobListAdapter;
 import com.lawnscape.VElisteners.JobListVEListener;
@@ -39,9 +40,6 @@ public class JobListFragment extends Fragment {
     private ArrayList<Job> allPostDetailsList;
     private ArrayList<String> jobsToFetch;
     private JobListAdapter jobsAdapter;
-    private DatabaseReference myListRef;
-
-    private ListView allPostsList;
 
     public JobListFragment() {
         // Required empty public constructor
@@ -81,7 +79,7 @@ public class JobListFragment extends Fragment {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         View rootView = inflater.inflate(R.layout.fragment_job_list, container, false);
         allPostDetailsList = new ArrayList<>();
-        allPostsList = (ListView) rootView.findViewById(R.id.lvJobListFrag);
+        ListView allPostsList = (ListView) rootView.findViewById(R.id.lvJobListFrag);
         jobsAdapter = new JobListAdapter(getContext(), allPostDetailsList);
         // The adaptor handles pushing each object in the ArrayList to the listview
         // but you must call jobsAdaptor.notifyDataSetChanged(); to update the listview
@@ -100,6 +98,7 @@ public class JobListFragment extends Fragment {
             }
         });
 
+        DatabaseReference myListRef;
         if(jobSet == null){
             /* ALL JOBS */
             myListRef = database.getReference("Jobs");
@@ -108,7 +107,7 @@ public class JobListFragment extends Fragment {
                     new JobListVEListener(getContext(), allPostDetailsList, jobsAdapter));
         }else if(jobSet.equals("myjobs")) {
             /* CURRENT USER JOBS */
-            DatabaseReference myUserRef = database.getReference("Users").child(currentUser.getUid().toString()).child("jobs");
+            DatabaseReference myUserRef = database.getReference("Users").child(currentUser.getUid()).child("jobs");
             //Async add user's own jobs to the list view
             myUserRef.addListenerForSingleValueEvent(
                     new ValueEventListener() {
@@ -132,7 +131,7 @@ public class JobListFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position,
                                         long id) {
-                    Job selectedJob = (Job) jobsAdapter.getItem(position);
+                    Job selectedJob = jobsAdapter.getItem(position);
                     Intent singleJobViewIntent = new Intent(getContext(), ViewSingleJobActivity.class);
                     singleJobViewIntent.putExtra("Job",selectedJob);
                     startActivity(singleJobViewIntent);
@@ -148,7 +147,7 @@ public class JobListFragment extends Fragment {
                     //registering popup with OnMenuItemClickListener
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
-                            final Job selectedJob = (Job) jobsAdapter.getItem(position);
+                            final Job selectedJob = jobsAdapter.getItem(position);
                             switch (item.getItemId()){
                                 case R.id.longclickDeletePost:
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -166,9 +165,15 @@ public class JobListFragment extends Fragment {
                                     return true;
                                 case R.id.longclickAssignJob:
                                     //nothing yet
-                                    Intent assignJobIntent = new Intent(getContext(), ViewJobRequestsActivity.class);
-                                    assignJobIntent.putExtra("Job", selectedJob);
-                                    startActivity(assignJobIntent);
+                                    JobRequestFragment chatFrag = new JobRequestFragment();
+                                    Bundle args = new Bundle();
+                                    args.putString("JobID", selectedJob.getPostid());
+                                    chatFrag.setArguments(args);
+                                    FragmentManager fragmentManager = getHostFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                    fragmentTransaction.replace(R.id.jobsListFrame, chatFrag, selectedJob.getPostid());
+                                    fragmentTransaction.addToBackStack(null);
+                                    fragmentTransaction.commit();
                                     return true;
                             }
                             return true;
@@ -181,7 +186,7 @@ public class JobListFragment extends Fragment {
         }else{
             /* LIST OF PARTICULAR JOBS */
             jobsToFetch = new ArrayList<>();
-            myListRef = database.getReference("Users").child(currentUser.getUid().toString()).child(jobSet).getRef();
+            myListRef = database.getReference("Users").child(currentUser.getUid()).child(jobSet).getRef();
             myListRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -210,6 +215,14 @@ public class JobListFragment extends Fragment {
             mListener = (OnFragmentInteractionListener) context;
         } else {
         }
+    }
+
+    private FragmentManager getHostFragmentManager() {
+        FragmentManager fm = getFragmentManager();
+        if (fm == null && isAdded()) {
+            fm = getActivity().getSupportFragmentManager();
+        }
+        return fm;
     }
 
     @Override
