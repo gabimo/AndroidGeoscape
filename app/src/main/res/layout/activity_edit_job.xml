@@ -27,13 +27,11 @@
         android:layout_alignEnd="@+id/etEditJobTitle"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintVertical_bias="1.0" />
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="7dp" />
 
     <TextView
         android:id="@+id/tvEditJobTitleLabel"
@@ -42,17 +40,13 @@
         android:layout_above="@+id/etEditJobTitle"
         android:layout_alignLeft="@+id/etEditJobTitle"
         android:layout_alignStart="@+id/etEditJobTitle"
-        android:layout_marginLeft="46dp"
-        android:layout_marginStart="46dp"
         android:text="@string/title"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/etEditJobTitle"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/etEditJobTitle"
-        app:layout_constraintVertical_bias="0.476"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1" />
+        app:layout_constraintRight_toRightOf="@+id/tvPostJobLocationLabel"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -63,11 +57,12 @@
         android:hint="@string/job_title"
         android:layout_above="@+id/tvPostJobLocationLabel"
         android:layout_centerHorizontal="true"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="62dp"
-        android:layout_marginRight="45dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="45dp" />
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:layout_marginStart="15dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/tvEditJobTitleLabel"
+        android:layout_marginLeft="15dp" />
 
     <EditText
         android:id="@+id/etEditJobDescription"
@@ -79,11 +74,9 @@
         android:ems="10"
         android:hint="@string/provide_a_detailed_description_of_the_job"
         android:inputType="textMultiLine"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="135dp"
-        android:layout_marginRight="45dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="45dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/etEditJobLocation"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPostJobDescriptionLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvPostJobDescriptionLabel" />
 
     <TextView
         android:id="@+id/tvPostJobDescriptionLabel"
@@ -95,11 +88,12 @@
         android:text="@string/description"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/etEditJobDescription"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/tvPostJobLocationLabel"
-        app:layout_constraintTop_toTopOf="@+id/etEditJobDescription"
-        app:layout_constraintVertical_bias="0.441" />
+        app:layout_constraintRight_toRightOf="@+id/tvPostJobCategoryLabel"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/etEditJobLocation"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp" />
 
     <TextView
         android:id="@+id/tvPostJobLocationLabel"
@@ -108,16 +102,13 @@
         android:layout_above="@+id/etEditJobLocation"
         android:layout_alignLeft="@+id/etEditJobLocation"
         android:layout_alignStart="@+id/etEditJobLocation"
-        android:text="@string/location"
+        android:text="@string/Location_colon"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/etEditJobLocation"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/tvEditJobTitleLabel"
-        app:layout_constraintTop_toTopOf="@+id/etEditJobLocation"
-        app:layout_constraintVertical_bias="0.476"
+        app:layout_constraintRight_toRightOf="@+id/tvPostJobDescriptionLabel"
         tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1" />
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/etEditJobTitle" />
 
     <EditText
         android:id="@+id/etEditJobLocation"
@@ -129,11 +120,10 @@
         android:ems="10"
         android:hint="@string/address"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="104dp"
-        android:layout_marginRight="45dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="45dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/etEditJobTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPostJobLocationLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvPostJobLocationLabel"
+        app:layout_constraintVertical_bias="0.285" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -147,10 +137,12 @@
         android:textStyle="bold"
         android:typeface="normal"
         android:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0.502"
+        android:id="@+id/textView2"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1" />
 
@@ -158,63 +150,63 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/add_job_plus_icon"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/gvEditPost"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="49dp"
-        app:layout_constraintVertical_bias="0.57"
-        android:layout_marginStart="49dp"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        android:id="@+id/imageButton"
+        android:layout_marginTop="242dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEditJobSubmitChanges"
+        android:layout_marginStart="47dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Spinner
         android:id="@+id/spEditCategories"
-        android:layout_width="206dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:entries="@array/category_arrays"
         android:prompt="@string/category_prompt"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/etEditJobDescription"
         app:layout_constraintBottom_toBottomOf="@+id/tvPostJobCategoryLabel"
         app:layout_constraintTop_toTopOf="@+id/tvPostJobCategoryLabel"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginRight="45dp"
-        android:layout_marginEnd="45dp" />
+        app:layout_constraintVertical_bias="0.615" />
 
     <TextView
         android:id="@+id/tvPostJobCategoryLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="199dp"
         android:text="@string/category"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/tvPostJobDescriptionLabel"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/etEditJobDescription"
+        app:layout_constraintRight_toRightOf="@+id/imageButton"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginRight="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_begin="2dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="20dp" />
+        tools:layout_editor_absoluteX="2dp" />
 
     <GridView
         android:id="@+id/gvEditPost"
-        android:layout_width="0dp"
+        android:layout_width="214dp"
         android:layout_height="0dp"
+        app:layout_constraintRight_toRightOf="@+id/etEditJobDescription"
         tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="7dp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonEditJobSubmitChanges"
-        app:layout_constraintRight_toRightOf="@+id/spEditCategories"
-        android:layout_marginTop="59dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostJobDescriptionLabel"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="57dp"
-        app:layout_constraintLeft_toLeftOf="@+id/etEditJobDescription"
-        android:layout_marginLeft="7dp" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonEditJobSubmitChanges"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostJobCategoryLabel"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

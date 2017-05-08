@@ -11,10 +11,10 @@
     <string name="password_colon">Password:</string>
     <string name="back_to_login">Back to Login</string>
     <string name="post_changes">Post Changes</string>
-    <string name="title">Title</string>
+    <string name="title">Title:</string>
     <string name="job_title">Job Title</string>
     <string name="provide_a_detailed_description_of_the_job">Provide a detailed description of the job</string>
-    <string name="description">Description</string>
+    <string name="description">Description:</string>
     <string name="location">City, State</string>
     <string name="Location_colon">Location:</string>
     <string name="address">Address</string>
@@ -48,7 +48,7 @@
     <string name="category_prompt">Choose a category</string>
     <string name="rating_submitted">Your rating has been submitted</string>
     <string name="review_submitted">Your review has been submitted, to edit submit a new review</string>
-    <string name="category">Category</string>
+    <string name="category">Category:</string>
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="log_in">Log In</string>
