@@ -4,176 +4,193 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context="com.lawnscape.fragments.PostJobFragment">
+tools:context="com.lawnscape.fragments.PostJobFragment"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
-<ScrollView
-    android:layout_width="wrap_content"
-    android:layout_height="0dp"
-    tools:layout_constraintTop_creator="1"
-    tools:layout_constraintBottom_creator="1"
-    android:layout_marginStart="8dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_marginTop="8dp"
-    tools:layout_constraintLeft_creator="1"
-    android:layout_marginBottom="8dp"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginLeft="8dp"
-    app:layout_constraintVertical_bias="1.0">
+            <ImageButton
+                android:id="@+id/ivPostJobUploadPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/add_job_plus_icon"
+                tools:ignore="ContentDescription"
+                tools:layout_constraintTop_creator="1"
+                tools:layout_constraintBottom_creator="1"
+                android:layout_marginStart="28dp"
+                app:layout_constraintBottom_toBottomOf="@+id/gvPhotoUploads"
+                android:layout_marginTop="73dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvCategoryLabel"
+                tools:layout_constraintLeft_creator="1"
+                android:layout_marginBottom="69dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="0dp">
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/btnPostJob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/tvPostJobDescriptionLabel"
+                android:layout_toRightOf="@+id/tvPostJobDescriptionLabel"
+                android:backgroundTint="@android:color/holo_green_light"
+                android:text="@string/post_job"
+                android:visibility="visible"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:roundedCorners="true"
+                app:showOutline="false"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="36dp"
+                app:layout_constraintHorizontal_bias="0.501"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintLeft_creator="1" />
 
-        <ImageButton
-            android:id="@+id/ivPostJobUploadPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/add_job_plus_icon"
-            tools:ignore="ContentDescription"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            tools:layout_editor_absoluteX="8dp"
-            android:layout_marginTop="49dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvCategoryLabel" />
+            <TextView
+                android:id="@+id/tvPostJoTitleLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignLeft="@+id/tvPostJobLocationLabel"
+                android:layout_alignStart="@+id/tvPostJobLocationLabel"
+                android:layout_below="@+id/tvPostJobHeader"
+                android:text="@string/title"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/etPostJobTitle"
+                app:layout_constraintTop_toTopOf="@+id/etPostJobTitle"
+                app:layout_constraintVertical_bias="0.521"
+                app:layout_constraintRight_toRightOf="@+id/tvPostJobLocationLabel"
+                tools:layout_constraintTop_creator="1"
+                tools:layout_constraintBottom_creator="1" />
 
-        <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/btnPostJob"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/tvPostJobDescriptionLabel"
-            android:layout_toRightOf="@+id/tvPostJobDescriptionLabel"
-            android:backgroundTint="@android:color/holo_green_light"
-            android:text="@string/post_job"
-            android:visibility="visible"
-            app:bootstrapBrand="primary"
-            app:bootstrapSize="lg"
-            app:buttonMode="regular"
-            app:roundedCorners="true"
-            app:showOutline="false"
-            android:layout_marginStart="109dp"
-            android:layout_marginEnd="8dp"
-            tools:layout_editor_absoluteY="437dp"
-            tools:layout_editor_absoluteX="127dp" />
+            <EditText
+                android:id="@+id/etPostJobTitle"
+                android:layout_width="235dp"
+                android:layout_height="47dp"
+                android:layout_alignLeft="@+id/etPostJobLocation"
+                android:layout_alignStart="@+id/etPostJobLocation"
+                android:layout_alignTop="@+id/tvPostJoTitleLabel"
+                android:ems="10"
+                android:hint="@string/job_title"
+                android:inputType="textPersonName"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintRight_toLeftOf="@+id/guideline"
+                tools:layout_constraintRight_creator="1"
+                android:layout_marginStart="92dp"
+                android:layout_marginEnd="93dp"
+                tools:layout_constraintLeft_creator="1"
+                app:layout_constraintLeft_toLeftOf="@+id/tvPostJobLocationLabel" />
 
-        <TextView
-            android:id="@+id/tvPostJoTitleLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:layout_alignLeft="@+id/tvPostJobLocationLabel"
-            android:layout_alignStart="@+id/tvPostJobLocationLabel"
-            android:layout_below="@+id/tvPostJobHeader"
-            android:text="@string/title"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginStart="6dp"
-            tools:layout_editor_absoluteY="16dp"
-            tools:layout_editor_absoluteX="14dp" />
+            <EditText
+                android:id="@+id/etPostJobDescription"
+                android:layout_width="0dp"
+                android:layout_height="67dp"
+                android:layout_alignLeft="@+id/etPostJobLocation"
+                android:layout_alignStart="@+id/etPostJobLocation"
+                android:layout_below="@+id/etPostJobLocation"
+                android:ems="10"
+                android:hint="@string/provide_a_detailed_description_of_the_job"
+                android:inputType="textMultiLine"
+                app:layout_constraintRight_toRightOf="@+id/etPostJobLocation"
+                app:layout_constraintLeft_toLeftOf="@+id/etPostJobLocation"
+                tools:layout_constraintTop_creator="1"
+                tools:layout_constraintRight_creator="1"
+                app:layout_constraintTop_toBottomOf="@+id/etPostJobLocation"
+                tools:layout_constraintLeft_creator="1" />
 
-        <EditText
-            android:id="@+id/etPostJobTitle"
-            android:layout_width="235dp"
-            android:layout_height="47dp"
-            android:layout_alignLeft="@+id/etPostJobLocation"
-            android:layout_alignStart="@+id/etPostJobLocation"
-            android:layout_alignTop="@+id/tvPostJoTitleLabel"
-            android:ems="10"
-            android:hint="@string/job_title"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteY="1dp"
-            tools:layout_editor_absoluteX="88dp" />
+            <TextView
+                android:id="@+id/tvPostJobLocationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etPostJobTitle"
+                android:text="@string/Location_colon"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="@+id/tvPostJobDescriptionLabel"
+                tools:layout_constraintTop_creator="1"
+                android:layout_marginTop="11dp"
+                app:layout_constraintTop_toTopOf="@+id/etPostJobLocation" />
 
-        <EditText
-            android:id="@+id/etPostJobDescription"
-            android:layout_width="235dp"
-            android:layout_height="67dp"
-            android:layout_alignLeft="@+id/etPostJobLocation"
-            android:layout_alignStart="@+id/etPostJobLocation"
-            android:layout_below="@+id/etPostJobLocation"
-            android:ems="10"
-            android:hint="@string/provide_a_detailed_description_of_the_job"
-            android:inputType="textMultiLine"
-            tools:layout_editor_absoluteY="113dp"
-            tools:layout_editor_absoluteX="88dp" />
+            <EditText
+                android:id="@+id/etPostJobLocation"
+                android:layout_width="0dp"
+                android:layout_height="47dp"
+                android:layout_alignBaseline="@+id/tvPostJobLocationLabel"
+                android:layout_alignBottom="@+id/tvPostJobLocationLabel"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:ems="10"
+                android:hint="@string/address"
+                android:inputType="textPersonName"
+                app:layout_constraintRight_toRightOf="@+id/etPostJobTitle"
+                app:layout_constraintLeft_toLeftOf="@+id/etPostJobTitle"
+                tools:layout_constraintTop_creator="1"
+                tools:layout_constraintRight_creator="1"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/etPostJobTitle"
+                tools:layout_constraintLeft_creator="1" />
 
-        <TextView
-            android:id="@+id/tvPostJobLocationLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/etPostJobTitle"
-            android:text="@string/Location_colon"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteY="87dp"
-            tools:layout_editor_absoluteX="8dp" />
+            <TextView
+                android:id="@+id/tvPostJobDescriptionLabel"
+                android:layout_width="77dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvPostJobLocationLabel"
+                android:layout_alignStart="@+id/tvPostJobLocationLabel"
+                android:layout_alignTop="@+id/etPostJobDescription"
+                android:text="@string/description"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="@+id/tvCategoryLabel"
+                tools:layout_constraintTop_creator="1"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toTopOf="@+id/etPostJobDescription" />
 
-        <EditText
-            android:id="@+id/etPostJobLocation"
-            android:layout_width="235dp"
-            android:layout_height="47dp"
-            android:layout_alignBaseline="@+id/tvPostJobLocationLabel"
-            android:layout_alignBottom="@+id/tvPostJobLocationLabel"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:ems="10"
-            android:hint="@string/address"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteY="56dp"
-            tools:layout_editor_absoluteX="88dp" />
+            <TextView
+                android:id="@+id/tvCategoryLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="@+id/ivPostJobUploadPhoto"
+                tools:layout_constraintTop_creator="1"
+                android:layout_marginTop="11dp"
+                app:layout_constraintTop_toTopOf="@+id/spinnerCategory" />
 
-        <TextView
-            android:id="@+id/tvPostJobDescriptionLabel"
-            android:layout_width="77dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tvPostJobLocationLabel"
-            android:layout_alignStart="@+id/tvPostJobLocationLabel"
-            android:layout_alignTop="@+id/etPostJobDescription"
-            android:text="@string/description"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteY="140dp"
-            tools:layout_editor_absoluteX="8dp" />
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                android:layout_width="0dp"
+                android:layout_height="47dp"
+                android:entries="@array/category_arrays"
+                android:prompt="@string/category_prompt"
+                app:layout_constraintRight_toRightOf="@+id/etPostJobDescription"
+                app:layout_constraintLeft_toLeftOf="@+id/etPostJobDescription"
+                tools:layout_constraintTop_creator="1"
+                tools:layout_constraintRight_creator="1"
+                app:layout_constraintTop_toBottomOf="@+id/etPostJobDescription"
+                tools:layout_constraintLeft_creator="1" />
 
-        <TextView
-            android:id="@+id/tvCategoryLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/category"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteY="204dp"
-            tools:layout_editor_absoluteX="8dp" />
+    <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="461dp"
+                tools:layout_editor_absoluteY="0dp"
+                tools:layout_editor_absoluteX="461dp" />
 
-        <Spinner
-            android:id="@+id/spinnerCategory"
-            android:layout_width="235dp"
-            android:layout_height="47dp"
-            android:entries="@array/category_arrays"
-            android:prompt="@string/category_prompt"
-            tools:layout_editor_absoluteY="188dp"
-            tools:layout_editor_absoluteX="88dp" />
+    <GridView
+        android:id="@+id/gvPhotoUploads"
+        android:layout_width="0dp"
+        android:layout_height="191dp"
+        app:layout_constraintRight_toRightOf="@+id/spinnerCategory"
+        app:layout_constraintLeft_toLeftOf="@+id/spinnerCategory"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCategory"
+        tools:layout_constraintLeft_creator="1">
 
-        <GridView
-            android:id="@+id/gvPhotoUploads"
-            android:layout_width="235dp"
-            android:layout_height="191dp"
-            android:layout_marginEnd="24dp"
-            tools:layout_editor_absoluteY="227dp"
-            tools:layout_editor_absoluteX="88dp">
+    </GridView>
 
-        </GridView>
-
-        <android.support.constraint.Guideline
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/guideline"
-            app:layout_constraintGuide_begin="8dp"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteY="0dp"
-            tools:layout_editor_absoluteX="8dp" />
-
-    </android.support.constraint.ConstraintLayout>
-</ScrollView>
 </android.support.constraint.ConstraintLayout>
