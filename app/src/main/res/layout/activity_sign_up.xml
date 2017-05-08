@@ -74,15 +74,15 @@
         android:layout_alignLeft="@+id/etSignUpEmail"
         android:layout_alignStart="@+id/etSignUpEmail"
         android:layout_below="@+id/etSignUpEmail"
-        android:ems="10"
-        android:hint="@string/firstname_lastname"
-        android:inputType="textPersonName"
-        android:layout_marginTop="51dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignUpHeader"
-        tools:layout_constraintRight_creator="1"
         android:layout_marginEnd="11dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="51dp"
+        android:ems="10"
+        android:hint="First Last"
+        android:inputType="textPersonName"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="27dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSignUpHeader"
+        tools:layout_constraintRight_creator="1" />
 
     <EditText
         android:id="@+id/etSignUpLocation"
