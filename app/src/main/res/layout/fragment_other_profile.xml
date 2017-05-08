@@ -124,23 +124,26 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:background="@color/bootstrap_brand_info"
         android:text="@string/review"
         app:layout_constraintBottom_toTopOf="@+id/lvUserProfileReviews"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/etUserProfileReview"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/btnUserSubmitRating"
         android:layout_width="83dp"
         android:layout_height="50dp"
-        android:text="@string/rate"
-        app:layout_constraintLeft_toRightOf="@+id/ratingBarUser"
+        android:layout_marginBottom="20dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:background="@android:color/holo_blue_light"
+        android:text="@string/rate"
+        android:textColorLink="@color/bootstrap_brand_info"
+        app:layout_constraintBottom_toTopOf="@+id/buttonUserProfileReview"
         app:layout_constraintHorizontal_bias="0.724"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonUserProfileReview" />
+        app:layout_constraintLeft_toRightOf="@+id/ratingBarUser"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
