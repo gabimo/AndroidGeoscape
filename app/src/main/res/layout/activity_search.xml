@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/etSearchBar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -27,7 +27,6 @@
         android:id="@+id/lvSearchResults"
         android:layout_width="365dp"
         android:layout_height="473dp"
-        android:layout_marginBottom="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:visibility="visible"
@@ -36,7 +35,5 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_editor_absoluteY="38dp"
-        tools:layout_editor_absoluteX="11dp" />
+        tools:layout_constraintRight_creator="1" />
 </android.support.constraint.ConstraintLayout>

@@ -8,8 +8,8 @@
 
     <ImageButton
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="95dp"
+        android:layout_height="88dp"
         android:layout_gravity="bottom|right"
         android:backgroundTint="@android:color/transparent"
         android:elevation="4dp"
@@ -53,33 +53,31 @@
             android:id="@+id/buttonViewActiveJobsList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="8dp"
             android:text="@string/active"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/jobsListFrame"
             app:layout_constraintRight_toLeftOf="@+id/buttonViewSavedJobs"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/buttonViewAllJobs"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonViewAllJobs" />
 
         <TextView
             android:id="@+id/buttonRequestedJobs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
             android:layout_marginEnd="33dp"
             android:layout_marginRight="33dp"
-            android:layout_marginTop="8dp"
             android:text="@string/requests"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/jobsListFrame"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/buttonViewSavedJobs"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonViewSavedJobs" />
 
         <TextView
             android:id="@+id/buttonViewSavedJobs"
@@ -88,17 +86,16 @@
             android:layout_alignBottom="@+id/buttonRequestedJobs"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="7dp"
             android:layout_marginEnd="28dp"
             android:layout_marginRight="28dp"
-            android:layout_marginTop="8dp"
             android:text="@string/saved"
             android:textColor="@android:color/holo_green_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/jobsListFrame"
             app:layout_constraintRight_toLeftOf="@+id/buttonRequestedJobs"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/buttonViewActiveJobsList"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonViewActiveJobsList" />
 
         <FrameLayout
             android:id="@+id/jobsListFrame"
@@ -107,12 +104,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/buttonViewAllJobs"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
