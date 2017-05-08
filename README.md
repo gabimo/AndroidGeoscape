@@ -1,6 +1,6 @@
 # AndroidGeoscape
 
-This is the master branch of the Android Application Geoscape's Github Repo.
+This is the master branch of the Android Application Geoscape's Github Repo. Please visit the project's web page at https://geoscape-7062a.firebaseapp.com/
 
 To find apk files to install the app please view the apkfiles folder above.
 
