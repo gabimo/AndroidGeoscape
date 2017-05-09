@@ -29,10 +29,12 @@
         </activity>
         <activity android:name=".activities.ViewSingleJobActivity" />
         <activity android:name=".activities.ViewJobsListsActivity" />
-        <activity android:name=".activities.ChatActivity"
-            android:parentActivityName=".activities.ViewJobsListsActivity"/>
-        <activity android:name=".activities.ViewChatListActivity"
-            android:parentActivityName=".activities.ViewJobsListsActivity"/>
+        <activity
+            android:name=".activities.ChatActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity" />
+        <activity
+            android:name=".activities.ViewChatListActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -48,9 +50,11 @@
         <activity
             android:name=".activities.MapJobsActivity"
             android:label="@string/title_activity_map_jobs" />
-        <activity android:name=".activities.SearchActivity"
-            android:parentActivityName=".activities.ViewJobsListsActivity"/>
+        <activity
+            android:name=".activities.SearchActivity"
+            android:parentActivityName=".activities.ViewJobsListsActivity" />
         <activity android:name=".activities.EditJobActivity" />
+        <activity android:name=".activities.PostJobActivity"></activity>
     </application>
 
 </manifest>

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -63,7 +62,6 @@ public class EditJobActivity extends AppCompatActivity {
                     etTitle.setText(jobPost.getTitle());
                     etLocation.setText(jobPost.getLocation());
                     etDesc.setText(jobPost.getDescription());
-                    //spCategory.getSelectedItem().toString();
 
                     //This finds the photo data by the job id from firebase storage, nothing is passed around
                     StorageReference jobPhotoRef = storage.getReference().child("jobphotos").child(jobPost.getPostid()).child("mainphoto ");
@@ -115,13 +113,9 @@ public class EditJobActivity extends AppCompatActivity {
         myUserJobRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                TextView etTitle = (TextView) findViewById(R.id.etEditJobTitle);
-                TextView etLocation = (TextView) findViewById(R.id.etEditJobLocation);
-                TextView etDescription = (TextView) findViewById(R.id.etEditJobDescription);
-                Spinner spCategory = (Spinner) findViewById(R.id.spEditCategories);
                 String newTitle = etTitle.getText().toString();
                 String newLoc = etLocation.getText().toString();
-                String newDesc = etDescription.getText().toString();
+                String newDesc = etDesc.getText().toString();
                 String newCaty = spCategory.getSelectedItem().toString();
                 // changes are made
                 if (newDesc.equals("")) {
@@ -134,7 +128,7 @@ public class EditJobActivity extends AppCompatActivity {
                 if (!newLoc.equals("")) {
                     dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(EditJobActivity.this, "location", newLoc));
                 }
-                if (!newLoc.equals("")) {
+                if (!newCaty.equals("No Category")) {
                     dataSnapshot.getRef().addListenerForSingleValueEvent(new ToggleAddIDVEListener(EditJobActivity.this, "category", newCaty));
                 }
             }

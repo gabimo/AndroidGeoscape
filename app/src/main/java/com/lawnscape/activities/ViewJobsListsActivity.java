@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.lawnscape.fragments.JobListFragment;
 import com.lawnscape.R;
-import com.lawnscape.fragments.PostJobFragment;
 
 public class ViewJobsListsActivity extends AppCompatActivity {
     //Firebase global init
@@ -72,17 +71,11 @@ public class ViewJobsListsActivity extends AppCompatActivity {
                     if( extras != null && extras.containsKey("View") && !extras.getString("View").equals("all")){
                         listHandler(extras.getString("View"));
                     }else{
-                        PostJobFragment f = (PostJobFragment) fm.findFragmentByTag("PostJobFrag");
-                        JobListFragment g = null;
-                        if (f != null) {
-                            ft.replace(R.id.jobsListFrame, f, "PostJobFrag");
-                        }else{
-                            g = (JobListFragment) fm.findFragmentByTag("JobListFrag");
-                            if(g == null){
-                                g = new JobListFragment();
-                            }
-                            ft.replace(R.id.jobsListFrame, g, "JobListFrag");
+                        JobListFragment f =  (JobListFragment) fm.findFragmentByTag("JobListFrag");
+                        if(f == null){
+                            f = new JobListFragment();
                         }
+                        ft.replace(R.id.jobsListFrame, f, "JobListFrag");
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         ft.disallowAddToBackStack();
                         ft.commit();
@@ -122,12 +115,7 @@ public class ViewJobsListsActivity extends AppCompatActivity {
             // Handles item selection from the action bar and menu
             switch (item.getItemId()) {
                 case R.id.viewPostsMenuPostJob:
-                    PostJobFragment f = new PostJobFragment();
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.jobsListFrame, f, "PostJobFrag");
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    startActivity(new Intent(this, PostJobActivity.class));
                     postJobItem = item;
                     item.setVisible(false);
                     return true;

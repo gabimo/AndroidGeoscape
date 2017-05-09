@@ -81,6 +81,7 @@
     <string name="incorrect_login">Incorrect Username or Password</string>
 
     <string-array name="category_arrays">
+        <item>No Category</item>
         <item>Repairs</item>
         <item>Tutoring</item>
         <item>Cleaning Service</item>

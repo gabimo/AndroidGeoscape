@@ -58,7 +58,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deletePost(null);
+                deletePost();
             }
         });
         requestButton = (BootstrapButton) findViewById(R.id.buttonRequestJob);
@@ -252,7 +252,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.viewSinglePostMenuDelete:
-                deletePost(null);
+                deletePost();
                 return true;
             case R.id.viewSinglePostMenuReport:
                 reportPost();
@@ -292,7 +292,7 @@ public class ViewSingleJobActivity extends AppCompatActivity {
                 new ToggleAddIDVEListener(ViewSingleJobActivity.this, currentUser.getUid(),jobPost.getPostid()));
     }
 
-    private void deletePost(@SuppressWarnings("UnusedParameters") BootstrapButton v) {
+    private void deletePost() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         //remove the job from the list of all jobs with a listener
         DatabaseReference myJobRef = database.getReference("Jobs");

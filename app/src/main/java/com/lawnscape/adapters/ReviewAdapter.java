@@ -1,16 +1,5 @@
 package com.lawnscape.adapters;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
-
-import com.lawnscape.R;
-
-import java.util.ArrayList;
-
 // --Commented out by Inspection START (5/7/2017 5:38 PM):
 //class ReviewAdapter extends BaseAdapter {
 //

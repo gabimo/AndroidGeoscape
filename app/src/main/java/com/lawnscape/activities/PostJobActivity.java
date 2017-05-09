@@ -1,6 +1,5 @@
-package com.lawnscape.fragments;
+package com.lawnscape.activities;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,11 +10,11 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
+import android.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -27,26 +26,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.lawnscape.R;
-import com.lawnscape.activities.ViewJobsListsActivity;
-import com.lawnscape.adapters.PhotoAdapter;
 import com.lawnscape.classes.Job;
+import com.lawnscape.adapters.*;
+import com.lawnscape.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static android.app.Activity.RESULT_OK;
-
-
-public class PostJobFragment extends Fragment {
-
+public class PostJobActivity extends AppCompatActivity {
     //Firebase global init
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private FirebaseStorage storage;
     private FirebaseDatabase database;
+    //photo vars
+    private ImageView ivPostJobPhoto;
     private final int PICK_PHOTO_FROM_GALLERY = 5;
     //Location Vars
     private Location myCurLoc;
@@ -57,43 +53,31 @@ public class PostJobFragment extends Fragment {
     private EditText etLocation;
     private EditText etDescription;
     private Spinner spinnerCategory;
+    private GridView gvUploadPhotos;
     private ArrayList<Uri> localUriList;
     private PhotoAdapter photoAdapter;
 
-    public PostJobFragment() {
-        // Required empty public constructor
-    }
-
-    public static PostJobFragment newInstance() {
-        PostJobFragment fragment = new PostJobFragment();
-        return fragment;
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_post_job, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         //Check for access to location data
-        if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             // If no access to location services, then ask for permission
-            ActivityCompat.requestPermissions(getActivity(), new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION },
+            ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION },
                     PERMISSION_ACCESS_COARSE_LOCATION);
         }else{
             LOCATION_SERVICES_ENABLED = true;
         }
+        setContentView(R.layout.activity_post_job);
         mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
-        ImageView ivPostJobPhoto = (ImageView) rootView.findViewById(R.id.ivPostJobUploadPhoto);
-        GridView gvUploadPhotos = (GridView) rootView.findViewById(R.id.gvPhotoUploads);
-        spinnerCategory = (Spinner) rootView.findViewById(R.id.spinnerCategory);
-        etTitle = (EditText) rootView.findViewById(R.id.etPostJobTitle);
-        etLocation = (EditText) rootView.findViewById(R.id.etPostJobLocation);
-        etDescription = (EditText) rootView.findViewById(R.id.etPostJobDescription);
+        ivPostJobPhoto = (ImageView) findViewById(R.id.ivPostJobUploadPhoto);
+        gvUploadPhotos = (GridView) findViewById(R.id.gvPhotoUploads);
+        spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         localUriList = new ArrayList<>();
-        photoAdapter = new PhotoAdapter(getActivity(), localUriList);
+        photoAdapter = new PhotoAdapter(this, localUriList);
         gvUploadPhotos.setAdapter(photoAdapter);
         ivPostJobPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,19 +88,40 @@ public class PostJobFragment extends Fragment {
                 startActivityForResult(photoGalleryIntent, PICK_PHOTO_FROM_GALLERY);
             }
         });
-        rootView.findViewById(R.id.btnPostJob).setOnClickListener(new View.OnClickListener() {
+        //make sure user is logged in and has an account
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onClick(View v) {
-                postJob(v);
+            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(PostJobActivity.this, LoginActivity.class));
+                    finish();
+                }
             }
-        });
-        return rootView;
+        };
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+    /**************** END LIFECYCLE METHODS ******************/
     public void postJob(View v) {
         v.setEnabled(false);
         if (LOCATION_SERVICES_ENABLED) {
             // Acquire a reference to the system Location Manager
-            LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             // Register the listener with the Location Manager to receive location updates
             try {
                 //Find the best method to get location(gps, wifi... whatever)
@@ -130,16 +135,20 @@ public class PostJobFragment extends Fragment {
                 e.printStackTrace();
             }
             if (myCurLoc != null) {
+                etTitle = (EditText) findViewById(R.id.etPostJobTitle);
+                etLocation = (EditText) findViewById(R.id.etPostJobLocation);
+                etDescription = (EditText) findViewById(R.id.etPostJobDescription);
+                spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
                 String newTitle = etTitle.getText().toString();
                 String newLoc = etLocation.getText().toString();
                 String newDesc = etDescription.getText().toString();
-                String userID = mAuth.getCurrentUser().getUid();
+                String userID = currentUser.getUid();
                 String newCategory = spinnerCategory.getSelectedItem().toString();
                 String lat = String.valueOf(myCurLoc.getLatitude());
                 String lng = String.valueOf(myCurLoc.getLongitude());
                 //Add the job to a list of jobs for the user
                 DatabaseReference myJobsRef = database.getReference("Jobs");
-                DatabaseReference myUserJobRef = database.getReference("Users").child(mAuth.getCurrentUser().getUid()).child("jobs").push();
+                DatabaseReference myUserJobRef = database.getReference("Users").child(currentUser.getUid()).child("jobs").push();
                 // Add a job, newJobRef will now hold the jobid value(a string)
                 DatabaseReference newJobRef = myJobsRef.push();
                 if (newDesc.equals("")) {
@@ -167,16 +176,16 @@ public class PostJobFragment extends Fragment {
                         pathReference.child("otherphotos").child(tempRef.getKey()).putFile(pic);
                     }
                 }
-                startActivity(new Intent(getContext(),ViewJobsListsActivity.class).putExtra("View","myjobs"));
-                getActivity().finish();
+                startActivity(new Intent(this,ViewJobsListsActivity.class).putExtra("View","myjobs"));
+                finish();
             }
         } else {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSION_ACCESS_COARSE_LOCATION);
         }
         v.setEnabled(true);
     }
-/***************************** NECESSARY FOR ************************************/
+/******************************* NECESSARY FOR ************************************/
     /************************** LOCATION GETTING METHOD *******************************/
     // triggered when the user responds to the request for location data
     @Override
@@ -188,7 +197,7 @@ public class PostJobFragment extends Fragment {
                     LOCATION_SERVICES_ENABLED = true;
                 } else {
                     LOCATION_SERVICES_ENABLED = false;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage("Your location will be used to display your post on a map.")
                             .setTitle("Please enable location settings")
                             .create()
@@ -198,7 +207,7 @@ public class PostJobFragment extends Fragment {
         }
     }
     // This is nothing more than a variable stored for later user
-    private final LocationListener locationListener = new LocationListener() {
+    LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             // Called when a new location is found by the network location provider.
             myCurLoc = location;
@@ -210,11 +219,21 @@ public class PostJobFragment extends Fragment {
     };
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_PHOTO_FROM_GALLERY && resultCode == RESULT_OK) {
             Uri targetURI = data.getData();
             localUriList.add(targetURI);
             photoAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return false;
     }
 }

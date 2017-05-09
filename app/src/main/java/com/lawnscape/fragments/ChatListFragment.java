@@ -29,6 +29,7 @@ import com.lawnscape.R;
 import com.lawnscape.VElisteners.UserListVEListener;
 import com.lawnscape.activities.LoginActivity;
 import com.lawnscape.activities.MapJobsActivity;
+import com.lawnscape.activities.PostJobActivity;
 import com.lawnscape.activities.SearchActivity;
 import com.lawnscape.activities.ViewJobsListsActivity;
 import com.lawnscape.activities.ViewProfileActivity;
@@ -218,12 +219,7 @@ public class ChatListFragment extends Fragment {
                 }
                 return true;
             case R.id.viewPostsMenuPostJob:
-                PostJobFragment f = new PostJobFragment();
-                FragmentManager fragmentManager = getHostFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.chatsFrameLayout, f, "PostJobFrag");
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                startActivity(new Intent(getContext(), PostJobActivity.class));
                 return true;
             case R.id.viewPostsMenuMyProfile:
                 startActivity( new Intent(getContext(), ViewProfileActivity.class));
